@@ -32,4 +32,7 @@ A3  A2  A1  A0  O1  O0
 Using K maps to solve for O1 and O0 we get 
 O1 = 
 O0 = 
+
+Correction - 
+Don't use Dont Cares for cases with multiple high inputs, use 0s instead. Why? IDK
 */
