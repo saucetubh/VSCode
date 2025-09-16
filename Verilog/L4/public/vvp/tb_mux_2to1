@@ -1,0 +1,105 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x5cee26739c40 .scope module, "tb_mux_2to1" "tb_mux_2to1" 2 3;
+ .timescale 0 0;
+v0x5cee26752030_0 .var "in0", 0 0;
+v0x5cee267520f0_0 .var "in1", 0 0;
+v0x5cee267521c0_0 .var "sel", 0 0;
+v0x5cee267522c0_0 .net "y", 0 0, L_0x5cee26752650;  1 drivers
+S_0x5cee26739dd0 .scope module, "uut" "mux_2to1" 2 12, 3 1 0, S_0x5cee26739c40;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 1 "y";
+    .port_info 1 /INPUT 1 "in0";
+    .port_info 2 /INPUT 1 "in1";
+    .port_info 3 /INPUT 1 "sel";
+L_0x5cee26752390 .functor NOT 1, v0x5cee267521c0_0, C4<0>, C4<0>, C4<0>;
+L_0x5cee26752480 .functor AND 1, L_0x5cee26752390, v0x5cee26752030_0, C4<1>, C4<1>;
+L_0x5cee26752590 .functor AND 1, v0x5cee267521c0_0, v0x5cee267520f0_0, C4<1>, C4<1>;
+L_0x5cee26752650 .functor OR 1, L_0x5cee26752480, L_0x5cee26752590, C4<0>, C4<0>;
+v0x5cee266ffcf0_0 .net "in0", 0 0, v0x5cee26752030_0;  1 drivers
+v0x5cee26751ad0_0 .net "in1", 0 0, v0x5cee267520f0_0;  1 drivers
+v0x5cee26751b90_0 .net "nsel", 0 0, L_0x5cee26752390;  1 drivers
+v0x5cee26751c60_0 .net "sel", 0 0, v0x5cee267521c0_0;  1 drivers
+v0x5cee26751d20_0 .net "w1", 0 0, L_0x5cee26752480;  1 drivers
+v0x5cee26751e30_0 .net "w2", 0 0, L_0x5cee26752590;  1 drivers
+v0x5cee26751ef0_0 .net "y", 0 0, L_0x5cee26752650;  alias, 1 drivers
+    .scope S_0x5cee26739c40;
+T_0 ;
+    %vpi_call 2 20 "$dumpfile", "public/vcd/wave_mux_2to1.vcd" {0 0 0};
+    %vpi_call 2 21 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x5cee26739c40 {0 0 0};
+    %vpi_call 2 23 "$display", "\012Testing 2-to-1 Multiplexer\012" {0 0 0};
+    %vpi_call 2 24 "$display", "|%-5s|%-5s|%-5s|%-5s|%-5s|", "Time", "in0", "in1", "sel", "y" {0 0 0};
+    %vpi_call 2 25 "$display", "|-----|-----|-----|-----|-----|" {0 0 0};
+    %vpi_call 2 27 "$monitor", "|%-5d|%-5b|%-5b|%-5b|%-5b|", $time, v0x5cee26752030_0, v0x5cee267520f0_0, v0x5cee267521c0_0, v0x5cee267522c0_0 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee26752030_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267520f0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x5cee267521c0_0, 0, 1;
+    %delay 10, 0;
+    %vpi_call 2 39 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "tb/tb_mux_2to1.v";
+    "./src/mux_2to1.v";

@@ -1,0 +1,76 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x14ee076e0 .scope module, "mux" "mux" 2 2;
+ .timescale 0 0;
+    .port_info 0 /INPUT 4 "A";
+    .port_info 1 /INPUT 4 "B";
+    .port_info 2 /INPUT 1 "s";
+    .port_info 3 /OUTPUT 4 "Y";
+o0x150040520 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x14ee216c0 .functor AND 1, o0x150040520, L_0x14ee21620, C4<1>, C4<1>;
+L_0x14ee21930 .functor AND 1, L_0x14ee21770, L_0x14ee21850, C4<1>, C4<1>;
+L_0x14ee21a60 .functor OR 1, L_0x14ee216c0, L_0x14ee21930, C4<0>, C4<0>;
+L_0x14ee21c30 .functor AND 1, o0x150040520, L_0x14ee21b50, C4<1>, C4<1>;
+L_0x14ee21ef0 .functor AND 1, L_0x14ee21d00, L_0x14ee21e50, C4<1>, C4<1>;
+L_0x14ee22030 .functor OR 1, L_0x14ee21c30, L_0x14ee21ef0, C4<0>, C4<0>;
+L_0x14ee22200 .functor AND 1, o0x150040520, L_0x14ee22120, C4<1>, C4<1>;
+L_0x14ee22480 .functor AND 1, L_0x14ee222f0, L_0x14ee22390, C4<1>, C4<1>;
+L_0x14ee22550 .functor OR 1, L_0x14ee22200, L_0x14ee22480, C4<0>, C4<0>;
+L_0x14ee22960 .functor AND 1, o0x150040520, L_0x14ee227e0, C4<1>, C4<1>;
+L_0x14ee22c80 .functor AND 1, L_0x14ee229d0, L_0x14ee22b70, C4<1>, C4<1>;
+L_0x14ee22d50 .functor OR 1, L_0x14ee22960, L_0x14ee22c80, C4<0>, C4<0>;
+o0x150040010 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x14ee10320_0 .net "A", 3 0, o0x150040010;  0 drivers
+o0x150040040 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x14ee20230_0 .net "B", 3 0, o0x150040040;  0 drivers
+v0x14ee202d0_0 .net "Y", 3 0, L_0x14ee22690;  1 drivers
+v0x14ee20380_0 .net *"_ivl_10", 0 0, L_0x14ee21930;  1 drivers
+v0x14ee20430_0 .net *"_ivl_12", 0 0, L_0x14ee21a60;  1 drivers
+v0x14ee20520_0 .net *"_ivl_17", 0 0, L_0x14ee21b50;  1 drivers
+v0x14ee205d0_0 .net *"_ivl_18", 0 0, L_0x14ee21c30;  1 drivers
+v0x14ee20680_0 .net *"_ivl_21", 0 0, L_0x14ee21d00;  1 drivers
+v0x14ee20720_0 .net *"_ivl_23", 0 0, L_0x14ee21e50;  1 drivers
+v0x14ee20830_0 .net *"_ivl_24", 0 0, L_0x14ee21ef0;  1 drivers
+v0x14ee208e0_0 .net *"_ivl_26", 0 0, L_0x14ee22030;  1 drivers
+v0x14ee20990_0 .net *"_ivl_3", 0 0, L_0x14ee21620;  1 drivers
+v0x14ee20a40_0 .net *"_ivl_31", 0 0, L_0x14ee22120;  1 drivers
+v0x14ee20af0_0 .net *"_ivl_32", 0 0, L_0x14ee22200;  1 drivers
+v0x14ee20ba0_0 .net *"_ivl_35", 0 0, L_0x14ee222f0;  1 drivers
+v0x14ee20c40_0 .net *"_ivl_37", 0 0, L_0x14ee22390;  1 drivers
+v0x14ee20cf0_0 .net *"_ivl_38", 0 0, L_0x14ee22480;  1 drivers
+v0x14ee20e80_0 .net *"_ivl_4", 0 0, L_0x14ee216c0;  1 drivers
+v0x14ee20f10_0 .net *"_ivl_40", 0 0, L_0x14ee22550;  1 drivers
+v0x14ee20fc0_0 .net *"_ivl_46", 0 0, L_0x14ee227e0;  1 drivers
+v0x14ee21070_0 .net *"_ivl_47", 0 0, L_0x14ee22960;  1 drivers
+v0x14ee21120_0 .net *"_ivl_50", 0 0, L_0x14ee229d0;  1 drivers
+v0x14ee211c0_0 .net *"_ivl_52", 0 0, L_0x14ee22b70;  1 drivers
+v0x14ee21270_0 .net *"_ivl_53", 0 0, L_0x14ee22c80;  1 drivers
+v0x14ee21320_0 .net *"_ivl_55", 0 0, L_0x14ee22d50;  1 drivers
+v0x14ee213d0_0 .net *"_ivl_7", 0 0, L_0x14ee21770;  1 drivers
+v0x14ee21470_0 .net *"_ivl_9", 0 0, L_0x14ee21850;  1 drivers
+v0x14ee21520_0 .net "s", 0 0, o0x150040520;  0 drivers
+L_0x14ee21620 .part o0x150040010, 0, 1;
+L_0x14ee21770 .reduce/nor o0x150040520;
+L_0x14ee21850 .part o0x150040040, 0, 1;
+L_0x14ee21b50 .part o0x150040010, 1, 1;
+L_0x14ee21d00 .reduce/nor o0x150040520;
+L_0x14ee21e50 .part o0x150040040, 1, 1;
+L_0x14ee22120 .part o0x150040010, 2, 1;
+L_0x14ee222f0 .reduce/nor o0x150040520;
+L_0x14ee22390 .part o0x150040040, 2, 1;
+L_0x14ee22690 .concat8 [ 1 1 1 1], L_0x14ee21a60, L_0x14ee22030, L_0x14ee22550, L_0x14ee22d50;
+L_0x14ee227e0 .part o0x150040010, 3, 1;
+L_0x14ee229d0 .reduce/nor o0x150040520;
+L_0x14ee22b70 .part o0x150040040, 3, 1;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "Mux.v";

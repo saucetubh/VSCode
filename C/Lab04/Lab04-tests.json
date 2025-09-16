@@ -1,0 +1,23 @@
+{
+  "test_cases":[
+    {   
+      "id":1,
+      "time_out":2,
+      "input":"0\n0\n0\n4\n3\n0\n",
+      "output":"Enter 3 coordinates for 3 points:\nTriangle can be constructed.\nThis is a right angled triangle.\n"
+    },
+    {
+      "id":2,
+      "time_out":2,
+      "input":"0\n0\n7\n0\n10\n0\n",
+      "output":"Enter 3 coordinates for 3 points:\nTriangle cannot be constructed.\n"
+    },
+    {
+      "id":3,
+      "time_out":2,
+      "input":"1\n0\n5\n0\n1\n4\n",
+      "output":"Enter 3 coordinates for 3 points:\nTriangle can be constructed.\nThis is an isosceles right triangle.\n"
+    }
+
+  ]
+}

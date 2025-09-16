@@ -1,0 +1,68 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x15c005650 .scope module, "testbench_three_variable" "testbench_three_variable" 2 3;
+ .timescale 0 0;
+v0x15c01bfb0_0 .var "a", 0 0;
+v0x15c01c050_0 .var "b", 0 0;
+v0x15c01c100_0 .var "c", 0 0;
+v0x15c01c1d0_0 .net "out", 0 0, L_0x15c01c460;  1 drivers
+S_0x15c0057c0 .scope module, "tv" "three_variable" 2 8, 3 3 0, S_0x15c005650;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "out";
+L_0x15c01c280 .functor NOT 1, v0x15c01bfb0_0, C4<0>, C4<0>, C4<0>;
+L_0x15c01c350 .functor AND 1, L_0x15c01c280, v0x15c01c050_0, C4<1>, C4<1>;
+L_0x15c01c460 .functor OR 1, v0x15c01c100_0, L_0x15c01c350, C4<0>, C4<0>;
+v0x15c006540_0 .net *"_ivl_0", 0 0, L_0x15c01c280;  1 drivers
+v0x15c01bbf0_0 .net *"_ivl_2", 0 0, L_0x15c01c350;  1 drivers
+v0x15c01bca0_0 .net "a", 0 0, v0x15c01bfb0_0;  1 drivers
+v0x15c01bd50_0 .net "b", 0 0, v0x15c01c050_0;  1 drivers
+v0x15c01bdf0_0 .net "c", 0 0, v0x15c01c100_0;  1 drivers
+v0x15c01bed0_0 .net "out", 0 0, L_0x15c01c460;  alias, 1 drivers
+    .scope S_0x15c005650;
+T_0 ;
+    %vpi_call 2 11 "$dumpfile", "three_variable.vcd" {0 0 0};
+    %vpi_call 2 12 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x15c005650 {0 0 0};
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x15c01bfb0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x15c01c050_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x15c01c100_0, 0, 1;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x15c01bfb0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x15c01c050_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x15c01c100_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x15c01bfb0_0, 0, 1;
+    %pushi/vec4 1, 0, 1;
+    %store/vec4 v0x15c01c050_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0x15c01c100_0, 0, 1;
+    %delay 10, 0;
+    %vpi_call 2 19 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x15c005650;
+T_1 ;
+    %vpi_call 2 23 "$monitor", "time = %0d, a = %b, b = %b, c = %b, out = %b", $time, v0x15c01bfb0_0, v0x15c01c050_0, v0x15c01c100_0, v0x15c01c1d0_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench_three_variable.v";
+    "./three_variable.v";

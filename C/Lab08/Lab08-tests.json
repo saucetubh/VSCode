@@ -1,0 +1,16 @@
+{
+  "test_cases": [
+    {
+      "id": 1,
+      "time_out": 2,
+      "input": "1\n6\n1 3 4 6 8 9\n3\n",
+      "output": "This program supports these operations:\n\t1. Search a key in a non-decreasing sequence of integers.\n\n\t2. Count the number of vowels in a string.\n\nChoose an operation: How many numbers do you want to enter (between 1 and 100)? Enter 6 integers in non-decreasing order (no duplicates): Enter the key to search: 3 found at index 1\n"
+    },
+    {
+      "id": 2,
+      "time_out": 2,
+      "input": "2\nred\n",
+      "output": "This program supports these operations:\n\t1. Search a key in a non-decreasing sequence of integers.\n\n\t2. Count the number of vowels in a string.\n\nChoose an operation: Enter a string: red has 1 vowels\n"
+    }
+  ]
+}

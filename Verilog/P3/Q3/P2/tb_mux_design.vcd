@@ -1,0 +1,106 @@
+$date
+	Tue Sep 16 17:56:39 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_mux_design $end
+$var wire 1 ! Z2 $end
+$var reg 1 " A $end
+$var reg 1 # B $end
+$var reg 1 $ C $end
+$scope module md $end
+$var wire 1 " A $end
+$var wire 1 # B $end
+$var wire 1 $ C $end
+$var wire 1 % w2 $end
+$var wire 1 & w1 $end
+$var wire 1 ! Z2 $end
+$scope module M211 $end
+$var wire 2 ' A [1:0] $end
+$var wire 1 & O $end
+$var wire 1 # S $end
+$upscope $end
+$scope module M212 $end
+$var wire 2 ( A [1:0] $end
+$var wire 1 % O $end
+$var wire 1 # S $end
+$upscope $end
+$scope module M213 $end
+$var wire 2 ) A [1:0] $end
+$var wire 1 ! O $end
+$var wire 1 " S $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 )
+b10 (
+b0 '
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#10
+b10 )
+1%
+b10 '
+b11 (
+1$
+#20
+0!
+b10 )
+0&
+b0 '
+b10 (
+0$
+1#
+#30
+1!
+b11 )
+1&
+b10 '
+b11 (
+1$
+#40
+0!
+0%
+b0 )
+0&
+b0 '
+b10 (
+0$
+0#
+1"
+#50
+1!
+b10 )
+1%
+b10 '
+b11 (
+1$
+#60
+b10 )
+0&
+b0 '
+b10 (
+0$
+1#
+#70
+b11 )
+1&
+b10 '
+b11 (
+1$
+#80

@@ -1,0 +1,84 @@
+$date
+	Wed Sep 10 15:44:09 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_full_adder $end
+$var wire 1 ! sum $end
+$var wire 1 " cout $end
+$var reg 1 # a $end
+$var reg 1 $ b $end
+$var reg 1 % cin $end
+$scope module uut $end
+$var wire 1 # a $end
+$var wire 1 $ b $end
+$var wire 1 % carry_in $end
+$var wire 1 " carry_out $end
+$var wire 1 ! sum $end
+$var wire 1 & s1 $end
+$var wire 1 ' c2 $end
+$var wire 1 ( c1 $end
+$scope module h1 $end
+$var wire 1 # a $end
+$var wire 1 $ b $end
+$var wire 1 ( carry $end
+$var wire 1 & sum $end
+$upscope $end
+$scope module h2 $end
+$var wire 1 & a $end
+$var wire 1 % b $end
+$var wire 1 ' carry $end
+$var wire 1 ! sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+0(
+0'
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#10
+1!
+1%
+#20
+1&
+0%
+1$
+#30
+1"
+0!
+1'
+1%
+#40
+0"
+1!
+0'
+0%
+0$
+1#
+#50
+1"
+0!
+1'
+1%
+#60
+0'
+0&
+1(
+0%
+1$
+#70
+1!
+1%
+#80

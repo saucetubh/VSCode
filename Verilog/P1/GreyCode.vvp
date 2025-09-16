@@ -1,0 +1,63 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x12c8055f0 .scope module, "GreyCode" "GreyCode" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 4 "B";
+    .port_info 1 /OUTPUT 4 "G";
+    .port_info 2 /OUTPUT 1 "Y";
+L_0x12c81d080 .functor BUF 1, L_0x12c81db00, C4<0>, C4<0>, C4<0>;
+L_0x12c81dbe0 .functor XOR 1, L_0x12c81dcd0, L_0x12c81ddf0, C4<0>, C4<0>;
+L_0x12c81ded0 .functor XOR 1, L_0x12c81dfa0, L_0x12c81e100, C4<0>, C4<0>;
+L_0x12c81e350 .functor XOR 1, L_0x12c81e3e0, L_0x12c81e500, C4<0>, C4<0>;
+L_0x12c81e080 .functor AND 1, L_0x12c81e5e0, L_0x12c81e7d0, C4<1>, C4<1>;
+L_0x12c81ea20 .functor AND 1, L_0x12c81e080, L_0x12c81e920, C4<1>, C4<1>;
+L_0x12c81ec80 .functor AND 1, L_0x12c81ead0, L_0x12c81eb70, C4<1>, C4<1>;
+L_0x12c81ed90 .functor OR 1, L_0x12c81ea20, L_0x12c81ec80, C4<0>, C4<0>;
+o0x130040010 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x12c80b5e0_0 .net "B", 3 0, o0x130040010;  0 drivers
+v0x12c81cb00_0 .net "G", 3 0, L_0x12c81e1d0;  1 drivers
+v0x12c81cba0_0 .net "Y", 0 0, L_0x12c81ed90;  1 drivers
+v0x12c81cc50_0 .net *"_ivl_0", 0 0, L_0x12c81d080;  1 drivers
+v0x12c81ccf0_0 .net *"_ivl_10", 0 0, L_0x12c81ded0;  1 drivers
+v0x12c81cde0_0 .net *"_ivl_13", 0 0, L_0x12c81dfa0;  1 drivers
+v0x12c81ce90_0 .net *"_ivl_15", 0 0, L_0x12c81e100;  1 drivers
+v0x12c81cf40_0 .net *"_ivl_16", 0 0, L_0x12c81e350;  1 drivers
+v0x12c81cff0_0 .net *"_ivl_20", 0 0, L_0x12c81e3e0;  1 drivers
+v0x12c81d100_0 .net *"_ivl_22", 0 0, L_0x12c81e500;  1 drivers
+v0x12c81d1b0_0 .net *"_ivl_24", 0 0, L_0x12c81e5e0;  1 drivers
+v0x12c81d260_0 .net *"_ivl_26", 0 0, L_0x12c81e7d0;  1 drivers
+v0x12c81d310_0 .net *"_ivl_3", 0 0, L_0x12c81db00;  1 drivers
+v0x12c81d3c0_0 .net *"_ivl_30", 0 0, L_0x12c81e920;  1 drivers
+v0x12c81d470_0 .net *"_ivl_31", 0 0, L_0x12c81ea20;  1 drivers
+v0x12c81d520_0 .net *"_ivl_34", 0 0, L_0x12c81ead0;  1 drivers
+v0x12c81d5c0_0 .net *"_ivl_36", 0 0, L_0x12c81eb70;  1 drivers
+v0x12c81d750_0 .net *"_ivl_37", 0 0, L_0x12c81ec80;  1 drivers
+v0x12c81d7e0_0 .net *"_ivl_4", 0 0, L_0x12c81dbe0;  1 drivers
+v0x12c81d890_0 .net *"_ivl_7", 0 0, L_0x12c81dcd0;  1 drivers
+v0x12c81d940_0 .net *"_ivl_9", 0 0, L_0x12c81ddf0;  1 drivers
+v0x12c81d9f0_0 .net "s", 0 0, L_0x12c81e080;  1 drivers
+L_0x12c81db00 .part o0x130040010, 3, 1;
+L_0x12c81dcd0 .part o0x130040010, 2, 1;
+L_0x12c81ddf0 .part o0x130040010, 3, 1;
+L_0x12c81dfa0 .part o0x130040010, 2, 1;
+L_0x12c81e100 .part o0x130040010, 1, 1;
+L_0x12c81e1d0 .concat8 [ 1 1 1 1], L_0x12c81e350, L_0x12c81ded0, L_0x12c81dbe0, L_0x12c81d080;
+L_0x12c81e3e0 .part o0x130040010, 1, 1;
+L_0x12c81e500 .part o0x130040010, 0, 1;
+L_0x12c81e5e0 .part o0x130040010, 3, 1;
+L_0x12c81e7d0 .part o0x130040010, 0, 1;
+L_0x12c81e920 .part o0x130040010, 2, 1;
+L_0x12c81ead0 .reduce/nor L_0x12c81e080;
+L_0x12c81eb70 .part o0x130040010, 1, 1;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "Greycode.v";

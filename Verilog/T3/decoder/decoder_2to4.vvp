@@ -1,0 +1,46 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x12de07770 .scope module, "decoder_2to4" "decoder_2to4" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 2 "A";
+    .port_info 1 /OUTPUT 4 "D";
+L_0x12de1cdf0 .functor NOT 1, L_0x12de1ce60, C4<0>, C4<0>, C4<0>;
+L_0x12de1cf40 .functor NOT 1, L_0x12de1cff0, C4<0>, C4<0>, C4<0>;
+L_0x12de1d110 .functor AND 1, L_0x12de1cdf0, L_0x12de1cf40, C4<1>, C4<1>;
+L_0x12de1d200 .functor AND 1, L_0x12de1d2b0, L_0x12de1cf40, C4<1>, C4<1>;
+L_0x12de1d390 .functor AND 1, L_0x12de1cdf0, L_0x12de1d490, C4<1>, C4<1>;
+L_0x12de1d730 .functor AND 1, L_0x12de1d7e0, L_0x12de1d8c0, C4<1>, C4<1>;
+o0x130040010 .functor BUFZ 2, C4<zz>; HiZ drive
+v0x12de0c700_0 .net "A", 1 0, o0x130040010;  0 drivers
+v0x12de1c460_0 .net "D", 3 0, L_0x12de1d5f0;  1 drivers
+v0x12de1c500_0 .net *"_ivl_1", 0 0, L_0x12de1ce60;  1 drivers
+v0x12de1c5b0_0 .net *"_ivl_10", 0 0, L_0x12de1d390;  1 drivers
+v0x12de1c660_0 .net *"_ivl_13", 0 0, L_0x12de1d490;  1 drivers
+v0x12de1c750_0 .net *"_ivl_14", 0 0, L_0x12de1d730;  1 drivers
+v0x12de1c800_0 .net *"_ivl_18", 0 0, L_0x12de1d7e0;  1 drivers
+v0x12de1c8b0_0 .net *"_ivl_20", 0 0, L_0x12de1d8c0;  1 drivers
+v0x12de1c960_0 .net *"_ivl_3", 0 0, L_0x12de1cff0;  1 drivers
+v0x12de1ca70_0 .net *"_ivl_4", 0 0, L_0x12de1d110;  1 drivers
+v0x12de1cb20_0 .net *"_ivl_6", 0 0, L_0x12de1d200;  1 drivers
+v0x12de1cbd0_0 .net *"_ivl_9", 0 0, L_0x12de1d2b0;  1 drivers
+v0x12de1cc80_0 .net "na1", 0 0, L_0x12de1cdf0;  1 drivers
+v0x12de1cd20_0 .net "na2", 0 0, L_0x12de1cf40;  1 drivers
+L_0x12de1ce60 .part o0x130040010, 0, 1;
+L_0x12de1cff0 .part o0x130040010, 1, 1;
+L_0x12de1d2b0 .part o0x130040010, 0, 1;
+L_0x12de1d490 .part o0x130040010, 1, 1;
+L_0x12de1d5f0 .concat8 [ 1 1 1 1], L_0x12de1d110, L_0x12de1d200, L_0x12de1d390, L_0x12de1d730;
+L_0x12de1d7e0 .part o0x130040010, 0, 1;
+L_0x12de1d8c0 .part o0x130040010, 1, 1;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "decoder_2to4.v";

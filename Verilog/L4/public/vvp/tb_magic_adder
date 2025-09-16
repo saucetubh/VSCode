@@ -1,0 +1,69 @@
+#! /usr/bin/vvp
+:ivl_version "11.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/system.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_sys.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/vhdl_textio.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/v2005_math.vpi";
+:vpi_module "/usr/lib/x86_64-linux-gnu/ivl/va_math.vpi";
+S_0x5e84c4455d20 .scope module, "bin_to_gray" "bin_to_gray" 2 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 4 "graycode";
+    .port_info 1 /INPUT 4 "binary";
+L_0x5e84c44a47f0 .functor BUF 1, L_0x5e84c44a4890, C4<0>, C4<0>, C4<0>;
+L_0x5e84c44a4930 .functor XOR 1, L_0x5e84c44a4a30, L_0x5e84c44a4b70, C4<0>, C4<0>;
+L_0x5e84c44a4c60 .functor XOR 1, L_0x5e84c44a4cd0, L_0x5e84c44a4e80, C4<0>, C4<0>;
+L_0x5e84c44a5120 .functor XOR 1, L_0x5e84c44a5210, L_0x5e84c44a5300, C4<0>, C4<0>;
+v0x5e84c448e9e0_0 .net *"_ivl_0", 0 0, L_0x5e84c44a47f0;  1 drivers
+v0x5e84c44a33a0_0 .net *"_ivl_10", 0 0, L_0x5e84c44a4c60;  1 drivers
+v0x5e84c44a3480_0 .net *"_ivl_13", 0 0, L_0x5e84c44a4cd0;  1 drivers
+v0x5e84c44a3540_0 .net *"_ivl_15", 0 0, L_0x5e84c44a4e80;  1 drivers
+v0x5e84c44a3620_0 .net *"_ivl_16", 0 0, L_0x5e84c44a5120;  1 drivers
+v0x5e84c44a3700_0 .net *"_ivl_20", 0 0, L_0x5e84c44a5210;  1 drivers
+v0x5e84c44a37e0_0 .net *"_ivl_22", 0 0, L_0x5e84c44a5300;  1 drivers
+v0x5e84c44a38c0_0 .net *"_ivl_3", 0 0, L_0x5e84c44a4890;  1 drivers
+v0x5e84c44a39a0_0 .net *"_ivl_4", 0 0, L_0x5e84c44a4930;  1 drivers
+v0x5e84c44a3a80_0 .net *"_ivl_7", 0 0, L_0x5e84c44a4a30;  1 drivers
+v0x5e84c44a3b60_0 .net *"_ivl_9", 0 0, L_0x5e84c44a4b70;  1 drivers
+o0x72772bab8228 .functor BUFZ 4, C4<zzzz>; HiZ drive
+v0x5e84c44a3c40_0 .net "binary", 3 0, o0x72772bab8228;  0 drivers
+v0x5e84c44a3d20_0 .net "graycode", 3 0, L_0x5e84c44a4f20;  1 drivers
+L_0x5e84c44a4890 .part o0x72772bab8228, 3, 1;
+L_0x5e84c44a4a30 .part o0x72772bab8228, 3, 1;
+L_0x5e84c44a4b70 .part o0x72772bab8228, 2, 1;
+L_0x5e84c44a4cd0 .part o0x72772bab8228, 2, 1;
+L_0x5e84c44a4e80 .part o0x72772bab8228, 1, 1;
+L_0x5e84c44a4f20 .concat8 [ 1 1 1 1], L_0x5e84c44a5120, L_0x5e84c44a4c60, L_0x5e84c44a4930, L_0x5e84c44a47f0;
+L_0x5e84c44a5210 .part o0x72772bab8228, 1, 1;
+L_0x5e84c44a5300 .part o0x72772bab8228, 0, 1;
+S_0x5e84c4455eb0 .scope module, "gray_to_bin" "gray_to_bin" 3 1;
+ .timescale 0 0;
+    .port_info 0 /OUTPUT 3 "binary";
+    .port_info 1 /INPUT 3 "graycode";
+L_0x5e84c44a5440 .functor BUF 1, L_0x5e84c44a54b0, C4<0>, C4<0>, C4<0>;
+L_0x5e84c44a55a0 .functor XOR 1, L_0x5e84c44a5610, L_0x5e84c44a5750, C4<0>, C4<0>;
+L_0x5e84c44a59b0 .functor XOR 1, L_0x5e84c44a5a70, L_0x5e84c44a5bb0, C4<0>, C4<0>;
+v0x5e84c44a3e60_0 .net *"_ivl_0", 0 0, L_0x5e84c44a5440;  1 drivers
+v0x5e84c44a3f40_0 .net *"_ivl_10", 0 0, L_0x5e84c44a59b0;  1 drivers
+v0x5e84c44a4020_0 .net *"_ivl_14", 0 0, L_0x5e84c44a5a70;  1 drivers
+v0x5e84c44a40e0_0 .net *"_ivl_16", 0 0, L_0x5e84c44a5bb0;  1 drivers
+v0x5e84c44a41c0_0 .net *"_ivl_3", 0 0, L_0x5e84c44a54b0;  1 drivers
+v0x5e84c44a42a0_0 .net *"_ivl_4", 0 0, L_0x5e84c44a55a0;  1 drivers
+v0x5e84c44a4380_0 .net *"_ivl_7", 0 0, L_0x5e84c44a5610;  1 drivers
+v0x5e84c44a4460_0 .net *"_ivl_9", 0 0, L_0x5e84c44a5750;  1 drivers
+v0x5e84c44a4540_0 .net "binary", 2 0, L_0x5e84c44a5840;  1 drivers
+o0x72772bab8498 .functor BUFZ 3, C4<zzz>; HiZ drive
+v0x5e84c44a46b0_0 .net "graycode", 2 0, o0x72772bab8498;  0 drivers
+L_0x5e84c44a54b0 .part o0x72772bab8498, 2, 1;
+L_0x5e84c44a5610 .part o0x72772bab8498, 2, 1;
+L_0x5e84c44a5750 .part o0x72772bab8498, 1, 1;
+L_0x5e84c44a5840 .concat8 [ 1 1 1 0], L_0x5e84c44a59b0, L_0x5e84c44a55a0, L_0x5e84c44a5440;
+L_0x5e84c44a5a70 .part L_0x5e84c44a5840, 1, 1;
+L_0x5e84c44a5bb0 .part o0x72772bab8498, 0, 1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "./src/bin_to_gray.v";
+    "./src/gray_to_bin.v";

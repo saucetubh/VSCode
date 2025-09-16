@@ -1,0 +1,4 @@
+Compile Time Polymorphism - also called static binding, via method overloading (same method name with different parameters) 
+and also operator overloading (same operator with different data types). We get to know whethter it is valid or not at compile time.
+Run Time Polymorphism - also called dynamic binding, via method overriding (same method name with same parameters in parent and child class).
+Functions cannot be overloaded by return type alone. We get to know whethter it is valid or not at run time. (Example - inheritance is a run time property)

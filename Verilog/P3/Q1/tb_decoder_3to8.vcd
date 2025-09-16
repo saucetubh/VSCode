@@ -1,0 +1,121 @@
+$date
+	Sun Sep 14 23:41:03 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_decoder_3to8 $end
+$var wire 8 ! O [7:0] $end
+$var reg 3 " A [2:0] $end
+$var reg 1 # E $end
+$scope module dec $end
+$var wire 3 $ A [2:0] $end
+$var wire 1 # E $end
+$var wire 8 % O [7:0] $end
+$scope module d1 $end
+$var wire 2 & A [1:0] $end
+$var wire 1 ' E $end
+$var wire 4 ( O [3:0] $end
+$upscope $end
+$scope module d2 $end
+$var wire 2 ) A [1:0] $end
+$var wire 1 * E $end
+$var wire 4 + O [3:0] $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 +
+0*
+b0 )
+b0 (
+0'
+b0 &
+b0 %
+b0 $
+0#
+b0 "
+b0 !
+$end
+#10
+b1 !
+b1 %
+b1 (
+1'
+1#
+#20
+b10 !
+b10 %
+b10 (
+b1 &
+b1 )
+b1 "
+b1 $
+#30
+b100 !
+b100 %
+b100 (
+b10 &
+b10 )
+b10 "
+b10 $
+#40
+b0 !
+b0 %
+b0 (
+0'
+b11 &
+b11 )
+0#
+b11 "
+b11 $
+#50
+b1000 !
+b1000 %
+b1000 (
+1'
+1#
+#60
+b1 +
+b10000 !
+b10000 %
+b0 (
+0'
+1*
+b0 &
+b0 )
+b100 "
+b100 $
+#70
+b100000 !
+b100000 %
+b10 +
+b1 &
+b1 )
+b101 "
+b101 $
+#80
+b1000000 !
+b1000000 %
+b100 +
+b10 &
+b10 )
+b110 "
+b110 $
+#90
+b10000000 !
+b10000000 %
+b1000 +
+b11 &
+b11 )
+b111 "
+b111 $
+#100

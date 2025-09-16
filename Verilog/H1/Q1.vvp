@@ -1,0 +1,43 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x13d705760 .scope module, "func" "func" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 1 "A";
+    .port_info 1 /INPUT 1 "B";
+    .port_info 2 /INPUT 1 "C";
+    .port_info 3 /INPUT 1 "D";
+    .port_info 4 /OUTPUT 1 "O";
+o0x140040010 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x13d719df0 .functor NOT 1, o0x140040010, C4<0>, C4<0>, C4<0>;
+o0x140040040 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x13d719e60 .functor NOT 1, o0x140040040, C4<0>, C4<0>, C4<0>;
+o0x1400400a0 .functor BUFZ 1, C4<z>; HiZ drive
+L_0x13d719f10 .functor NOT 1, o0x1400400a0, C4<0>, C4<0>, C4<0>;
+L_0x13d719fe0 .functor AND 1, L_0x13d719e60, L_0x13d719f10, C4<1>, C4<1>;
+L_0x13d71a110 .functor AND 1, L_0x13d719df0, o0x140040040, C4<1>, C4<1>;
+L_0x13d71a200 .functor AND 1, o0x140040040, o0x1400400a0, C4<1>, C4<1>;
+L_0x13d71a2b0 .functor OR 1, L_0x13d719fe0, L_0x13d71a110, L_0x13d71a200, C4<0>;
+v0x13d7058d0_0 .net "A", 0 0, o0x140040010;  0 drivers
+v0x13d7196a0_0 .net "B", 0 0, o0x140040040;  0 drivers
+o0x140040070 .functor BUFZ 1, C4<z>; HiZ drive
+v0x13d719740_0 .net "C", 0 0, o0x140040070;  0 drivers
+v0x13d7197d0_0 .net "D", 0 0, o0x1400400a0;  0 drivers
+v0x13d719870_0 .net "O", 0 0, L_0x13d71a2b0;  1 drivers
+v0x13d719950_0 .net "nA", 0 0, L_0x13d719df0;  1 drivers
+v0x13d7199f0_0 .net "nB", 0 0, L_0x13d719e60;  1 drivers
+v0x13d719a90_0 .net "nD", 0 0, L_0x13d719f10;  1 drivers
+v0x13d719b30_0 .net "w1", 0 0, L_0x13d719fe0;  1 drivers
+v0x13d719c40_0 .net "w2", 0 0, L_0x13d71a110;  1 drivers
+v0x13d719cd0_0 .net "w3", 0 0, L_0x13d71a200;  1 drivers
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "Q1.v";

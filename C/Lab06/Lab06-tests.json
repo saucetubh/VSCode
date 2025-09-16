@@ -1,0 +1,23 @@
+{
+  "test_cases":[
+    {   
+      "id":1,
+      "time_out":2,
+      "input":"1\n7\n",
+      "output":"1. decimal to binary  2. calculator(0)\nWhich function do you want to test? Enter 1 or 2 accordingly.\nEnter a number between 0 and 1000 (both inclusive): Binary is: 111\n"
+    },
+    {
+      "id":2,
+      "time_out":2,
+      "input":"2\n+\n10\nc\ne\n",
+      "output":"1. decimal to binary  2. calculator(0)\nWhich function do you want to test? Enter 1 or 2 accordingly.\nBalance: 0\nBalance: 10\nBalance: 0\n"
+    },
+    {
+      "id":3,
+      "time_out":2,
+      "input":"2\n-\n10\n+\n20\nc\n+\n30\nc\ne\n",
+      "output":"1. decimal to binary  2. calculator(0)\nWhich function do you want to test? Enter 1 or 2 accordingly.\nBalance: 0\nBalance: -10\nBalance: 10\nBalance: -10\nBalance: 20\nBalance: -10\n"
+    }
+
+  ]
+}

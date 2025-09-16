@@ -1,0 +1,128 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x121e09af0 .scope module, "tb_GreyCode" "tb_GreyCode" 2 2;
+ .timescale 0 0;
+v0x121e25700_0 .var "B", 3 0;
+v0x121e25790_0 .net "G", 3 0, L_0x121e26010;  1 drivers
+v0x121e25820_0 .net "Y", 0 0, L_0x121e26bb0;  1 drivers
+S_0x121e09c60 .scope module, "g1" "GreyCode" 2 6, 3 1 0, S_0x121e09af0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 4 "B";
+    .port_info 1 /OUTPUT 4 "G";
+    .port_info 2 /OUTPUT 1 "Y";
+L_0x121e258b0 .functor BUF 1, L_0x121e25960, C4<0>, C4<0>, C4<0>;
+L_0x121e25a80 .functor XOR 1, L_0x121e25b30, L_0x121e25c10, C4<0>, C4<0>;
+L_0x121e25d70 .functor XOR 1, L_0x121e25e20, L_0x121e25f00, C4<0>, C4<0>;
+L_0x121e261a0 .functor XOR 1, L_0x121e26250, L_0x121e26370, C4<0>, C4<0>;
+L_0x121e26690 .functor AND 1, L_0x121e26550, L_0x121e265f0, C4<1>, C4<1>;
+L_0x121e26840 .functor AND 1, L_0x121e26690, L_0x121e26740, C4<1>, C4<1>;
+L_0x121e26aa0 .functor AND 1, L_0x121e268f0, L_0x121e26990, C4<1>, C4<1>;
+L_0x121e26bb0 .functor OR 1, L_0x121e26840, L_0x121e26aa0, C4<0>, C4<0>;
+v0x121e11420_0 .net "B", 3 0, v0x121e25700_0;  1 drivers
+v0x121e24700_0 .net "G", 3 0, L_0x121e26010;  alias, 1 drivers
+v0x121e247b0_0 .net "Y", 0 0, L_0x121e26bb0;  alias, 1 drivers
+v0x121e24860_0 .net *"_ivl_0", 0 0, L_0x121e258b0;  1 drivers
+v0x121e24910_0 .net *"_ivl_10", 0 0, L_0x121e25d70;  1 drivers
+v0x121e24a00_0 .net *"_ivl_13", 0 0, L_0x121e25e20;  1 drivers
+v0x121e24ab0_0 .net *"_ivl_15", 0 0, L_0x121e25f00;  1 drivers
+v0x121e24b60_0 .net *"_ivl_16", 0 0, L_0x121e261a0;  1 drivers
+v0x121e24c10_0 .net *"_ivl_20", 0 0, L_0x121e26250;  1 drivers
+v0x121e24d20_0 .net *"_ivl_22", 0 0, L_0x121e26370;  1 drivers
+v0x121e24dd0_0 .net *"_ivl_24", 0 0, L_0x121e26550;  1 drivers
+v0x121e24e80_0 .net *"_ivl_26", 0 0, L_0x121e265f0;  1 drivers
+v0x121e24f30_0 .net *"_ivl_3", 0 0, L_0x121e25960;  1 drivers
+v0x121e24fe0_0 .net *"_ivl_30", 0 0, L_0x121e26740;  1 drivers
+v0x121e25090_0 .net *"_ivl_31", 0 0, L_0x121e26840;  1 drivers
+v0x121e25140_0 .net *"_ivl_34", 0 0, L_0x121e268f0;  1 drivers
+v0x121e251e0_0 .net *"_ivl_36", 0 0, L_0x121e26990;  1 drivers
+v0x121e25370_0 .net *"_ivl_37", 0 0, L_0x121e26aa0;  1 drivers
+v0x121e25400_0 .net *"_ivl_4", 0 0, L_0x121e25a80;  1 drivers
+v0x121e254b0_0 .net *"_ivl_7", 0 0, L_0x121e25b30;  1 drivers
+v0x121e25560_0 .net *"_ivl_9", 0 0, L_0x121e25c10;  1 drivers
+v0x121e25610_0 .net "s", 0 0, L_0x121e26690;  1 drivers
+L_0x121e25960 .part v0x121e25700_0, 3, 1;
+L_0x121e25b30 .part v0x121e25700_0, 2, 1;
+L_0x121e25c10 .part v0x121e25700_0, 3, 1;
+L_0x121e25e20 .part v0x121e25700_0, 2, 1;
+L_0x121e25f00 .part v0x121e25700_0, 1, 1;
+L_0x121e26010 .concat8 [ 1 1 1 1], L_0x121e261a0, L_0x121e25d70, L_0x121e25a80, L_0x121e258b0;
+L_0x121e26250 .part v0x121e25700_0, 1, 1;
+L_0x121e26370 .part v0x121e25700_0, 0, 1;
+L_0x121e26550 .part v0x121e25700_0, 3, 1;
+L_0x121e265f0 .part v0x121e25700_0, 0, 1;
+L_0x121e26740 .part v0x121e25700_0, 2, 1;
+L_0x121e268f0 .reduce/nor L_0x121e26690;
+L_0x121e26990 .part v0x121e25700_0, 1, 1;
+    .scope S_0x121e09af0;
+T_0 ;
+    %vpi_call 2 8 "$dumpfile", "tb_GreyCode.vcd" {0 0 0};
+    %vpi_call 2 9 "$dumpvars", 32'sb00000000000000000000000000000000, S_0x121e09af0 {0 0 0};
+    %pushi/vec4 0, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 1, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 2, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 3, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 4, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 5, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 6, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 7, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 8, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 9, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 10, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 11, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 12, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 13, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 14, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %pushi/vec4 15, 0, 4;
+    %store/vec4 v0x121e25700_0, 0, 4;
+    %delay 10, 0;
+    %vpi_call 2 26 "$finish" {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0x121e09af0;
+T_1 ;
+    %vpi_call 2 29 "$monitor", "Time = %0d, B = %b, G = %b, Y = %b", $time, v0x121e25700_0, v0x121e25790_0, v0x121e25820_0 {0 0 0};
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "testbench.v";
+    "./GreyCode.v";

@@ -1,0 +1,124 @@
+$date
+	Wed Sep 10 10:08:03 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_GreyCode $end
+$var wire 1 ! Y $end
+$var wire 4 " G [3:0] $end
+$var reg 4 # B [3:0] $end
+$scope module g1 $end
+$var wire 4 $ B [3:0] $end
+$var wire 1 ! Y $end
+$var wire 1 % s $end
+$var wire 4 & G [3:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+b0 &
+0%
+b0 $
+b0 #
+b0 "
+0!
+$end
+#10
+b1 "
+b1 &
+b1 #
+b1 $
+#20
+1!
+b11 "
+b11 &
+b10 #
+b10 $
+#30
+b10 "
+b10 &
+b11 #
+b11 $
+#40
+0!
+b110 "
+b110 &
+b100 #
+b100 $
+#50
+b111 "
+b111 &
+b101 #
+b101 $
+#60
+1!
+b101 "
+b101 &
+b110 #
+b110 $
+#70
+b100 "
+b100 &
+b111 #
+b111 $
+#80
+0!
+b1100 "
+b1100 &
+b1000 #
+b1000 $
+#90
+b1101 "
+b1101 &
+1%
+b1001 #
+b1001 $
+#100
+1!
+b1111 "
+b1111 &
+0%
+b1010 #
+b1010 $
+#110
+0!
+b1110 "
+b1110 &
+1%
+b1011 #
+b1011 $
+#120
+0!
+b1010 "
+b1010 &
+0%
+b1100 #
+b1100 $
+#130
+1!
+b1011 "
+b1011 &
+1%
+b1101 #
+b1101 $
+#140
+b1001 "
+b1001 &
+0%
+b1110 #
+b1110 $
+#150
+b1000 "
+b1000 &
+1%
+b1111 #
+b1111 $
+#160

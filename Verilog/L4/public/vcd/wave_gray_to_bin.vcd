@@ -1,0 +1,72 @@
+$date
+	Wed Sep 10 15:44:09 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_gray_to_bin $end
+$var wire 3 ! bin [2:0] $end
+$var reg 3 " gray [2:0] $end
+$var integer 32 # i [31:0] $end
+$scope module uut $end
+$var wire 3 $ graycode [2:0] $end
+$var wire 3 % binary [2:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b0 %
+b0 $
+b0 #
+b0 "
+b0 !
+$end
+#10000
+b1 !
+b1 %
+b1 "
+b1 $
+b1 #
+#20000
+b11 !
+b11 %
+b10 "
+b10 $
+b10 #
+#30000
+b10 !
+b10 %
+b11 "
+b11 $
+b11 #
+#40000
+b111 !
+b111 %
+b100 "
+b100 $
+b100 #
+#50000
+b110 !
+b110 %
+b101 "
+b101 $
+b101 #
+#60000
+b100 !
+b100 %
+b110 "
+b110 $
+b110 #
+#70000
+b101 !
+b101 %
+b111 "
+b111 $
+b111 #
+#80000
+b1000 #
+#90000

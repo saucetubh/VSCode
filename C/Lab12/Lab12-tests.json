@@ -1,0 +1,28 @@
+{
+    "test_cases": [
+        {
+            "id": 1,
+            "time_out": 4,
+            "input": "3\nArnab\n50\nSurjya\n100\nSwaroop\n80\n1\n",
+            "output": "Enter the number of employees: Enter name and productivity:\nEnter name and productivity:\nEnter name and productivity:\nThis program supports TWO operations:\n\t1. Print the employee's name with the highest productivity,\n\t2. Print all characters of the longest name in alphabetical order.\n\nChoose an operation (1 or 2): The employee with the highest productivity is Surjya\n"
+        },
+        {
+            "id": 2,
+            "time_out": 4,
+            "input": "3\nArnab\n50\nSurjya\n100\nSwaroop\n100\n1\n",
+            "output": "Enter the number of employees: Enter name and productivity:\nEnter name and productivity:\nEnter name and productivity:\nThis program supports TWO operations:\n\t1. Print the employee's name with the highest productivity,\n\t2. Print all characters of the longest name in alphabetical order.\n\nChoose an operation (1 or 2): The employee with the highest productivity is Swaroop\n"
+        },
+        {
+            "id": 1,
+            "time_out": 4,
+            "input": "3\nArnab\n50\nSurjya\n100\nSwaroop\n80\n2\n",
+            "output": "Enter the number of employees: Enter name and productivity:\nEnter name and productivity:\nEnter name and productivity:\nThis program supports TWO operations:\n\t1. Print the employee's name with the highest productivity,\n\t2. Print all characters of the longest name in alphabetical order.\n\nChoose an operation (1 or 2): The characters in the longest employee's name in alphabetical order are aooprSw\n"
+        },
+        {
+            "id": 1,
+            "time_out": 4,
+            "input": "3\nabBA\n50\nabc\n100\naBBa\n80\n2\n",
+            "output": "Enter the number of employees: Enter name and productivity:\nEnter name and productivity:\nEnter name and productivity:\nThis program supports TWO operations:\n\t1. Print the employee's name with the highest productivity,\n\t2. Print all characters of the longest name in alphabetical order.\n\nChoose an operation (1 or 2): The characters in the longest employee's name in alphabetical order are AaBb\n"
+        }
+    ]
+}

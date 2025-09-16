@@ -1,0 +1,283 @@
+$date
+	Wed Sep  3 10:36:29 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbench $end
+$var wire 1 ! o $end
+$var wire 5 " num [4:0] $end
+$var reg 1 # a $end
+$var reg 1 $ b $end
+$var reg 1 % c $end
+$var reg 1 & d $end
+$var reg 1 ' e $end
+$scope module h1 $end
+$var wire 1 # A $end
+$var wire 1 $ B $end
+$var wire 1 % C $end
+$var wire 1 & D $end
+$var wire 1 ' E $end
+$var wire 1 ! Y $end
+$var wire 1 ( nA $end
+$var wire 1 ) nB $end
+$var wire 1 * nC $end
+$var wire 1 + nD $end
+$var wire 1 , nE $end
+$var wire 1 - w1 $end
+$var wire 1 . w2 $end
+$var wire 1 / w3 $end
+$var wire 1 0 w4 $end
+$var wire 1 1 w5 $end
+$var wire 1 2 w6 $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+02
+01
+00
+0/
+0.
+0-
+1,
+1+
+1*
+1)
+1(
+0'
+0&
+0%
+0$
+0#
+b0 "
+0!
+$end
+#10
+0,
+b1 "
+1'
+#20
+1!
+1,
+0+
+12
+0'
+b10 "
+1&
+#30
+0,
+1-
+10
+b11 "
+1'
+#40
+0!
+1,
+1+
+0-
+00
+02
+0*
+0'
+0&
+b100 "
+1%
+#50
+1!
+0,
+11
+b101 "
+1'
+#60
+0!
+1,
+01
+0+
+0'
+b110 "
+1&
+#70
+1!
+0,
+10
+b111 "
+1'
+#80
+0!
+1,
+1+
+00
+1*
+0)
+0'
+0&
+0%
+b1000 "
+1$
+#90
+0,
+b1001 "
+1'
+#100
+1,
+0+
+0'
+b1010 "
+1&
+#110
+1!
+0,
+1-
+b1011 "
+1'
+#120
+0!
+1,
+1+
+0-
+0*
+0'
+0&
+b1100 "
+1%
+#130
+1!
+0,
+11
+b1101 "
+1'
+#140
+0!
+1,
+01
+0+
+0'
+b1110 "
+1&
+#150
+0,
+b1111 "
+1'
+#160
+1,
+1+
+1*
+1)
+0(
+0'
+0&
+0%
+0$
+b10000 "
+1#
+#170
+1!
+0,
+1/
+b10001 "
+1'
+#180
+0!
+1,
+0/
+0+
+0'
+b10010 "
+1&
+#190
+1!
+0,
+1/
+10
+b10011 "
+1'
+#200
+0!
+1,
+0/
+1+
+00
+0*
+0'
+0&
+b10100 "
+1%
+#210
+0,
+b10101 "
+1'
+#220
+1,
+0+
+0'
+b10110 "
+1&
+#230
+1!
+0,
+10
+b10111 "
+1'
+#240
+0!
+1,
+1+
+00
+1*
+0)
+0'
+0&
+0%
+b11000 "
+1$
+#250
+0,
+b11001 "
+1'
+#260
+1,
+0+
+0'
+b11010 "
+1&
+#270
+0,
+b11011 "
+1'
+#280
+1,
+1+
+0*
+0'
+0&
+b11100 "
+1%
+#290
+1!
+0,
+1.
+b11101 "
+1'
+#300
+0!
+1,
+0.
+0+
+0'
+b11110 "
+1&
+#310
+1!
+0,
+1.
+b11111 "
+1'
+#330
