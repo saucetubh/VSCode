@@ -1,0 +1,636 @@
+$date
+	Wed Sep 17 11:58:38 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb $end
+$var wire 1 ! Olt $end
+$var wire 1 " Ogt $end
+$var wire 1 # Oeq $end
+$var reg 4 $ A [3:0] $end
+$var reg 4 % B [3:0] $end
+$scope module IE $end
+$var wire 4 & A [3:0] $end
+$var wire 4 ' B [3:0] $end
+$var wire 1 # O $end
+$var wire 1 ( O3 $end
+$var wire 1 ) O2 $end
+$var wire 1 * O1 $end
+$var wire 1 + O0 $end
+$scope module IE11 $end
+$var wire 1 , A $end
+$var wire 1 - B $end
+$var wire 1 + O $end
+$upscope $end
+$scope module IE12 $end
+$var wire 1 . A $end
+$var wire 1 / B $end
+$var wire 1 * O $end
+$upscope $end
+$scope module IE13 $end
+$var wire 1 0 A $end
+$var wire 1 1 B $end
+$var wire 1 ) O $end
+$upscope $end
+$scope module IE14 $end
+$var wire 1 2 A $end
+$var wire 1 3 B $end
+$var wire 1 ( O $end
+$upscope $end
+$upscope $end
+$scope module IG $end
+$var wire 4 4 A [3:0] $end
+$var wire 4 5 B [3:0] $end
+$var wire 1 " O $end
+$var wire 1 6 w0 $end
+$var wire 1 7 w1 $end
+$var wire 1 8 w2 $end
+$var wire 1 9 w3 $end
+$var wire 1 : x3 $end
+$var wire 1 ; x2 $end
+$var wire 1 < x1 $end
+$scope module IE11 $end
+$var wire 1 = A $end
+$var wire 1 > B $end
+$var wire 1 < O $end
+$upscope $end
+$scope module IE12 $end
+$var wire 1 ? A $end
+$var wire 1 @ B $end
+$var wire 1 ; O $end
+$upscope $end
+$scope module IE13 $end
+$var wire 1 A A $end
+$var wire 1 B B $end
+$var wire 1 : O $end
+$upscope $end
+$upscope $end
+$scope module IL $end
+$var wire 4 C A [3:0] $end
+$var wire 4 D B [3:0] $end
+$var wire 1 ! O $end
+$var wire 1 E O2 $end
+$var wire 1 F O1 $end
+$scope module IE41 $end
+$var wire 4 G A [3:0] $end
+$var wire 4 H B [3:0] $end
+$var wire 1 F O $end
+$var wire 1 I O3 $end
+$var wire 1 J O2 $end
+$var wire 1 K O1 $end
+$var wire 1 L O0 $end
+$scope module IE11 $end
+$var wire 1 M A $end
+$var wire 1 N B $end
+$var wire 1 L O $end
+$upscope $end
+$scope module IE12 $end
+$var wire 1 O A $end
+$var wire 1 P B $end
+$var wire 1 K O $end
+$upscope $end
+$scope module IE13 $end
+$var wire 1 Q A $end
+$var wire 1 R B $end
+$var wire 1 J O $end
+$upscope $end
+$scope module IE14 $end
+$var wire 1 S A $end
+$var wire 1 T B $end
+$var wire 1 I O $end
+$upscope $end
+$upscope $end
+$scope module IG1 $end
+$var wire 4 U A [3:0] $end
+$var wire 4 V B [3:0] $end
+$var wire 1 E O $end
+$var wire 1 W w0 $end
+$var wire 1 X w1 $end
+$var wire 1 Y w2 $end
+$var wire 1 Z w3 $end
+$var wire 1 [ x3 $end
+$var wire 1 \ x2 $end
+$var wire 1 ] x1 $end
+$scope module IE11 $end
+$var wire 1 ^ A $end
+$var wire 1 _ B $end
+$var wire 1 ] O $end
+$upscope $end
+$scope module IE12 $end
+$var wire 1 ` A $end
+$var wire 1 a B $end
+$var wire 1 \ O $end
+$upscope $end
+$scope module IE13 $end
+$var wire 1 b A $end
+$var wire 1 c B $end
+$var wire 1 [ O $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0c
+0b
+0a
+0`
+0_
+0^
+1]
+1\
+1[
+0Z
+0Y
+0X
+0W
+b0 V
+b0 U
+0T
+0S
+0R
+0Q
+0P
+0O
+0N
+0M
+1L
+1K
+1J
+1I
+b0 H
+b0 G
+1F
+0E
+b0 D
+b0 C
+0B
+0A
+0@
+0?
+0>
+0=
+1<
+1;
+1:
+09
+08
+07
+06
+b0 5
+b0 4
+03
+02
+01
+00
+0/
+0.
+0-
+0,
+1+
+1*
+1)
+1(
+b0 '
+b0 &
+b0 %
+b0 $
+1#
+0"
+0!
+$end
+#10
+1!
+0#
+0F
+0*
+0<
+0K
+0]
+0+
+0L
+1/
+1>
+1P
+1_
+1,
+1M
+b10 %
+b10 '
+b10 5
+b10 D
+b10 H
+b10 V
+b1 $
+b1 &
+b1 4
+b1 C
+b1 G
+b1 U
+#20
+0!
+1"
+1E
+17
+1X
+1-
+0/
+0>
+1N
+0P
+0_
+0,
+1.
+1=
+0M
+1O
+1^
+b1 %
+b1 '
+b1 5
+b1 D
+b1 H
+b1 V
+b10 $
+b10 &
+b10 4
+b10 C
+b10 G
+b10 U
+#30
+0"
+0E
+07
+0X
+0!
+1#
+1F
+1*
+1<
+1K
+1]
+1+
+1L
+1/
+1>
+1P
+1_
+1,
+1M
+b11 %
+b11 '
+b11 5
+b11 D
+b11 H
+b11 V
+b11 $
+b11 &
+b11 4
+b11 C
+b11 G
+b11 U
+#40
+1!
+0"
+0E
+0#
+08
+0F
+0Y
+0+
+0L
+0/
+11
+1@
+0>
+0P
+1R
+1a
+0_
+0,
+0.
+10
+1?
+0=
+0M
+0O
+1Q
+1`
+0^
+b101 %
+b101 '
+b101 5
+b101 D
+b101 H
+b101 V
+b100 $
+b100 &
+b100 4
+b100 C
+b100 G
+b100 U
+#50
+0!
+1"
+1E
+16
+1W
+0-
+0N
+1,
+1M
+b100 %
+b100 '
+b100 5
+b100 D
+b100 H
+b100 V
+b101 $
+b101 &
+b101 4
+b101 C
+b101 G
+b101 U
+#60
+0"
+0E
+06
+0!
+0W
+07
+0X
+1#
+1F
+1+
+1L
+1/
+1>
+1P
+1_
+0,
+1.
+1=
+0M
+1O
+1^
+b110 %
+b110 '
+b110 5
+b110 D
+b110 H
+b110 V
+b110 $
+b110 &
+b110 4
+b110 C
+b110 G
+b110 U
+#70
+1!
+0#
+0F
+0*
+0)
+0(
+0:
+0;
+0<
+0K
+0J
+0I
+0[
+0\
+0]
+0+
+0L
+0/
+01
+13
+1B
+0@
+0>
+0P
+0R
+1T
+1c
+0a
+0_
+1,
+1M
+b1000 %
+b1000 '
+b1000 5
+b1000 D
+b1000 H
+b1000 V
+b111 $
+b111 &
+b111 4
+b111 C
+b111 G
+b111 U
+#80
+0!
+1"
+1E
+19
+1Z
+1-
+1/
+11
+03
+0B
+1@
+1>
+1N
+1P
+1R
+0T
+0c
+1a
+1_
+0,
+0.
+00
+12
+1A
+0?
+0=
+0M
+0O
+0Q
+1S
+1b
+0`
+0^
+b111 %
+b111 '
+b111 5
+b111 D
+b111 H
+b111 V
+b1000 $
+b1000 &
+b1000 4
+b1000 C
+b1000 G
+b1000 U
+#90
+0!
+0"
+0E
+09
+0Z
+1#
+1F
+1*
+1)
+1(
+1:
+1;
+1<
+1K
+1J
+1I
+1[
+1\
+1]
+1+
+1L
+0/
+01
+13
+1B
+0@
+0>
+0P
+0R
+1T
+1c
+0a
+0_
+1,
+1M
+b1001 %
+b1001 '
+b1001 5
+b1001 D
+b1001 H
+b1001 V
+b1001 $
+b1001 &
+b1001 4
+b1001 C
+b1001 G
+b1001 U
+#100
+0"
+1!
+0E
+07
+0X
+0#
+0F
+0+
+0L
+1/
+1>
+1P
+1_
+0,
+1.
+1=
+0M
+1O
+1^
+b1011 %
+b1011 '
+b1011 5
+b1011 D
+b1011 H
+b1011 V
+b1010 $
+b1010 &
+b1010 4
+b1010 C
+b1010 G
+b1010 U
+#110
+0!
+1"
+1E
+16
+1W
+0-
+0N
+1,
+1M
+b1010 %
+b1010 '
+b1010 5
+b1010 D
+b1010 H
+b1010 V
+b1011 $
+b1011 &
+b1011 4
+b1011 C
+b1011 G
+b1011 U
+#120
+1!
+0"
+06
+0E
+0W
+08
+0Y
+1+
+0)
+0(
+0:
+0;
+1L
+0J
+0I
+0[
+0\
+0/
+0>
+0P
+0_
+0,
+0.
+10
+02
+0A
+1?
+0=
+0M
+0O
+1Q
+0S
+0b
+1`
+0^
+b1000 %
+b1000 '
+b1000 5
+b1000 D
+b1000 H
+b1000 V
+b100 $
+b100 &
+b100 4
+b100 C
+b100 G
+b100 U
+#130
