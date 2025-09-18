@@ -1,0 +1,105 @@
+$date
+	Wed Sep 17 15:39:31 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_priority_encoder_4to2 $end
+$var wire 2 ! Y [1:0] $end
+$var wire 1 " V $end
+$var reg 1 # E $end
+$var reg 4 $ I [3:0] $end
+$scope module uut $end
+$var wire 1 # E $end
+$var wire 4 % I [3:0] $end
+$var wire 1 " V $end
+$var wire 2 & Y [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b0 &
+b1 %
+b1 $
+0#
+0"
+b0 !
+$end
+#10000
+b10 $
+b10 %
+#20000
+b0 !
+b0 &
+0"
+1#
+b0 $
+b0 %
+#30000
+1"
+b1 $
+b1 %
+#40000
+b1 !
+b1 &
+1"
+b10 $
+b10 %
+#50000
+b11 $
+b11 %
+#60000
+1"
+b10 !
+b10 &
+b100 $
+b100 %
+#70000
+b101 $
+b101 %
+#80000
+b0 !
+b0 &
+0"
+0#
+b110 $
+b110 %
+#90000
+b10 !
+b10 &
+1"
+1#
+#100000
+b111 $
+b111 %
+#110000
+b11 !
+b11 &
+b1000 $
+b1000 %
+#120000
+b1001 $
+b1001 %
+#130000
+b1010 $
+b1010 %
+#140000
+b1011 $
+b1011 %
+#150000
+b1100 $
+b1100 %
+#160000
+b1101 $
+b1101 %
+#170000
+b1110 $
+b1110 %
+#180000
+b1111 $
+b1111 %
+#190000
