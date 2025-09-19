@@ -1,0 +1,26 @@
+`include "module_dlatch.v"
+
+
+module tb_dlatch;
+reg D,enable;
+wire Q;
+
+d_latch d1(D,enable,Q);
+
+
+initial begin
+    $dumpfile("out.vcd");
+    $dumpvars(0,tb_dlatch);
+    enable=1; D=1;
+    #10 enable=0; D=0;
+    #10 enable=1; D=0;
+    #10 enable=0; D=1;
+    #10 enable=1; D=1;
+    $finish;
+    end
+
+
+initial begin
+        $monitor ("Time =%0d, enable=%b, D=%b, Q=%b",$time,enable,D,Q);
+    end
+endmodule

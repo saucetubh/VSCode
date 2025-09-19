@@ -1,0 +1,10 @@
+Instance variables are variables defined in a class for which each instantiated object of the class has its own copy. They are inside the object, unique to each object.
+Static variables are variables defined in a class for which there is only one copy, regardless of how many objects are instantiated from the class. 
+They are shared among all instances of the class, common to all objects.
+
+BankAccount b = new CheckingAccount();
+BankAccount is the reference type. CheckingAccount is the object type. Wont be able to use checking account methods, since reference variable decides what methods can be used
+Compiler sees the reference type, but object type is what exists at run time.
+
+
+

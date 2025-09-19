@@ -1,7 +1,7 @@
 // include decoder and encoder modules if you wish to use them
 // prefix the included module names with "src/"
-`include "decoder_2to4.v"
-`include "priority_encoder_4to2.v"
+`include "src/decoder_2to4.v"
+`include "src/priority_encoder_4to2.v"
 module podium_permutations(
     output VALID,
     output POI,
