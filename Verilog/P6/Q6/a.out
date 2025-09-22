@@ -1,0 +1,31 @@
+#! /opt/homebrew/Cellar/icarus-verilog/12.0/bin/vvp
+:ivl_version "12.0 (stable)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/system.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_sys.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/vhdl_textio.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/v2005_math.vpi";
+:vpi_module "/opt/homebrew/Cellar/icarus-verilog/12.0/lib/ivl/va_math.vpi";
+S_0x122e09350 .scope module, "decoder_5to32" "decoder_5to32" 2 1;
+ .timescale 0 0;
+    .port_info 0 /INPUT 5 "in";
+    .port_info 1 /OUTPUT 32 "out";
+o0x128040010 .functor BUFZ 5, C4<zzzzz>; HiZ drive
+v0x122e07850_0 .net "in", 4 0, o0x128040010;  0 drivers
+v0x122e193d0_0 .var "out", 31 0;
+E_0x122e08010 .event anyedge, v0x122e07850_0;
+    .scope S_0x122e09350;
+T_0 ;
+    %wait E_0x122e08010;
+    %pushi/vec4 1, 0, 32;
+    %ix/getv 4, v0x122e07850_0;
+    %shiftl 4;
+    %store/vec4 v0x122e193d0_0, 0, 32;
+    %jmp T_0;
+    .thread T_0, $push;
+# The file index is used to find the file name in the following table.
+:file_names 3;
+    "N/A";
+    "<interactive>";
+    "decoder_5to32bit.v";
