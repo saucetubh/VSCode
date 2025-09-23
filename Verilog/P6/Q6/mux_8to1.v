@@ -10,8 +10,9 @@ module mux_8to1(input [7:0] in, input [2:0] sel, output reg out);
       3'b101: out=in[5];
       3'b110: out=in[6];
       3'b111: out=in[7];
+      default: out=1'bx;
     endcase
-    */ //lengthy and ineffecient for bigger muxes
+    */ //lengthy and inefficient for bigger muxes
     out = in[sel];
   end
 endmodule

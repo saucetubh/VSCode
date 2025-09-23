@@ -1,6 +1,6 @@
 parent(john, mary). %facts
 parent(mary, bob). 
-
+parent(mary, alice).
 grandparent(X, Y) :- parent(X, Z), parent(Z, Y). %rule
 
 %clause has the following structure: Head :- Body.
@@ -13,3 +13,6 @@ grandparent(X, Y) :- parent(X, Z), parent(Z, Y). %rule
 %There are operators, for example, :- is called the neck operator
 %comma , is called the conjunction operator
 %period . is called the full stop operator
+
+%Variables start with uppercase letters or underscore _
+%Atoms start with lowercase letters or are enclosed in single quotes
