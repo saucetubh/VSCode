@@ -1,0 +1,252 @@
+$date
+	Wed Sep 24 11:44:46 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module tb_multiplier3bit $end
+$var wire 6 ! AB [5:0] $end
+$var reg 3 " A [2:0] $end
+$var reg 3 # B [2:0] $end
+$scope module M31 $end
+$var wire 3 $ A [2:0] $end
+$var wire 3 % B [2:0] $end
+$var wire 1 & w1 $end
+$var wire 1 ' w2 $end
+$var wire 1 ( w3 $end
+$var wire 1 ) w4 $end
+$var wire 1 * w5 $end
+$var wire 1 + w6 $end
+$var wire 1 , w7 $end
+$var wire 1 - w8 $end
+$var wire 1 . s2 $end
+$var wire 1 / s1 $end
+$var wire 1 0 c6 $end
+$var wire 1 1 c5 $end
+$var wire 1 2 c4 $end
+$var wire 1 3 c3 $end
+$var wire 1 4 c2 $end
+$var wire 1 5 c1 $end
+$var wire 6 6 AB [5:0] $end
+$scope module FA1 $end
+$var wire 1 ( A $end
+$var wire 1 ) B $end
+$var wire 1 5 Cin $end
+$var reg 1 4 Cout $end
+$var reg 1 / Sum $end
+$upscope $end
+$scope module FA2 $end
+$var wire 1 , B $end
+$var wire 1 2 Cin $end
+$var wire 1 . A $end
+$var reg 1 1 Cout $end
+$var reg 1 7 Sum $end
+$upscope $end
+$scope module FA3 $end
+$var wire 1 - A $end
+$var wire 1 1 Cin $end
+$var wire 1 3 B $end
+$var reg 1 0 Cout $end
+$var reg 1 8 Sum $end
+$upscope $end
+$scope module HA1 $end
+$var wire 1 & A $end
+$var wire 1 ' B $end
+$var reg 1 5 Cout $end
+$var reg 1 9 Sum $end
+$upscope $end
+$scope module HA2 $end
+$var wire 1 * A $end
+$var wire 1 4 B $end
+$var reg 1 3 Cout $end
+$var reg 1 . Sum $end
+$upscope $end
+$scope module HA3 $end
+$var wire 1 / A $end
+$var wire 1 + B $end
+$var reg 1 2 Cout $end
+$var reg 1 : Sum $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+0:
+09
+08
+07
+b0 6
+05
+04
+03
+02
+01
+00
+0/
+0.
+0-
+0,
+0+
+0*
+0)
+0(
+0'
+0&
+b0 %
+b0 $
+b0 #
+b0 "
+b0 !
+$end
+#10
+b10 !
+b10 6
+19
+1&
+b1 #
+b1 %
+b10 "
+b10 $
+#20
+1:
+09
+1/
+b10100 !
+b10100 6
+18
+0&
+1(
+1-
+b101 #
+b101 %
+b100 "
+b100 $
+#30
+18
+10
+11
+13
+15
+14
+1/
+12
+0:
+07
+1*
+b110001 !
+b110001 6
+1&
+1'
+1)
+1+
+1,
+b111 #
+b111 %
+b111 "
+b111 $
+#40
+00
+0/
+03
+1.
+18
+05
+04
+02
+0:
+01
+17
+0(
+b11000 !
+b11000 6
+0&
+0'
+0)
+0+
+0,
+b110 #
+b110 %
+b100 "
+b100 $
+#50
+1:
+07
+19
+1/
+0.
+b110 !
+b110 6
+08
+1'
+1)
+0*
+0-
+b10 #
+b10 %
+b11 "
+b11 $
+#60
+10
+11
+12
+0:
+1.
+08
+b100011 !
+b100011 6
+1+
+1(
+0)
+1*
+1-
+b111 #
+b111 %
+b101 "
+b101 $
+#70
+00
+18
+01
+0/
+0.
+09
+02
+0:
+17
+0(
+0*
+b11000 !
+b11000 6
+0'
+0+
+1,
+b100 #
+b100 %
+b110 "
+b110 $
+#80
+10
+08
+11
+07
+12
+19
+1/
+0:
+1&
+1(
+b100011 !
+b100011 6
+1+
+b101 #
+b101 %
+b111 "
+b111 $
+#90

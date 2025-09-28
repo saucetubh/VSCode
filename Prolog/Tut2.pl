@@ -20,7 +20,7 @@ next_to(X, Y, [Y, X|_]).
 next_to(X, Y, [_|Rest]) :- next_to(X, Y, Rest).
 
 puzzle(Owner, Drinker) :-
-    Street = [house(C1, N1, P1, D1, S1), house(C2, N2, P2, D2, S2), house(C3, N3, P3, D3, S3), house(C4, N4, P4, D4, S4), house(C5, N5, P5, D5, S5)], %Street is begin defined as a variable structure, must start with upper case letter, since if lower case then it is simply an atom.
+    Street = [house(C1, N1, P1, D1, S1), house(C2, N2, P2, D2, S2), house(C3, N3, P3, D3, S3), house(C4, N4, P4, D4, S4), house(C5, N5, P5, D5, S5)], %Street is defined as a variable structure, must start with upper case letter, since if lower case then it is simply an atom.
     member(house(red, englishman, _, _, _), Street),
     member(house(_, spaniard, dog, _, _), Street),
     member(house(green, _, _, coffee, _), Street),
