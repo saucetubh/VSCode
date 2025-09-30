@@ -1,0 +1,151 @@
+$date
+	Mon Sep 29 16:21:10 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_gated_dff $end
+$var wire 1 ! q $end
+$var reg 1 " clk $end
+$var reg 1 # d $end
+$var reg 1 $ expected $end
+$var reg 1 % load $end
+$var reg 1 & rst_n $end
+$var reg 1 ' scrub $end
+$var integer 32 ( combo [31:0] $end
+$scope module uut $end
+$var wire 1 " clk $end
+$var wire 1 # d $end
+$var wire 1 % load $end
+$var wire 1 & rst_n $end
+$var wire 1 ' scrub $end
+$var reg 1 ! q $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+$end
+#0
+$dumpvars
+bx (
+0'
+0&
+0%
+0$
+0#
+0"
+0!
+$end
+#5000
+1"
+#6000
+b0 (
+1&
+#10000
+0"
+#15000
+1"
+#16000
+b1 (
+#20000
+1#
+0"
+#25000
+1"
+#26000
+b10 (
+#30000
+1%
+0#
+0"
+#35000
+1"
+#36000
+b11 (
+#40000
+1#
+0"
+#45000
+1!
+1$
+1"
+#46000
+b100 (
+#50000
+1'
+0%
+0#
+0"
+#55000
+0!
+0$
+1"
+#56000
+b101 (
+#60000
+1#
+0"
+#65000
+1"
+#66000
+b110 (
+#70000
+1%
+0#
+0"
+#75000
+1"
+#76000
+b111 (
+#80000
+1#
+0"
+#85000
+1"
+#86000
+b1000 (
+#90000
+0"
+#95000
+1"
+#100000
+0'
+0"
+#105000
+1!
+1$
+1"
+#110000
+0%
+1'
+0"
+#115000
+0!
+0$
+1"
+#118000
+0&
+#119000
+0'
+1&
+#120000
+0"
+#125000
+1"
+#130000
+0"
+#135000
+1"
+#140000
+0"
+#145000
+1"
+#150000
+0"
+#155000
+1"
+#156000

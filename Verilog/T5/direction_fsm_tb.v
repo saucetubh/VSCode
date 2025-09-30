@@ -1,5 +1,5 @@
 `timescale 1ns/1ps
-`include "direction_fsm.v"
+`include "direction.v"
 
 module direction_fsm_tb;
     reg clk;

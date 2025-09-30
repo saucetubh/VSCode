@@ -1,5 +1,4 @@
 `timescale 1ns/1ps
-`include "../Q1/gated_dff.v"
 `include "state_register3.v"
 
 module tb_state_register3;
