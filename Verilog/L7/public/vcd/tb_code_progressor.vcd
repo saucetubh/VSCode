@@ -1,0 +1,108 @@
+$date
+	Wed Oct  1 15:39:36 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_code_progressor $end
+$scope module dut $end
+$var wire 1 ! armed $end
+$var wire 1 " clk $end
+$var wire 1 # code_bit $end
+$var reg 2 $ next_stage [1:0] $end
+$var reg 2 % stage [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+bx %
+bx $
+0#
+0"
+0!
+$end
+#5000
+b0 $
+b0 %
+1"
+#10000
+b1 $
+0"
+1#
+#15000
+1"
+#20000
+0"
+1!
+#25000
+b1 %
+1"
+#30000
+b10 $
+0"
+0#
+#35000
+b0 $
+b10 %
+1"
+#40000
+b11 $
+0"
+1#
+#45000
+b1 $
+b11 %
+1"
+#50000
+b10 $
+0"
+0#
+#55000
+b0 $
+b10 %
+1"
+#60000
+0"
+0!
+#65000
+b0 %
+1"
+#70000
+b1 $
+0"
+1#
+1!
+#75000
+b1 %
+1"
+#80000
+0"
+#85000
+1"
+#90000
+b10 $
+0"
+0#
+#95000
+b0 $
+b10 %
+1"
+#100000
+b11 $
+0"
+1#
+#105000
+b1 $
+b11 %
+1"
+#110000
+0"
+#115000
+b1 %
+1"
+#120000
+0"
