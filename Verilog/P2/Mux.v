@@ -1,6 +1,6 @@
 //objective - output A if s=1, output B if s=0
 //multiple bit mux
-//diagramatically this can be represented as either a 8x4 mux, with 3 select lines or 4 2x1 muxes with 1 select line
+//diagramatically this can be represented by 4 2x1 muxes with 1 select line. Number of mux needed = number of bits in output. One mux can have atmost one bit of output
 module mux(input [3:0]A, input [3:0]B, input s, output[3:0]Y);
     //assign Y = ((s&A) | ((!s)&B)); //this is incorrect, s is 1bit but A and B are 4bits. Need to do this individually for each bit
     assign Y[0] = ((s&A[0]) | ((!s)&B[0]));
