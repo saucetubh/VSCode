@@ -1,6 +1,6 @@
 interface Comparable {
     double compareTo(Object o);
-}
+} 
 abstract class Vehicle implements Comparable {
     private String brand; 
     private int year; 
@@ -10,7 +10,8 @@ abstract class Vehicle implements Comparable {
     private double maxSpeed; 
     private double horsePower; 
     private int noOfPassengers; 
-    public Vehicle(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers){
+    private VehicleInsurance vehIns; 
+    public Vehicle(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, int insuranceNo, String insuredUpto, String insurersName) {
         this.brand = brand;
         this.year = year;
         this.fuelLeft = fuelLeft;
@@ -19,6 +20,7 @@ abstract class Vehicle implements Comparable {
         this.maxSpeed = maxSpeed;
         this.horsePower = horsePower;
         this.noOfPassengers = noOfPassengers;
+        this.vehIns = new VehicleInsurance(insuranceNo, insuredUpto, insurersName); //creating object of nested class inside constructor of outer class by calling the constructor of nested/inner class
     } //abstract class does not need a constructor, but can have one, since in previous problem -lab02, we used it hence we will still use it here
 
     public String getBrand() {
@@ -125,6 +127,40 @@ abstract class Vehicle implements Comparable {
             this.ownerName = ownerName;
         }
     } //nested class. The outer class can have an object of the nested class as its field, and used in its constructor
+    public class VehicleInsurance { //non-static nested class, i.e inner class
+        private int insuranceNo;
+        private String insuredUpto;
+        private String insurersName;
+        public VehicleInsurance(int insuranceNo, String insuredUpto, String insurersName) {
+            this.insuranceNo = insuranceNo;
+            this.insuredUpto = insuredUpto;
+            this.insurersName = insurersName;
+        }
+        public int getInsuranceNo() {
+            return this.insuranceNo;
+        }
+        public String getInsuredUpto() {
+            return this.insuredUpto;
+        }
+        public String getInsurersName() {
+            return this.insurersName;
+        }
+        public void setInsuranceNo(int insuranceNo) {
+            this.insuranceNo = insuranceNo;
+        }
+        public void setInsuredUpto(String insuredUpto) {
+            this.insuredUpto = insuredUpto;
+        }
+        public void setInsurersName(String insurersName) {
+            this.insurersName = insurersName;
+        }   
+    }
+    public VehicleInsurance getVehicleInsurance() {
+        return this.vehIns;
+    }
+    public void setVehicleInsurance(VehicleInsurance vehIns) {
+        this.vehIns = vehIns;
+    }
 }//depending on your use, nested class can be static or non-static. If it is static, we can create object of this nested class in main method without creating object of outer class Vehicle. If it is non-static, we need to create object of outer class Vehicle first, then only we can create object of this nested class VehicleRegistration
 //static nested class cannot access non-static members of outer class directly, but non-static nested class can access all members of outer class directly, i.e even the private fields
 

@@ -1,8 +1,8 @@
 public class Bike extends Vehicle {
     boolean isElectric;
     VehicleRegistration vehReg;
-    public Bike(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, boolean isElectric, int registrationNo, String chasisNo, String ownerName) {
-        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers);
+    public Bike(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, boolean isElectric, int registrationNo, String chasisNo, String ownerName, int insuranceNo, String insuredUpto, String insurersName) {
+        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers, insuranceNo, insuredUpto, insurersName);
         this.isElectric = isElectric;
         this.vehReg = new VehicleRegistration(registrationNo, chasisNo, ownerName);
     }

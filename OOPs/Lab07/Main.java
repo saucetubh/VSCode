@@ -3,14 +3,14 @@ public class Main {
     public static void main(String[] args) {
         // --- Test Car Class ---
         System.out.println("--- Testing Car Class ---");
-        Car myCar = new Car("Toyota", 2022, 40, 50, 12, 120, 180, 5, "Sedan", 1873, "CHS123456789", "Alice Smith"); //constructor of Car class takes individual fields of VehicleRegistration class as parameters and makes the vehReg object by itself inside, so we pass those fields here
+        Car myCar = new Car("Toyota", 2022, 40, 50, 12, 120, 180, 5, "Sedan", 1873, "CHS123456789", "Alice Smith", 123456, "2025-12-31", "XYZ Insurance"); //constructor of Car class takes individual fields of VehicleRegistration class as parameters and makes the vehReg object by itself inside, so we pass those fields here
         myCar.printInfo();
         // Expected Output: Type: Sedan, Passengers: 5, Fuel Left: 40.0, Efficiency: 12.0 mpg
         myCar.Honk();
         // Expected Output: Honk honk!
         // --- Test Bike Class ---
         System.out.println("--- Testing Bike Class ---");
-        Bike myElectricBike = new Bike("Trek", 2023, 20, 20, 25, 20, 5, 1, true, 9876, "CHS987654321", "Bob Johnson"); //constructor of Bike class takes individual fields of VehicleRegistration class as parameters and makes the vehReg object by itself inside, so we pass those fields here
+        Bike myElectricBike = new Bike("Trek", 2023, 20, 20, 25, 20, 5, 1, true, 9876, "CHS987654321", "Bob Johnson", 654321, "2026-12-31", "ABC Insurance"); //constructor of Bike class takes individual fields of VehicleRegistration class as parameters and makes the vehReg object by itself inside, so we pass those fields here
         myElectricBike.printInfo();
         // Expected Output: Type: Electric, Fuel Left/Charge: 20.0, Efficiency: 25.0 mpge
         System.out.println("Calculated Range: " + myElectricBike.calculateRange());
@@ -18,7 +18,7 @@ public class Main {
         myElectricBike.honk();
         // Expected Output: Ring ring!
         System.out.println();
-        Bike myGasBike = new Bike("Harley-Davidson", 2021, 20, 20, 25, 20, 10, 1, false, 1234, "CHS123456789", "Pratham Ladoo");
+        Bike myGasBike = new Bike("Harley-Davidson", 2021, 20, 20, 25, 20, 10, 1, false, 1234, "CHS123456789", "Pratham Ladoo", 789012, "2024-12-31", "DEF Insurance");
         System.out.println("Calculated Range (Gas): " + myGasBike.calculateRange());
         // Expected Output: Calculated Range (Gas): 500.0
         // --- Test Truck Class ---
@@ -29,7 +29,7 @@ public class Main {
         Vehicle outer = new Vehicle(...); //create object of outer class first
         Vehicle.VehicleRegistration truckReg = outer.new VehicleRegistration(...); //then create object of nested class
         */
-        Truck myTruck = new Truck("Volvo", 2019, 100, 150, 5, 90, 450, 2, 10000, 5000, truckReg); //since constructor of truck class takes object of VehicleRegistration class as parameter, we create the object of VehicleRegistration class in main method and pass it to Truck constructor
+        Truck myTruck = new Truck("Volvo", 2019, 100, 150, 5, 90, 450, 2, 10000, 5000, truckReg, 123456, "2025-12-31", "XYZ Insurance"); //since constructor of truck class takes object of VehicleRegistration class as parameter, we create the object of VehicleRegistration class in main method and pass it to Truck constructor
         myTruck.printInfo();
         // Expected Output: Max Weight Capacity: 10000.0 kg, Loaded Weight: 5000.0 kg, Fuel Left: 100.0, Efficiency: 5.0 mpg
         System.out.println("Calculated Range with Load: " + myTruck.calculateRange());
@@ -81,7 +81,7 @@ public class Main {
                     vehicles[j] = temp;
                 }
             }
-        } //clearly this is not a good way to do it, it is better to implement using an interface
+        } //clearly this is not a good way to do it, it is better to implement using an interface. to implement an interface that compares owner names, we also need a getter method for vehReg in Vehicle class, and override it in subclasses to return their vehReg object which will further return owner name.
         System.out.println("--- Vehicles Sorted by Owner Name ---");
         for(Vehicle v : vehicles) {
             String ownerName = "";

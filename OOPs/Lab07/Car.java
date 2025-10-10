@@ -1,8 +1,8 @@
 public class Car extends Vehicle {
     private String typeOfCar;
     private VehicleRegistration vehReg;
-    public Car(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, String typeOfCar, /*VehicleRegistration vehReg?*/int registrationNo, String chasisNo, String ownerName) {
-        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers);
+    public Car(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, String typeOfCar, /*VehicleRegistration vehReg?*/int registrationNo, String chasisNo, String ownerName, int insuranceNo, String insuredUpto, String insurersName) {
+        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers, insuranceNo, insuredUpto, insurersName);
         this.typeOfCar = typeOfCar;
         this.vehReg = new VehicleRegistration(registrationNo, chasisNo, ownerName);
     }

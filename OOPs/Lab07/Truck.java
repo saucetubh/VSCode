@@ -2,8 +2,8 @@ public class Truck extends Vehicle {
     double maximumWeightCapacity;
     double loadedWeight;
     VehicleRegistration vehReg; //composition - Truck "has a" VehicleRegistration. nested class VehicleRegistration is used here as a field
-    public Truck(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, double maximumWeightCapacity, double loadedWeight, VehicleRegistration vehReg) {
-        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers);
+    public Truck(String brand, int year, double fuelLeft, double fuelCapacity, double efficiency, double maxSpeed, double horsePower, int noOfPassengers, double maximumWeightCapacity, double loadedWeight, VehicleRegistration vehReg, int insuranceNo, String insuredUpto, String insurersName) {
+        super(brand, year, fuelLeft, fuelCapacity, efficiency, maxSpeed, horsePower, noOfPassengers, insuranceNo, insuredUpto, insurersName);
         this.maximumWeightCapacity = maximumWeightCapacity; 
         this.loadedWeight = loadedWeight;
         this.vehReg = vehReg; //differenc in how i am doing this in Truck and Car class, because in Truck class, i am passing the object of VehicleRegistration class as parameter, whereas in Car class, i am passing the individual fields and creating the object of VehicleRegistration class inside the constructor of Car class
@@ -50,7 +50,6 @@ public class Truck extends Vehicle {
         Vehicle otherV = (Vehicle) other; //type casting Object to Vehicle
         return this.getHorsePower() - otherV.getHorsePower();
     }
-    
 }
 
 /*
