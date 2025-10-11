@@ -47,7 +47,7 @@ public class Truck extends Vehicle {
     @Override
     public double compareTo(Object other) { //must use Object as parameter type to correctly implement Comparable interface
         //Truck otherTruck = (Truck) other; //type casting Object to Truck //this will throw ClassCastException when in my main, i compare Truck object with Car or Bike object
-        Vehicle otherV = (Vehicle) other; //type casting Object to Vehicle
+        Vehicle otherV = (Vehicle) other; //type casting Object to Vehicle. explicit downcasting 
         return this.getHorsePower() - otherV.getHorsePower();
     }
 }

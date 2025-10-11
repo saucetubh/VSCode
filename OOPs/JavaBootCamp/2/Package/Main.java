@@ -9,7 +9,9 @@ public class Main {
         Package p = new ExpressPackage(999, 10.0, 50.0); //Polymorphism. P is an object of the Package type but i have called the constructor of express package type
         System.out.println("Package ID: " + p.getID());
         // Expected: Package ID: 999
-
+        //p.printer(); //this doesnt work since the printer method is only in the expresspackage class, not in package class, and p is referenced as a package type
+        ExpressPackage ep = (ExpressPackage) p;
+        ep.printer(); //now this works since we have typecasted p to expresspackage type
         System.out.println("Normal cost: " + p.calculateCost(20));
         // Expected: Normal cost: 250.0
 //this must be an express package with a fee of 50

@@ -71,3 +71,44 @@ public class Main {
         System.out.println("Range: " + c.calculateRange());
     }
 }
+/*
+// The outer class containing both types of nested classes
+public class OuterClass {
+
+    // 1. Static Nested Class (like a blueprint)
+    public static class StaticNestedClass {
+        public void showMessage() {
+            System.out.println("Message from the static nested class.");
+        }
+    }
+
+    // 2. Inner Class (like a specific car's engine)
+    public class InnerClass {
+        public void showMessage() {
+            System.out.println("Message from the inner class.");
+        }
+    }
+
+    // Main method to demonstrate instantiation
+    public static void main(String[] args) {
+        
+        // === Instantiating the Static Nested Class ===
+        // You can do this directly. No OuterClass object is needed.
+        // The syntax is: OuterClass.NestedClassName variable = new OuterClass.NestedClassName();
+        OuterClass.StaticNestedClass staticNestedObject = new OuterClass.StaticNestedClass();
+        staticNestedObject.showMessage();
+
+
+        // === Instantiating the Inner Class ===
+        // This is a two-step process.
+
+        // Step 1: You MUST create an instance of the OuterClass first.
+        OuterClass outerObject = new OuterClass();
+
+        // Step 2: Use the outer object to create the inner object. 
+        // The syntax is: outerObjectReference.new InnerClassName();
+        OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+        innerObject.showMessage();
+    }
+}
+*/

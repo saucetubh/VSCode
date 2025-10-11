@@ -14,4 +14,7 @@ class ExpressPackage extends Package {
 public double calculateCost(double ratePerKg) {
     return super.calculateCost(ratePerKg) + expressFee; //super refers to the parent class, so it called the method from Package class, gets the cost and adds expressfee for new cost
 }
+public void printer() {
+    System.out.println("Boohoo");
+}
 }
