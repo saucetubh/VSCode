@@ -30,3 +30,6 @@ mynextto(L, X, Y) :- substring(L, [X,Y]).
 greater([H1|_],[H2|_]) :- H1 > H2.
 greater([H1|T1], [H2|T2]) :- H1 =< H2, greater(T1, T2). % H1 =< H2 is necessary for appropriate backtracking
 myhp(N1, N2) :- permutation(N2, N1), greater(N1, N2).
+
+
+%problems here arent exactly correct, fix them
