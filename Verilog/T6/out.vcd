@@ -1,0 +1,100 @@
+$date
+	Wed Oct 15 09:37:36 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1s
+$end
+$scope module testbench $end
+$var wire 8 ! state_alias [7:0] $end
+$var wire 1 " out $end
+$var reg 1 # clk $end
+$var reg 1 $ in $end
+$var reg 1 % reset $end
+$scope module f $end
+$var wire 1 # clk $end
+$var wire 1 $ in $end
+$var wire 1 % reset $end
+$var parameter 2 & S0 $end
+$var parameter 2 ' S1 $end
+$var parameter 2 ( S2 $end
+$var reg 2 ) nextState [1:0] $end
+$var reg 1 " out $end
+$var reg 2 * state [1:0] $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b10 (
+b1 '
+b0 &
+$end
+#0
+$dumpvars
+b0 *
+b0 )
+1%
+0$
+0#
+1"
+b1000001 !
+$end
+#5
+1#
+#10
+0#
+0%
+#15
+1#
+#20
+0"
+b1 )
+0#
+1$
+#25
+b10 )
+b1000010 !
+b1 *
+1#
+#30
+1"
+b1000001 !
+b0 *
+b0 )
+0#
+0$
+1%
+#35
+1#
+#40
+0"
+b1 )
+0#
+1$
+0%
+#45
+b10 )
+b1000010 !
+b1 *
+1#
+#50
+0#
+#55
+b1000011 !
+1"
+b0 )
+b10 *
+1#
+#60
+0#
+#65
+0"
+b1 )
+b1000001 !
+b0 *
+1#
+#70
+0#
