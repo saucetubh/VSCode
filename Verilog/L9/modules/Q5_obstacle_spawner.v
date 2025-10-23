@@ -13,5 +13,6 @@ module obstacle_spawner #(
     // Create Condition to spawn a new obstacle
     // Only spawn if the game is active
     // Reset frame count on spawn, otherwise increment if active
-
+    assign spawn_obstacle = (game_active)&&(prev_frame_count >= SPAWN_INTERVAL)&&(obstacles_in[WORLD_WIDTH-1] == 1'b0)&&(obstacles_in[WORLD_WIDTH-2] == 1'b0); 
+    assign frame_count = game_active ? (spawn_obstacle ? 4'b0000 : prev_frame_count + 1) : prev_frame_count;
 endmodule

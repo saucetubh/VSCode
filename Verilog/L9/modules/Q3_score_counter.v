@@ -8,8 +8,7 @@ module score_counter #(
     input  wire game_active,        
     output wire [15:0] score
 );
-
-    // Only count score if the game is active
-    
-
+    wire c1; //condition for increment in score
+    assign c1 = (game_active)&(obstacles[0]==1);
+    assign score = c1 ? (prev_score + POINTS_PER_OBSTACLE) : prev_score;
 endmodule

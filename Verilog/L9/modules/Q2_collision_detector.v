@@ -12,7 +12,10 @@ module collision_detector #(
     output wire game_over
 );
 
-    // Only detect collision if the game is active
+    wire c1; //condition for collision
+    assign c1 = (game_active)&(obstacles[PLAYER_POSITION] == 1)&(player_height == GROUND_LEVEL);
+    assign collision = c1 ? 1'b1 : 1'b0;
+    assign game_over = collision ? 1'b1 : prev_game_over; //is this taking care of the latch condition?
     
 
 endmodule
