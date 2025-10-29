@@ -1,4 +1,4 @@
-`include "q1.v"
+`include "q1.v" //chage acc to whatever file you want to test
 
 module tb_bcd_counter;
   reg clk;
