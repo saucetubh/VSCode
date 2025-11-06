@@ -1,0 +1,11 @@
+import java.util.List;
+//interface defining operations such as
+//list.add(50); // adds 50 to the end of the list
+//list.add(3, 60); // adds 60 at index 3
+//list.get(4); // returns the element at index 4
+//list.set(2, 70); // sets the element at index 2 to 70
+//list.remove(5); // removes the element at index 5
+//list.indexOf(80); // returns the index of the first occurence of element 80
+//list.lastIndexOf(90); // returns the index of the last occurence of element 90
+//list.size(); // returns the size of the list
+
