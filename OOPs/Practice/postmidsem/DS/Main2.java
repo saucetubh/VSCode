@@ -15,7 +15,8 @@ public class Main2 {
         names.add("Mary");
         names.add("Juan");
         names.add("Lana");
-        marks.set(names.indexOf("John"), 20);
+        names.remove("John");
+        //marks.set(names.indexOf("John"), 20);
         marks.set(names.indexOf("Lana"), 70);
         marks.set(names.indexOf("Juan"), 100);
         marks.set(names.indexOf("Mary"), 50);
