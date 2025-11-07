@@ -28,4 +28,25 @@ class SavingsAccount{
             interestDetails.put(key, interest);
         }
     }
-}
+} //AI answer
+
+
+/*
+class SavingsAccount{
+    public Map <Integer, Integer> interestDetails = new HashMap<>();
+    private int balance;
+    private int interestRate;
+    public List<Integer> fixedDeposit;
+    public SavingsAccount(int balance, List<Integer> fixedDeposit) {
+        this.balance = balance;
+        this.fixedDeposit = fixedDeposit;
+    }
+    public void interestCalculation(int interestRate) {
+        this.interestRate = interestRate;
+        int key = 0;
+        for(Integer i : fixedDeposit) {
+            interestDetails.put(key++, i*interestRate);
+        }
+    }
+} //My Answer
+*/
