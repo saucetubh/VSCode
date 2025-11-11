@@ -14,8 +14,9 @@ This repository includes practical implementations in the following languages:
 
 * **Hardware Description:** Verilog
 * **Object-Oriented:** Java
-* **Procedural:** C, C++
+* **Procedural:** C
 * **Logic:** Prolog
+* **Markup:** LaTeX
 
 ## Disclaimer
 
