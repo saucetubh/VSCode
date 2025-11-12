@@ -8,9 +8,8 @@ mymem(H,[H|_]).
 mymem(X,[_|T]) :- mymem(X,T).
 
 % part a
-parent(_,_).
-mydescendant(X,Y) :- parent(Y,Z), mydescendant(X,Z).
-%this is incorrect implementation, fix it
+mydescendant(X,Y) :- parent(Y,X).
+mydescendant(X,Y) :- parent(W,X), mydescendant(W,Y).
 
 % part b
 mymember(H,[H|_],1).
