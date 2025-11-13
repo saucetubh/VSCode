@@ -7,7 +7,7 @@ a(X,Y,Z) :- X>0, Y>0, X1 is X-1, Y1 is Y-1, a(X,Y1,Z1), a(X1, Z1, Z).
 %Q2
 mysize([_], 1).
 mysize([_|T],X) :- mysize(T,X1), X is X1+1. 
-    %X1 is X-1 wont work, order also matters
+    %X1 is X-1 wont work, order also matters, smth about variables in rhs being instantiated
 mylisttonum([X], X).
 mylisttonum([H|T], N) :- mysize([H|T], X), mylisttonum(T, N1), N is (N1 + H*(10**(X-1))). 
 

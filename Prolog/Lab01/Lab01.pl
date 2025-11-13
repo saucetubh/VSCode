@@ -4,25 +4,22 @@ conc([H|T], L, [H|T1]) :- conc(T, L, T1).
 substring([],[]).
 substring(L,S) :- conc(L1,_,L), conc(_,S,L1).
 
-mymem(H,[H|_]).
-mymem(X,[_|T]) :- mymem(X,T).
-
 % part a
 mydescendant(X,Y) :- parent(Y,X).
 mydescendant(X,Y) :- parent(W,X), mydescendant(W,Y).
 
 % part b
-mymember(H,[H|_],1).
-mymember(X,[_|T],N) :- mymember(X,T,N1), N is N1 + 1. 
-%this is incorrect implementation, fix it
-
+mymember(_,[],0).
+mymember(X,[X|T],N):- mymember(X,T,N1), N is N1+1.
+mymember(X,[_|T],N):- mymember(X,T,N).
+%compiles normally, but not in this file, why?
 % part c 
 mydelete(H, [H|T], T).
 mydelete(X, [H|T], [H|T1]) :- 
             X \= H, 
             mydelete(X, T, T1).
 
-insert(X,L1,L2) :- mydelete(X,L2,L1).
+insert(X,L1,L2) :- delete(X,L2,L1).
 permutation([],[]).
 permutation([H|T],P) :- permutation(T, T1), insert(H,T1,P).
 
