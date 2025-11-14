@@ -68,14 +68,10 @@ nhp(N1, N2) :- hp(N1, N2), \+ (hp(N1, N3),greater(N3, N2)).
     %space after \+ is important, idk why
 
 %Q13
-mymember(X,[X|_]).
+mymember(X, [X|_]).
 mymember(X,[_|T]) :- mymember(X,T).
-mysubset([], []).
-mysubset([H|T], L) :- mymember(H,L), mysubset(T, L).
-mysubset2([],[]).
-mysubset2([H|T1], [H|T2]) :- mysubset2(T1, T2).
-mysubset2(S, [_|T]) :- mysubset(S,T).
-myequal(L1,L2) :- mysubset(L1, L2), mysubset(L2, L1). 
-powerset(S, S1) :- mysubset(S, S1).
-
-%fix this
+mysubset([],[]).
+mysubset([H|T1], [H|T2]) :- mysubset(T1, T2).
+mysubset(S, [_|T]) :- mysubset(S,T). 
+powerset([],[[]]).
+powerset([H|T],PS) :- powerset(T,PS1), 
