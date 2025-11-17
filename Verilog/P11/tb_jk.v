@@ -44,8 +44,8 @@ module tb_jk;
                 expected_Q = old; // hold when disabled
             end
 
-            // expected Qb <= old (non-blocking style in DUT)
-            expected_Qb = old;
+            // expected Qb = complement of Q (DUT drives Qb = ~Q)
+            expected_Qb = ~expected_Q;
 
             // small delta to let DUT settle
             #1;
@@ -70,7 +70,7 @@ module tb_jk;
 
         // initialize expected model to known state (choose 0)
         expected_Q  = 1'b0;
-        expected_Qb = 1'b0;
+        expected_Qb = ~expected_Q;  // Qb is the complement of Q in the DUT
 
         // initialize signals
         J = 0; K = 0; En = 0;
