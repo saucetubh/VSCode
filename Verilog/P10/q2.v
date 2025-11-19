@@ -19,11 +19,19 @@ module seq_counter(input clk,rst, output [2:0]q); //0,2,3,5,6,0,2,...
 	assign t0 = (q[2]&q[0])|(~q[2]&q[1]&~q[0]);
 	t_ff t0(clk, rst, t0, q[0]);
 	t_ff t1(clk, rst, t1, q[1]);
-	t_ff t2(clk, rst, t2, q[2]);
+	//t_ff t2(clk, rst, t2, q[2]);
+	tff2 t2(q[1], rst, 1'b1, q[2]);
 endmodule
 
 module t_ff(input clk,rst,t, output reg q);
 	always @(posedge clk) begin
+		if (rst) q <= 0;
+		else if (t) q <= ~q;
+	end
+endmodule
+
+module tff2(input clk, rst, t, output reg q);
+	always @(negedge clk) begin
 		if (rst) q <= 0;
 		else if (t) q <= ~q;
 	end

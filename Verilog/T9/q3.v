@@ -7,7 +7,7 @@ endmodule
 
 module Shiftreg(input clk, rst, ctrl, Incoming, input [3:0]num, output [3:0]out);
     wire din3, din2, din1, din0;
-    assign din3 = (ctrl & Incoming) | (~ctrl & out[3]);
+    assign din3 = (ctrl & Incoming) | (~ctrl & out[3]); // assign din3 = ctrl ? Incoming : out[3]; //ternary operators are allowed
     assign din2 = (ctrl & out[3]) | (~ctrl & out[2]);
     assign din1 = (ctrl & out[2]) | (~ctrl & out[1]);
     assign din0 = (ctrl & out[1]) | (~ctrl & out[0]);

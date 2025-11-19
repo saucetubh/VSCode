@@ -7,7 +7,7 @@ module up_counter (
         if (reset) begin
             out <= 3'b000;
         end else begin
-            out <= out + 1; //how does this wrap around automatically? i.e go from 111 to 000
+            out <= out + 1; //how does this wrap around automatically? i.e go from 111 to 000 -> because of overflow 
         end
     end
 endmodule

@@ -24,5 +24,5 @@ module ripple_counter_4bit (
     t_ff ff3(q[2], reset, 1'b1, q[3]); //MSB
 endmodule
 //not giving correct output. FIX IT
-//FIXED - changed posedge clk to negedge clk in t_ff module, but why? - UNDERSTAND
+//FIXED - changed posedge clk to negedge clk in t_ff module, but why? - for up counter, should be negedge, and for down counter, should be posedge
 

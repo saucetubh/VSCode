@@ -1,6 +1,8 @@
 `include "half_adder.v"
 `include "fulladder.v"
 module m3bit(input [2:0]A, input [2:0]B, output [5:0]AB);
+    assign AB = A * B; //very simple with assign statement and dataflow modeling
+/*
     wire w1, w2, w3, w4, w5, w6, w7, w8;
     wire s1, s2;
     wire c1, c2, c3, c4, c5, c6;
@@ -20,6 +22,7 @@ module m3bit(input [2:0]A, input [2:0]B, output [5:0]AB);
     and A9(w8, A[2], B[2]);
     fulladder FA3(w8, c3, c5, c6, AB[4]);
     buf B1(AB[5], c6);
+*/
 endmodule
 
 //is it possible to make 3bit multiplier using 2bit multiplier? idk i tried its too hard

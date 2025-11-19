@@ -9,7 +9,7 @@ module decoder5to32 (
         out = 1 << in; //automatically typecasts from decimal to binary. Instead of simply 1, can also say 32'b1 i.e 0000.....0001
     end
     */
-
+/*
     always @(*) begin
         out = 32'b0; //default //dont use assign, it fixes the out to that value and doesnt let it change
         case(in) 
@@ -46,5 +46,10 @@ module decoder5to32 (
             30: out[30]=1'b1;
             31: out[31]=1'b1;
         endcase
+    end
+*/
+    always @(*) begin
+        out = 32'b0; //default
+        out[in] = 1'b1;
     end
 endmodule

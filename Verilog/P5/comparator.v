@@ -10,7 +10,7 @@ module isequal_4bit(input[3:0]A, input [3:0]B, output O); //outputs 1 if A and B
     and A1(O, O0, O1, O2, O3);
 endmodule
 
-module isgreater(input[3:0]A, input [3:0]B, output O); //outputs 1 if A > B
+module isgreater(input[3:0]A, input [3:0]B, output O); //outputs 1 if A > B (strictly greater)
     wire w3, w2, w1, w0;
     wire x3, x2, x1;
     isequal_1bit IE13(A[3], B[3], x3);

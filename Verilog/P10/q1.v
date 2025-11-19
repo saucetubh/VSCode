@@ -14,7 +14,7 @@ module jkfflop(input  J, K , clk ,rst, output reg Q);
     end
 endmodule
 //asynchronous BCD Counter -- for some reason works only when i take a posedge rst, does not work with negedge rst or synchronous rst -- WHY?
-//with negedge rst use !rst (active low) and change logic to (rst & ~(Q[1] & Q[3]))
+//with negedge rst use !rst (active low) and change logic to (rst & ~(Q[1] & Q[3])) and vice versa for posedge rst
 //why does it not work with synchronous rst? - idk - could be race condition?
 
 module BCD_Counter(input clk, rst, output [3:0] Q);
