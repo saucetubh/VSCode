@@ -1,0 +1,534 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+
+% -------------------- Packages --------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}          % Better font
+\usepackage{geometry}         % Margins
+\geometry{margin=1in}
+
+\usepackage{amsmath, amssymb, amsthm}   % Math packages + theorem env
+\usepackage{mathtools}        % Enhancements for amsmath
+\usepackage{enumitem}         % Better lists
+\usepackage{graphicx}         % Images
+\usepackage{booktabs}         % Good tables
+\usepackage{hyperref}         % Clickable refs
+\usepackage{xcolor}           % Colors, if needed
+\usepackage{tikz}             % Graph drawing (optional)
+\usetikzlibrary{graphs}       % Graph theory tools (optional)
+
+% -------------------- Theorem Environments --------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+% Proof environment already included in amsthm.
+
+% -------------------- Custom Commands --------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% Handy graph notation
+\newcommand{\vn}{V(G)}
+\newcommand{\en}{E(G)}
+
+% ---------------------------------------------------------
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\section{Functions and Relations}
+\begin{proposition}
+    Define \(R\subseteq\mathbb{R}\times\mathbb{R}\) by
+\((a,b)\in R \iff a-b\in\mathbb{Q}\).
+\end{proposition}
+\begin{proof}
+    
+
+
+\textbf{(i) $R$ is an equivalence relation.} \\
+Reflexive: \(a-a=0\in\mathbb{Q}\Rightarrow (a,a)\in R\).\\
+Symmetric: \(a-b\in\mathbb{Q}\Rightarrow b-a=-(a-b)\in\mathbb{Q}\Rightarrow (b,a)\in R\).\\
+Transitive: \(a-b\in\mathbb{Q},\; b-c\in\mathbb{Q}\Rightarrow a-c=(a-b)+(b-c)\in\mathbb{Q}\Rightarrow (a,c)\in R\).
+
+Hence \(R\) is an equivalence relation.
+
+\medskip
+\textbf{(ii) Cardinality of equivalence classes.} \\
+The class of \(a\) is \( [a]=a+\mathbb{Q}=\{a+q:q\in\mathbb{Q}\}\). Since \(\mathbb{Q}\) is countable, each class \([a]\) is countable.
+
+If the set of classes were countable, then \(\mathbb{R}\), being the union of all classes, would be a countable union of countable sets and therefore countable — contradiction. Thus the set of equivalence classes is uncountable.
+
+\end{proof}
+
+\section{Graph Theory}
+\begin{proposition}
+Let $G$ be a graph on $n$ vertices. Assume
+\[
+\deg(u)+\deg(v)\ge n-1\qquad\text{for every pair of nonadjacent vertices }u,v.
+\]
+Then $G$ is connected and $\operatorname{diam}(G)\le 2$ (i.e. every two vertices
+are at distance $1$ or $2$).
+\end{proposition}
+
+\begin{proof}
+(Connectedness.) Suppose $G$ is disconnected. Let $U$ and $W$ be two distinct
+components and pick $u\in U$, $w\in W$. If $|U|=a$ and $|W|=b$ then
+$\deg(u)\le a-1$ and $\deg(w)\le b-1$, hence
+\[
+\deg(u)+\deg(w)\le (a-1)+(b-1)=a+b-2\le n-2,
+\]
+contradicting $\deg(u)+\deg(w)\ge n-1$. Thus $G$ is connected.
+
+(Diameter $\le2$.) Let $x,y$ be distinct vertices. If $xy\in E(G)$ then
+$d(x,y)=1$. Assume $xy\notin E(G)$. If $N(x)\cap N(y)\neq\varnothing$ then
+there is a common neighbour and $d(x,y)=2$. Otherwise $N(x)$ and $N(y)$ are
+disjoint subsets of $V\setminus\{x,y\}$, so
+\[
+\deg(x)+\deg(y)=|N(x)|+|N(y)|\le n-2,
+\]
+again contradicting the hypothesis. Hence $N(x)\cap N(y)\neq\varnothing$, so
+$d(x,y)\le2$. Therefore $\operatorname{diam}(G)\le2$.
+\end{proof}
+
+\begin{corollary}
+If $\delta(G)\ge\frac{n-1}{2}$ then $G$ is connected (indeed $\operatorname{diam}(G)\le2$).
+\end{corollary}
+
+\begin{proof}
+For any nonadjacent $u,v$ we have
+$\deg(u)+\deg(v)\ge 2\delta(G)\ge 2\cdot\frac{n-1}{2}=n-1$, so the hypothesis
+of the proposition holds; the conclusion follows.
+\end{proof}
+
+\begin{proposition}
+Let \(T\) be a tree on \(n\) vertices. Then \(T\) has exactly \(n-1\) edges.
+\end{proposition}
+
+\begin{proof}
+We prove by induction on \(n\ge1\).
+
+Base \(n=1\). A single vertex has no edges, so the claim holds.
+
+Inductive step. Assume every tree on \(n-1\) vertices has \((n-1)-1=n-2\) edges.
+Let \(T\) be a tree on \(n\) vertices. Choose a longest simple path in \(T\);
+an endpoint \(v\) of this path has degree \(1\) (otherwise the path could be
+extended), so \(v\) is a leaf. Remove \(v\) and its incident edge to obtain
+\(T':=T-v\). Then \(T'\) is a tree on \(n-1\) vertices, hence by the
+inductive hypothesis \(|E(T')|=n-2\). Adding back \(v\) adds exactly one
+edge, so \(|E(T)|=|E(T')|+1=(n-2)+1=n-1\). This completes the induction.
+\end{proof}
+
+\begin{proposition}
+Let $G,H$ be finite simple graphs. If $G\cong H$ then
+\[
+|V(G)|=|V(H)|,\qquad |E(G)|=|E(H)|,
+\]
+and the degree sequence of $G$ equals the degree sequence of $H$ (up to ordering).
+\end{proposition}
+
+\begin{proof}
+If $\varphi:V(G)\to V(H)$ is a graph isomorphism then $\varphi$ is a bijection,
+so $|V(G)|=|V(H)|$. An isomorphism preserves edges, so $|E(G)|=|E(H)|$. For
+each $v\in V(G)$ the degrees satisfy $\deg_G(v)=\deg_H(\varphi(v))$, hence
+the multisets of vertex-degrees coincide; equivalently the degree sequences
+agree up to reordering.
+\end{proof}
+
+\begin{remark}
+The converse is false: equal vertex count, equal edge count and identical
+degree sequence do \emph{not} imply $G\cong H$.
+\end{remark}
+
+\begin{example}[counterexample]
+Let $G=C_6$ be the $6$-cycle and let $H$ be the disjoint union of two
+$3$-cycles, $H=C_3\sqcup C_3$. Then
+\[
+|V(G)|=|V(H)|=6,\qquad |E(G)|=|E(H)|=6,
+\]
+and every vertex of both graphs has degree $2$, so both graphs have the same
+degree sequence $(2,2,2,2,2,2)$. But $G$ is connected while $H$ is
+disconnected, therefore $G\not\cong H$.
+\end{example}
+
+\begin{proposition}
+Every finite directed acyclic graph (DAG) has at least one vertex of
+in-degree \(0\) and at least one vertex of out-degree \(0\).
+\end{proposition}
+
+\begin{proof}
+Suppose, for contradiction, that every vertex has in-degree at least \(1\).
+Start at any vertex \(v_0\). Since \(\deg^-(v_0)\ge 1\), choose an incoming
+edge \(v_1 \to v_0\). Similarly, as \(\deg^-(v_1)\ge 1\), choose an edge
+\(v_2 \to v_1\), and so on. Because the graph is finite, some vertex must
+repeat, producing a directed cycle. This contradicts that the graph is acyclic.
+Hence there exists a vertex with in-degree \(0\).
+
+An identical argument applied to out-degrees shows that if every vertex had
+out-degree at least \(1\), then following outgoing edges would eventually form
+a directed cycle. Thus there must also exist a vertex of out-degree \(0\).
+
+Therefore every DAG has at least one source and at least one sink.
+\end{proof}
+\begin{corollary}
+Every finite DAG admits a topological ordering.
+\end{corollary}
+
+\begin{proof}
+Let \(G\) be a finite DAG. By the source–sink property, \(G\) contains a
+vertex \(v_1\) with \(\deg^{-}(v_1)=0\). Set \(G_1 := G - v_1\). Then
+\(G_1\) is a DAG, so again contains a vertex \(v_2\) with
+\(\deg^{-}_{G_1}(v_2)=0\). Define recursively
+\[
+G_{k} := G_{k-1} - v_k,\qquad
+v_{k+1}\ \text{a vertex of}\ G_k\ \text{with}\ \deg^-_{G_k}(v_{k+1}) = 0.
+\]
+Since \(G\) is finite, the process terminates with
+\[
+V(G)=\{v_1,v_2,\dots,v_n\}.
+\]
+For any edge \(v_i \to v_j\) in \(G\), removal of vertices ensures
+\(v_i\) is chosen before \(v_j\), hence \(i < j\). Therefore
+\((v_1, v_2, \dots, v_n)\) is a topological ordering.
+\end{proof}
+
+\begin{proposition}
+The statement ``Every graph contains a non-trivial vertex cut'' is false.
+\end{proposition}
+
+\begin{proof}
+Consider the complete graph $K_n$ with $n \ge 3$ vertices. We claim that
+$K_n$ has no non-trivial vertex cut.
+
+Let $S \subseteq V(K_n)$ be any proper subset of vertices, and consider the
+graph $K_n - S$ obtained after removing $S$ and all edges incident to $S$.
+If $r = |V(K_n) \setminus S|$ denotes the number of remaining vertices, then
+$K_n - S$ is isomorphic to the complete graph $K_r$.
+
+If $r \ge 2$, then $K_r$ is connected, so $K_n - S$ is connected. Thus, the
+removal of $S$ does \emph{not} disconnect the graph.
+
+If $r = 1$, then $K_n - S$ consists of a single isolated vertex, which is
+still considered connected and therefore does not produce two or more
+components.
+
+Finally, if $r = 0$, then $S = V(K_n)$, which is not a valid (non-trivial)
+vertex cut, since vertex cuts must be proper subsets of $V(K_n)$.
+
+Hence no proper subset $S \subset V(K_n)$ disconnects the graph. Therefore,
+$K_n$ contains no non-trivial vertex cut, proving that the original claim is
+false.
+\end{proof}
+
+\begin{proposition}
+Every simple graph \(G=(V,E)\) has a non-trivial
+vertex cover; in other words there exists a vertex cover \(S\subset V\) with
+\(S\neq V\).
+\end{proposition}
+
+\begin{proof}
+If \(V=\varnothing\) then \(S=\varnothing\) is a (proper) vertex cover, so
+assume \(V\neq\varnothing\).
+
+Pick any vertex \(v\in V\) and set \(S := V\setminus\{v\}\). We claim \(S\) is
+a vertex cover. Let \(e=xy\in E\) be an arbitrary edge. Since the graph has
+no self loops, \(x\neq y\). If neither endpoint of \(e\) belonged to \(S\), then
+both endpoints would have to equal the single vertex omitted, namely \(v\),
+which is impossible because that would violate assumption of simple graph. Hence at least one endpoint
+of \(e\) lies in \(S\), so \(e\) is covered by \(S\). As \(e\) was arbitrary,
+every edge of \(G\) has at least one endpoint in \(S\), i.e. \(S\) is a vertex
+cover.
+
+Finally \(S\) is proper because \(S=V\setminus\{v\}\neq V\). Thus every simple graph admits a non-trivial vertex cover.
+\end{proof}
+
+\begin{proposition}
+Let $G$ be a simple graph on $n$ vertices. If the edge-connectivity $\lambda(G)=n-1$,
+then $G\cong K_n$.
+\end{proposition}
+
+\begin{proof}
+Recall that for any graph $G$ the edge-connectivity satisfies
+\[
+\lambda(G)\le \delta(G),
+\]
+where $\delta(G)$ denotes the minimum vertex degree. (Indeed, if $v$ is a vertex with
+degree $\delta(G)$ then removing all edges incident to $v$ separates $v$ from the
+rest of the graph, so there exists an edge cut of size $\delta(G)$; hence the minimum
+size of an edge cut, $\lambda(G)$, cannot exceed $\delta(G)$.)
+
+Now assume $\lambda(G)=n-1$. By the inequality above we must have
+\[
+n-1 = \lambda(G) \le \delta(G).
+\]
+But for a simple graph on $n$ vertices the maximum possible degree of any vertex is $n-1$,
+so $\delta(G)\le n-1$. Combining these gives $\delta(G)=n-1$.
+
+Therefore every vertex of $G$ has degree $n-1$, i.e. each vertex is adjacent to every
+other vertex. This means $G$ is the complete graph on $n$ vertices, $K_n$. Hence
+$G\cong K_n$, as required.
+\end{proof}
+\begin{proposition}
+Let $G$ be a connected graph containing a bridge $e=uv$. If $|V(G)|\ge 3$ then
+$G$ contains a cut-vertex.
+\end{proposition}
+
+\begin{proof}
+Let $e=uv$ be a bridge. Removing $e$ splits $G$ into two components $C_u$ and $C_v$
+with $u\in C_u$ and $v\in C_v$. (Possibly $C_u=\{u\}$ or $C_v=\{v\}$.)
+
+If $|V(G)|\ge3$ then at least one of $C_u$ or $C_v$ contains a vertex other than
+its endpoint, so at least one endpoint of $e$ has degree $\ge 2$. 
+
+Case 1: $\deg(u)\ge2$. Then $C_u\setminus\{u\}\neq\varnothing$. After removing the
+vertex $u$ from $G$, the remaining vertices of $C_u\setminus\{u\}$ are separated
+from the vertices of $C_v$, so $G-u$ has at least two components. Thus $u$ is a
+cut-vertex.
+
+Case 2: $\deg(u)=1$. Then necessarily $\deg(v)\ge2$ (since $|V(G)|\ge3$ and $e$ is a bridge).
+By the same argument with roles reversed, $v$ is a cut-vertex.
+
+Hence in either case $G$ has a cut-vertex.
+\end{proof}
+
+\begin{proposition}
+Let \(G\) be a finite connected graph. The following are equivalent:
+
+\begin{align*}
+\text{(i)}\ & G \text{ has an Eulerian circuit},\\
+\text{(ii)}\ & \deg(v)\ \text{is even for all } v\in V(G),\\
+\text{(iii)}\ & E(G)\ \text{is a disjoint union of cycles}.
+\end{align*}
+\end{proposition}
+
+
+\begin{proof}
+\textbf{(i) $\Rightarrow$ (ii).}
+Let \(C\) be an Eulerian circuit. Each traversal of a vertex contributes one incident edge for entrance and one for exit, hence \(\deg(v)\) is even for every \(v\).
+
+\medskip
+\noindent
+\textbf{(ii) $\Rightarrow$ (iii).}
+Proceed by induction on \(m:=|E(G)|\). If \(m=0\) the claim is trivial. Assume \(m>0\).
+Let \(T\) be a maximal trail in \(G\). If \(T\) is not closed then an endpoint of \(T\) has odd degree, contradicting (ii); hence \(T\) is a cycle \(C_0\).
+Let \(G':=G-C_0\). Every vertex in \(G'\) has even degree (degrees on \(C_0\) drop by \(2\)), so by the induction hypothesis each component of \(G'\) is a union of cycles. Therefore \(E(G)\) is a disjoint union of cycles.
+
+\medskip
+\noindent
+\textbf{(iii) $\Rightarrow$ (ii).}
+If \(E(G)\) is a disjoint union of cycles then each cycle contributes \(2\) to the degree of any vertex it passes through; hence every vertex degree is even.
+
+\medskip
+\noindent
+\textbf{(ii) + connected $\Rightarrow$ (i).}
+By (ii) there exists a cycle \(C_1\). If \(E(C_1)=E(G)\) we are done. Otherwise let \(T\) be a closed trail obtained so far. While \(E(T)\neq E(G)\) choose an edge \(e\notin E(T)\); connectedness implies some vertex \(v\in V(T)\) is incident with an unused edge. Follow unused edges from \(v\) until returning to \(v\) (possible since degrees of vertices in the unused subgraph are even), obtaining a cycle \(C\). Splice \(C\) into \(T\) at \(v\) to form a larger closed trail. Repeat; finiteness yields a closed trail using every edge, i.e. an Eulerian circuit.
+\end{proof}
+
+
+\begin{proposition}
+If a graph \(G\) is Hamiltonian (i.e. contains a Hamiltonian cycle), then every vertex of \(G\) has degree at least \(2\).
+\end{proposition}
+
+\begin{proof}
+Let \(C\) be a Hamiltonian cycle of \(G\). Then \(C\) is a cycle visiting every vertex of \(G\) exactly once. For any vertex \(v\in V(G)\), the cycle \(C\) contains exactly two edges incident to \(v\) (one entering and one leaving \(v\)). Those two edges are present in \(G\), so \(\deg_G(v)\ge 2\). Since \(v\) was arbitrary, every vertex of \(G\) has degree at least \(2\).
+\end{proof}
+
+\begin{remark}
+Having $\deg(v)\ge 2$ for all vertices is a \emph{necessary} condition for a
+graph to be Hamiltonian, but it is not sufficient.
+\end{remark}
+
+\begin{itemize}
+    \item If \(G\) is Hamiltonian, then every vertex has degree at least \(2\).
+          (True.)
+    \item The converse is false: \(\deg(v)\ge 2\ \forall v\) does not imply that \(G\) is Hamiltonian.
+\end{itemize}
+
+\begin{example}[Counterexample]
+Consider a graph consisting of two disjoint triangles (i.e.\ two copies of
+\(C_3\) with no edges between them). Every vertex has degree \(2\), but the
+graph is disconnected. Hence there is no cycle that visits every vertex
+exactly once, so the graph is not Hamiltonian.
+\end{example}
+\begin{theorem}[Ore]
+Let \(G\) be a simple graph on \(n\ge3\) vertices. If
+\[
+\deg(u)+\deg(v)\ge n
+\quad\text{for every pair of nonadjacent vertices }u,v,
+\]
+then \(G\) is Hamiltonian.
+\end{theorem}
+
+\begin{proof}
+Assume \(G\) satisfies the degree condition but is not Hamiltonian. Let
+\(P=v_1v_2\ldots v_k\) be a longest simple path in \(G\). Then \(k<n\)
+(otherwise \(P\) is a Hamiltonian path and, since \(v_1v_k\) cannot be an
+edge (otherwise \(P\) would extend to a Hamiltonian cycle), we would reach a
+contradiction); in particular \(v_1\) and \(v_k\) are nonadjacent.
+
+Let
+\[
+A=\{v_j: 2\le j\le k,\ v_1v_j\in E(G)\},\qquad
+B=\{v_j: 1\le j\le k-1,\ v_jv_k\in E(G)\}.
+\]
+Thus \(|A|=\deg(v_1)\) and \(|B|=\deg(v_k)\).
+
+If there exists an index \(j\) with \(v_j\in A\) and \(v_{j-1}\in B\), then
+the cycle
+\[
+v_1v_jv_{j+1}\cdots v_kv_{j-1}v_{j-2}\cdots v_1
+\]
+contains all vertices of \(P\), hence is a Hamiltonian cycle — contradiction.
+Therefore no such adjacent pair \((v_j,v_{j-1})\) occurs.
+
+Consequently, for every \(v_j\in A\) the predecessor \(v_{j-1}\) does not lie
+in \(B\). The map \(v_j\mapsto v_{j-1}\) is injective from \(A\) into
+\(\{v_1,\dots,v_{k-1}\}\setminus B\); hence
+\[
+|A| + |B| \le k-1.
+\]
+But \(|A|+|B|=\deg(v_1)+\deg(v_k)\). By hypothesis
+\(\deg(v_1)+\deg(v_k)\ge n\), so \(n \le k-1\). This contradicts \(k<n\).
+
+Therefore the assumption that \(G\) is non-Hamiltonian is false, and \(G\)
+is Hamiltonian.
+\end{proof}
+
+\begin{proposition}
+Let \(G\) be a finite planar graph drawn in the plane with \(n\) vertices,
+\(m\) edges, \(f\) faces (including the unbounded face) and \(c\) connected
+components. Then
+\[
+f - m + n = c + 1.
+\]
+\end{proposition}
+
+\begin{proof}
+We prove the statement by induction on \(m\).
+
+\medskip
+\noindent\textbf{Base.} If \(m=0\) then \(G\) has no edges, so \(c=n\) and the
+plane has exactly one face, \(f=1\). Hence
+\[
+f-m+n = 1-0+n = n+1 = c+1.
+\]
+
+\medskip
+\noindent\textbf{Inductive step.} Assume the formula holds for every planar
+graph with \(m-1\) edges. Let \(G\) be a planar graph with \(m>0\) edges and
+choose an edge \(e\). Let \(G'=G-e\) and write \(n',m',f',c'\) for the
+corresponding parameters of \(G'\). Clearly \(n'=n\) and \(m'=m-1\).
+
+There are two cases.
+
+\textbf{(a)} \(e\) lies on a cycle. Then removing \(e\) does not change the
+number of components, but it reduces the number of faces by \(1\): \(c'=c\),
+\(f'=f-1\). By the inductive hypothesis
+\[
+f' - m' + n' = c' + 1,
+\]
+i.e.
+\[
+(f-1) - (m-1) + n = c + 1.
+\]
+Hence \(f-m+n = c+1\).
+
+\textbf{(b)} \(e\) is a bridge. Then removing \(e\) increases the number of
+components by \(1\) and leaves the number of faces unchanged: \(c'=c+1\),
+\(f'=f\). By the inductive hypothesis
+\[
+f' - m' + n' = c' + 1,
+\]
+i.e.
+\[
+f - (m-1) + n = (c+1) + 1.
+\]
+Rearranging yields \(f-m+n = c+1\).
+
+Thus in both cases the formula holds for \(G\). This completes the induction.
+\end{proof}
+
+\begin{proposition}
+$K_5$ and $K_{3,3}$ are non-planar.
+\end{proposition}
+
+\begin{proof}
+Let $G$ be a connected planar simple graph with $n$ vertices, $m$ edges and $f$ faces.
+Euler's formula gives $n-m+f=2$. Each face is bounded by at least three edges and
+each edge borders at most two faces, hence
+\[
+3f \le 2m \quad\Longrightarrow\quad f \le \frac{2m}{3}.
+\]
+Substituting into Euler's formula yields
+\[
+n-m+\frac{2m}{3} \ge 2 \quad\Longrightarrow\quad m \le 3n-6.
+\]
+
+(1) For $K_5$: $n=5$, $m={5\choose2}=10$. The bound gives $m\le 3\cdot5-6=9$, 
+but $10>9$. Contradiction. Hence $K_5$ is non-planar.
+
+For bipartite planar graphs one improves the face bound: every face is bounded by
+at least $4$ edges, so $4f\le 2m$, i.e. $f\le m/2$. Euler then gives
+\[
+n-m+\frac{m}{2}\ge 2 \quad\Longrightarrow\quad m \le 2n-4.
+\]
+
+(2) For $K_{3,3}$: $n=6$, $m=3\cdot3=9$. The bipartite bound gives $m\le 2\cdot6-4=8$,
+but $9>8$. Contradiction. Hence $K_{3,3}$ is non-planar.
+\end{proof}
+
+\begin{proposition}
+Let $\approx$ denote the relation ``$G \approx H$ if $G$ and $H$ have the
+same planar embedding'', i.e.\ there exists a graph isomorphism preserving
+the cyclic order of incident edges at every vertex. Then $\approx$ is an
+equivalence relation on the set of planar graphs.
+\end{proposition}
+
+\begin{proof}
+\textbf{Reflexive:}  
+For every planar graph $G$, the identity map
+$\mathrm{id}:V(G)\to V(G)$ is an isomorphism and clearly preserves the
+cyclic order of edges at each vertex. Hence $G\approx G$.
+
+\medskip
+\noindent
+\textbf{Symmetric:}  
+If $G\approx H$, there exists an isomorphism
+$\varphi:V(G)\to V(H)$ preserving cyclic order at each vertex.
+Since $\varphi$ is a bijection, its inverse $\varphi^{-1}:V(H)\to V(G)$
+is also an isomorphism. The inverse map preserves cyclic order because
+$\varphi$ does. Hence $H\approx G$.
+
+\medskip
+\noindent
+\textbf{Transitive:}  
+If $G\approx H$ via $\varphi$ and $H\approx K$ via $\psi$, then
+$\psi\circ\varphi:V(G)\to V(K)$ is a graph isomorphism. Preservation of
+cyclic order holds because both $\varphi$ and $\psi$ preserve cyclic
+order at each vertex. Thus $G\approx K$.
+
+\medskip
+Therefore $\approx$ is reflexive, symmetric, and transitive, so it is an
+equivalence relation.
+\end{proof}
+
+
+\end{document}

@@ -1,0 +1,386 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+
+% -------------------- Packages --------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}          % Better font
+\usepackage{geometry}         % Margins
+\geometry{margin=1in}
+
+\usepackage{amsmath, amssymb, amsthm}   % Math packages + theorem env
+\usepackage{mathtools}        % Enhancements for amsmath
+\usepackage{enumitem}         % Better lists
+\usepackage{graphicx}         % Images
+\usepackage{booktabs}         % Good tables
+\usepackage{hyperref}         % Clickable refs
+\usepackage{xcolor}           % Colors, if needed
+\usepackage{tikz}             % Graph drawing (optional)
+\usetikzlibrary{graphs}       % Graph theory tools (optional)
+
+% -------------------- Theorem Environments --------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+% Proof environment already included in amsthm.
+
+% -------------------- Custom Commands --------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% Handy graph notation
+\newcommand{\vn}{V(G)}
+\newcommand{\en}{E(G)}
+
+% ---------------------------------------------------------
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Functions and Relations}
+\begin{proposition}
+If $n$ is a positive integer, then $133$ divides $11^{n+1}+12^{2n-1}$.
+\end{proposition}
+
+\begin{proof}
+Note that $133=7\cdot 19$ and $\gcd(7,19)=1$. It suffices to show
+\[
+11^{n+1}+12^{2n-1}\equiv 0 \pmod 7
+\quad\text{and}\quad
+11^{n+1}+12^{2n-1}\equiv 0 \pmod{19}.
+\]
+
+\textbf{Modulo $7$.}
+We have $11\equiv 4\pmod 7$ and $12\equiv 5\pmod 7$. Thus
+\[
+11^{n+1}+12^{2n-1}
+\equiv 4^{\,n+1} + 5^{\,2n-1} \pmod 7.
+\]
+Since $5\equiv -2$ and $25\equiv 4\pmod 7$,
+\[
+5^{2n-1} = 5\,(5^2)^{n-1} \equiv 5\cdot 4^{\,n-1}\pmod 7.
+\]
+Hence
+\[
+4^{\,n+1}+5^{\,2n-1}
+\equiv 4^{\,n+1}+5\cdot 4^{\,n-1}
+=4^{\,n-1}(4^2+5)
+=4^{\,n-1}(16+5)
+=4^{\,n-1}\cdot 21 \equiv 0 \pmod 7.
+\]
+
+\textbf{Modulo $19$.}
+We have $12^2=144\equiv 11\pmod{19}$, so $11\equiv 12^2\pmod{19}$ and hence
+\[
+11^{n+1} \equiv (12^2)^{n+1} = 12^{2n+2}\pmod{19}.
+\]
+Therefore
+\[
+11^{n+1}+12^{2n-1}
+\equiv 12^{2n+2}+12^{2n-1}
+=12^{2n-1}\bigl(12^3+1\bigr)\pmod{19}.
+\]
+Compute $12^3\pmod{19}$:
+\[
+12^2\equiv 11,\quad 12^3\equiv 11\cdot 12 = 132 \equiv -1 \pmod{19}.
+\]
+Thus $12^3+1\equiv -1+1\equiv 0\pmod{19}$, and so
+\[
+11^{n+1}+12^{2n-1}\equiv 12^{2n-1}\cdot 0 \equiv 0\pmod{19}.
+\]
+
+We have shown that $11^{n+1}+12^{2n-1}$ is divisible by both $7$ and $19$.
+Since $\gcd(7,19)=1$, it follows that $11^{n+1}+12^{2n-1}$ is divisible by
+$7\cdot 19=133$. Hence $133\mid 11^{n+1}+12^{2n-1}$ for every positive
+integer $n$.
+\end{proof}
+
+\begin{proposition}
+    Define \(R\subseteq\mathbb{R}\times\mathbb{R}\) by
+\((a,b)\in R \iff a-b\in\mathbb{Q}\).
+\end{proposition}
+\begin{proof}
+    
+
+
+\textbf{(i) $R$ is an equivalence relation.} \\
+Reflexive: \(a-a=0\in\mathbb{Q}\Rightarrow (a,a)\in R\).\\
+Symmetric: \(a-b\in\mathbb{Q}\Rightarrow b-a=-(a-b)\in\mathbb{Q}\Rightarrow (b,a)\in R\).\\
+Transitive: \(a-b\in\mathbb{Q},\; b-c\in\mathbb{Q}\Rightarrow a-c=(a-b)+(b-c)\in\mathbb{Q}\Rightarrow (a,c)\in R\).
+
+Hence \(R\) is an equivalence relation.
+
+\medskip
+\textbf{(ii) Cardinality of equivalence classes.} \\
+The class of \(a\) is \( [a]=a+\mathbb{Q}=\{a+q:q\in\mathbb{Q}\}\). Since \(\mathbb{Q}\) is countable, each class \([a]\) is countable.
+
+If the set of classes were countable, then \(\mathbb{R}\), being the union of all classes, would be a countable union of countable sets and therefore countable — contradiction. Thus the set of equivalence classes is uncountable.
+
+\end{proof}
+
+\begin{proposition}
+There do not exist positive integers \(x,y\) satisfying
+\[
+x^{2}=2y^{2}+3.
+\]
+\end{proposition}
+
+\begin{proof}
+Reduce modulo \(4\). Squares are \(0\) or \(1\pmod4\). If \(y\) were even then
+\(2y^{2}\equiv0\pmod4\) and hence \(x^{2}=2y^{2}+3\equiv3\pmod4\), impossible.
+Thus \(y\) is odd. Write \(y=2k+1\). Then
+\[
+y^{2}=(2k+1)^{2}=4k(k+1)+1\equiv1\pmod8
+\]
+because \(k(k+1)\) is even, so \(4k(k+1)\) is a multiple of \(8\). Hence
+\[
+2y^{2}+3\equiv 2\cdot1+3=5\pmod8.
+\]
+But no square is congruent to \(5\pmod8\) (odd squares are \(1\pmod8\), even
+squares are \(0\) or \(4\pmod8\)). This contradiction shows there are no
+positive integers \(x,y\) with \(x^{2}=2y^{2}+3\).
+\end{proof}
+\begin{proposition}
+There are no positive integers \(x,y\) satisfying
+\[
+x^2 = 2y^2 + 3.
+\]
+\end{proposition}
+
+\begin{proof}
+Work modulo \(3\). Squares mod \(3\) are \(0\) or \(1\).
+
+Reduce the equation mod \(3\). Since \(3\equiv0\pmod3\) we obtain
+\[
+x^2 \equiv 2y^2 \pmod3.
+\]
+
+Case 1: \(y\not\equiv 0\pmod3\). Then \(y^2\equiv1\pmod3\), so
+\(x^2\equiv 2\pmod3\), impossible because a square modulo \(3\) cannot be \(2\).
+
+Case 2: \(y\equiv 0\pmod3\). Write \(y=3k\). Then
+\[
+x^2 = 2(3k)^2+3 = 18k^2+3 = 3(6k^2+1),
+\]
+so \(3\mid x^2\) and hence \(3\mid x\). Put \(x=3t\). Substituting and
+dividing by \(3\) yields
+\[
+3t^2 = 6k^2+1 \quad\Longrightarrow\quad 0\equiv 1\pmod3,
+\]
+a contradiction.
+
+Both cases are impossible. Therefore no positive integers \(x,y\) satisfy
+\(x^2=2y^2+3\).
+\end{proof}
+\begin{lemma}
+For any integer $n$, the residue of $n^2 \pmod 3$ is either $0$ or $1$.
+\end{lemma}
+
+\begin{proof}
+Every integer $n$ is congruent modulo $3$ to exactly one of
+\[
+0,\;1,\;2.
+\]
+Compute the squares of these representatives:
+\[
+0^2 \equiv 0 \pmod 3,\qquad
+1^2 \equiv 1 \pmod 3,\qquad
+2^2 = 4 \equiv 1 \pmod 3.
+\]
+Thus every square is congruent to either $0$ or $1$ modulo $3$.
+\end{proof}
+\begin{proposition}
+For an integer $n$, the following are equivalent:
+
+(i) $n$ is odd.
+
+(ii) $n^2 \equiv 1 \pmod{8}$.
+
+(iii) $n^4 \equiv 1 \pmod{16}$.
+\end{proposition}
+
+\begin{proof}
+\textbf{(i $\Rightarrow$ ii).}
+If $n$ is odd, write $n = 2k+1$. Then
+\[
+n^2 = (2k+1)^2 = 4k(k+1)+1.
+\]
+Since $k(k+1)$ is even, $4k(k+1)$ is a multiple of $8$, hence
+\[
+n^2 \equiv 1 \pmod{8}.
+\]
+
+\medskip
+\textbf{(ii $\Rightarrow$ iii).}
+Assume $n^2 \equiv 1 \pmod{8}$. Then $n^2 = 8m + 1$ for some $m\in\mathbb{Z}$.  
+Square both sides:
+\[
+n^4 = (8m+1)^2 = 64m^2 + 16m + 1 \equiv 1 \pmod{16}.
+\]
+
+\medskip
+\textbf{(iii $\Rightarrow$ i).}
+Assume $n^4 \equiv 1 \pmod{16}$. Reduce modulo $2$:
+\[
+n^4 \equiv 1 \pmod 2.
+\]
+
+\textbf{(iii $\Rightarrow$ i).}
+Assume $n^4\equiv 1\pmod{16}$. If $n$ were even, write $n=2k$; then
+\[
+n^4=(2k)^4=16k^4\equiv 0\pmod{16}.
+\]
+Hence an even $n$ cannot satisfy $n^4\equiv1\pmod{16}$. Therefore $n$ is odd.
+
+\medskip
+Thus (i), (ii), (iii) are equivalent.
+\end{proof}
+\begin{proposition}
+For all real numbers \(x,y\) we have
+\[
+|x+y|\ge \bigl||x|-|y|\bigr|.
+\]
+\end{proposition}
+
+\begin{proof}
+We split into two cases.
+
+\medskip
+\noindent\textbf{Case 1:} \(|x|\ge |y|\). \\
+Then \(|x|-|y|\ge0\). Using the triangle inequality in the form
+\(|x|=|(x+y)-y|\le |x+y|+|y|\) we obtain
+\[
+|x|-|y| \le |x+y|.
+\]
+Hence \(\bigl||x|-|y|\bigr|=|x|-|y|\le |x+y|\).
+
+\medskip
+\noindent\textbf{Case 2:} \(|x|<|y|\). \\
+Then \(|y|-|x|>0\). Apply the same triangle-inequality trick with the roles
+of \(x\) and \(y\) interchanged:
+\(|y|=|(x+y)-x|\le |x+y|+|x|\), whence
+\[
+|y|-|x| \le |x+y|.
+\]
+Thus \(\bigl||x|-|y|\bigr|=|y|-|x|\le |x+y|\).
+
+\medskip
+In both cases \(\bigl||x|-|y|\bigr|\le |x+y|\). Therefore
+\(|x+y|\ge \bigl||x|-|y|\bigr|\) for all real \(x,y\).
+\end{proof}
+\begin{proposition}
+Let $\mathcal I=\{A\subseteq\mathbb N: A\text{ is infinite}\}$ and define
+$R$ on $\mathcal I$ by $A\,R\,B\iff A\subseteq B$.
+\begin{enumerate}
+  \item $R$ is a partial order on $\mathcal I$.
+  \item $R$ is not a total (linear) order.
+  \item $\mathcal I$ has no minimum element, but it has a maximum element (namely $\mathbb N$).
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+(1) Reflexive: $A\subseteq A$ for every $A\in\mathcal I$.  
+Antisymmetric: $A\subseteq B$ and $B\subseteq A$ imply $A=B$.  
+Transitive: $A\subseteq B$ and $B\subseteq C$ imply $A\subseteq C$.  
+Hence $R$ is a partial order.
+
+\medskip\noindent
+(2) Not total: take the infinite sets of even and odd naturals,
+$E=\{2,4,6,\dots\}$ and $O=\{1,3,5,\dots\}$. Then $E,O\in\mathcal I$ but
+neither $E\subseteq O$ nor $O\subseteq E$, so $R$ is not linear.
+
+\medskip\noindent
+(3) Minimum: suppose $M\in\mathcal I$ were least, i.e.\ $M\subseteq A$ for every
+infinite $A$. Choose any $m\in M$. The set $A=\mathbb N\setminus\{m\}$ is
+infinite, but $m\notin A$, hence $M\not\subseteq A$, contradiction. Thus no
+minimum exists.
+
+Maximum: $\mathbb N\in\mathcal I$ and for every $A\in\mathcal I$ we have
+$A\subseteq\mathbb N$, so $\mathbb N$ is the greatest element (maximum).
+\end{proof}
+\section{Group and Graph}
+\begin{proposition}
+Let $G$ be a cyclic group of order $24$. Then $G$ has exactly $2$ elements of order $4$.
+\end{proposition}
+
+\begin{proof}
+Since $G$ is cyclic of order $24$, let $G=\langle g\rangle$. Every element of $G$
+is of the form $g^k$ for $0\le k\le 23$, and its order is
+\[
+\operatorname{ord}(g^k)=\frac{24}{\gcd(24,k)}.
+\]
+
+We seek all $k$ such that $\operatorname{ord}(g^k)=4$. Thus:
+\[
+\frac{24}{\gcd(24,k)}=4
+\quad\Longrightarrow\quad
+\gcd(24,k)=6.
+\]
+
+Now list all $k$ with $0\le k<24$ and $\gcd(24,k)=6$. The multiples of $6$
+below $24$ are $0,6,12,18$. Their gcds with $24$ are:
+\[
+\gcd(24,0)=24,\qquad
+\gcd(24,6)=6,\qquad
+\gcd(24,12)=12,\qquad
+\gcd(24,18)=6.
+\]
+Thus exactly two values satisfy $\gcd(24,k)=6$, namely $k=6$ and $k=18$.
+
+Therefore the only elements of order $4$ are $g^6$ and $g^{18}$, and hence
+there are exactly $2$ elements of order $4$ in $G$.
+\end{proof}
+% Q3-A
+\begin{proposition}
+The statement
+``Every connected bipartite graph has at least one vertex of even degree''
+is false.
+\end{proposition}
+
+\begin{proof}
+Consider the complete bipartite graph $K_{3,3}$. It is connected and
+bipartite with bipartition $\{a_1,a_2,a_3\}\cup\{b_1,b_2,b_3\}$, and
+$\deg(a_i)=\deg(b_j)=3$ for all $i,j$. Thus every vertex has odd degree and
+there is no vertex of even degree. Hence the given statement is false.
+\end{proof}
+\begin{proposition}
+Let $G$ be a connected graph in which every block (i.e.\ maximal $2$-connected
+subgraph) is bipartite. Then $G$ is bipartite.
+\end{proposition}
+
+\begin{proof}
+Recall two standard facts:
+
+(1) A cycle is $2$-connected, hence is contained in some block of $G$.
+
+(2) A graph is bipartite $\iff$ it contains no cycle of odd length.
+
+\medskip
+Assume, for contradiction, that $G$ is not bipartite. By (2) $G$ then
+contains an odd cycle $C$. By (1) the cycle $C$ is contained in some block
+$B$ of $G$. Thus $B$ contains an odd cycle, so $B$ is not bipartite, which
+contradicts the hypothesis that every block of $G$ is bipartite.
+
+Hence $G$ has no odd cycle. Again by (2), $G$ is bipartite.
+\end{proof}
+
+\end{document}
