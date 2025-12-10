@@ -1,0 +1,260 @@
+\documentclass[8pt,landscape]{article}
+\usepackage[a4paper, margin=0.2in]{geometry}
+\usepackage{multicol}
+\usepackage{listings}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\titlespacing*{\section}{0pt}{2pt}{1pt}
+\titlespacing*{\subsection}{0pt}{1pt}{0pt}
+
+\lstset{
+    language=Prolog,
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true,
+    aboveskip=0pt,
+    belowskip=0pt,
+    frame=none,
+    morekeywords={is, mod}
+}
+
+\begin{document}
+\begin{multicols*}{3}
+
+% ==============================
+\section*{1. Basic List Ops}
+% ==============================
+
+\textbf{Member}
+\begin{lstlisting}
+member(X,[X|_]).
+member(X,[_|T]):-member(X,T).
+\end{lstlisting}
+
+\textbf{Count Member (mymember/3)}
+\begin{lstlisting}
+mymember(_,[],0):-fail.
+mymember(X,[X|T],N):-N1 is N-1,mymember(X,T,N1).
+mymember(X,[_|T],N):-mymember(X,T,N).
+\end{lstlisting}
+
+\textbf{Append}
+\begin{lstlisting}
+conc([],L,L).
+conc([H|T],L,[H|R]):-conc(T,L,R).
+\end{lstlisting}
+
+\textbf{Reverse}
+\begin{lstlisting}
+rev(L,R):-rev_acc(L,[],R).
+rev_acc([],A,A).
+rev_acc([H|T],A,R):-rev_acc(T,[H|A],R).
+\end{lstlisting}
+
+\textbf{Length}
+\begin{lstlisting}
+len([],0).
+len([_|T],N):-len(T,M),N is M+1.
+\end{lstlisting}
+
+\textbf{Nth Element}
+\begin{lstlisting}
+nth(1,[H|_],H).
+nth(N,[_|T],X):-N>1,N1 is N-1,nth(N1,T,X).
+\end{lstlisting}
+
+\textbf{Last}
+\begin{lstlisting}
+last([X],X).
+last([_|T],X):-last(T,X).
+\end{lstlisting}
+
+% ==============================
+\section*{2. Deletion / Search}
+% ==============================
+
+\textbf{Delete First Occurrence}
+\begin{lstlisting}
+mydelete(X,[X|T],T):-!.
+mydelete(X,[H|T],[H|R]):-mydelete(X,T,R).
+\end{lstlisting}
+
+\textbf{Delete All}
+\begin{lstlisting}
+del_all(_,[],[]).
+del_all(X,[X|T],R):-del_all(X,T,R).
+del_all(X,[H|T],[H|R]):-X\=H,del_all(X,T,R).
+\end{lstlisting}
+
+\textbf{Select}
+\begin{lstlisting}
+select(X,[X|T],T).
+select(X,[H|T],[H|R]):-select(X,T,R).
+\end{lstlisting}
+
+\textbf{Next To (Adjacency)}
+\begin{lstlisting}
+mynextto([A,B|_],A,B).
+mynextto([_|T],A,B):-mynextto(T,A,B).
+\end{lstlisting}
+
+% ==============================
+\section*{3. Combinatorics}
+% ==============================
+
+\textbf{Permutation}
+\begin{lstlisting}
+perm([],[]).
+perm(L,[H|T]):-select(H,L,R),perm(R,T).
+\end{lstlisting}
+
+\textbf{Subset}
+\begin{lstlisting}
+subset([],[]).
+subset([H|T],[H|R]):-subset(T,R).
+subset([_|T],R):-subset(T,R).
+\end{lstlisting}
+
+\textbf{Sublist}
+\begin{lstlisting}
+sublist(S,L):-conc(_,X,L),conc(S,_,X).
+\end{lstlisting}
+
+\textbf{Remove Duplicates (Set)}
+\begin{lstlisting}
+removedups([],[]).
+removedups([H|T],R):-member(H,T),!,removedups(T,R).
+removedups([H|T],[H|R]):-removedups(T,R).
+\end{lstlisting}
+
+% ==============================
+\section*{4. Partitioning}
+% ==============================
+
+\textbf{List Partition (No Dups)}
+\begin{lstlisting}
+mylistpartition([],[],[]).
+mylistpartition([H|T],[H|B],C):-mylistpartition(T,B,C).
+mylistpartition([H|T],B,[H|C]):-mylistpartition(T,B,C).
+\end{lstlisting}
+
+\textbf{Set Partition (Handles Dups)}
+\begin{lstlisting}
+mysetpartition(A,B,C):-removedups(A,S),mylistpartition(S,B,C).
+\end{lstlisting}
+
+\textbf{Intersection / Union}
+\begin{lstlisting}
+inter([],_,[]).
+inter([H|T],L,[H|R]):-member(H,L),!,inter(T,L,R).
+inter([_|T],L,R):-inter(T,L,R).
+
+union([],L,L).
+union([H|T],L,R):-member(H,L),!,union(T,L,R).
+union([H|T],L,[H|R]):-union(T,L,R).
+\end{lstlisting}
+
+% ==============================
+\section*{5. Trees \& Relations}
+% ==============================
+
+\textbf{Descendant}
+\begin{lstlisting}
+mydescendant(X,Y):-parent(Y,X).
+mydescendant(X,Y):-parent(Y,Z),mydescendant(X,Z).
+\end{lstlisting}
+
+% ==============================
+\section*{6. Peano Arithmetic}
+% ==============================
+
+\textbf{Addition}
+\begin{lstlisting}
+add(X,0,X).
+add(X,s(Y),s(Z)):-add(X,Y,Z).
+\end{lstlisting}
+
+\textbf{Multiplication}
+\begin{lstlisting}
+mult(_,0,0).
+mult(X,s(Y),Z):-mult(X,Y,P),add(P,X,Z).
+\end{lstlisting}
+
+% ==============================
+\section*{7. Numbers as Lists}
+% ==============================
+
+\textbf{List → Number}
+\begin{lstlisting}
+listnum(L,N):-listnum(L,0,N).
+listnum([],A,A).
+listnum([H|T],A,N):-A1 is A*10+H,listnum(T,A1,N).
+\end{lstlisting}
+
+\textbf{Higher Permutation Test (HP)}
+\begin{lstlisting}
+myhp(N1,N2):-perm(N2,N1),listnum(N1,X),listnum(N2,Y),X>Y.
+\end{lstlisting}
+
+\textbf{Next Higher Permutation}
+\begin{lstlisting}
+mynhp(N1,N2):-myhp(N1,N2),
+ \+ (myhp(N,N2),listnum(N,A),listnum(N1,B),A<B).
+\end{lstlisting}
+
+% ==============================
+\section*{8. Logic \& Control}
+% ==============================
+
+\textbf{Cut (!)}
+\begin{itemize}[leftmargin=5pt]
+\item Green Cut: prunes search, no semantic change.
+\item Red Cut: changes meaning (danger).
+\item Pattern: \texttt{rule :- cond, !, body.}
+\end{itemize}
+
+\textbf{Negation as Failure (\textbackslash+)}
+\begin{lstlisting}
+not(G):-G,!,fail.
+not(_).
+\end{lstlisting}
+
+\textbf{IMPORTANT PROPERTY:}
+\begin{itemize}[leftmargin=5pt]
+\item \textbf{\textbackslash+ G is sound ONLY if G is ground.}
+\item If G has uninstantiated variables, negation becomes unsound.
+\end{itemize}
+
+\textbf{Disjoint Sets}
+\begin{lstlisting}
+disjoint(A,B):-member(X,A),member(X,B),!,fail.
+disjoint(_, _).
+\end{lstlisting}
+
+% ==============================
+\section*{9. CNF Evaluation}
+% ==============================
+
+\textbf{Literal Eval}
+\begin{lstlisting}
+val(a,[A|_],A). val(b,[_|[B|_]],B).
+val(c,_,C). val(d,_,D). val(e,_,E).  % compress manually
+ev(not(X),I):-val(X,I,f).
+ev(X,I):-val(X,I,t).
+\end{lstlisting}
+
+\textbf{Clause / CNF}
+\begin{lstlisting}
+cl([L|_],I):-ev(L,I),!.
+cl([_|T],I):-cl(T,I).
+
+cnf([], _).
+cnf([C|T],I):-cl(C,I),cnf(T,I).
+
+mysatisfied(F):-interpretation(I),cnf(F,I),!.
+\end{lstlisting}
+
+\end{multicols*}
+\end{document}

@@ -1,0 +1,667 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+
+% -------------------- Packages --------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}          % Better font
+\usepackage{geometry}         % Margins
+\geometry{margin=1in}
+
+\usepackage{amsmath, amssymb, amsthm}   % Math packages + theorem env
+\usepackage{mathtools}        % Enhancements for amsmath
+\usepackage{enumitem}         % Better lists
+\usepackage{graphicx}         % Images
+\usepackage{booktabs}         % Good tables
+\usepackage{hyperref}         % Clickable refs
+\usepackage{xcolor}           % Colors, if needed
+\usepackage{tikz}             % Graph drawing (optional)
+\usetikzlibrary{graphs}       % Graph theory tools (optional)
+
+% -------------------- Theorem Environments --------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+
+% Proof environment already included in amsthm.
+
+% -------------------- Custom Commands --------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+
+% Handy graph notation
+\newcommand{\vn}{V(G)}
+\newcommand{\en}{E(G)}
+
+% ---------------------------------------------------------
+
+\title{}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{First Order Logic}
+
+% Hilbert axioms for implication
+
+\[
+\begin{array}{ll}
+\text{(A1)} & A \to (B \to A)\\[2mm]
+\text{(A2)} & (A \to (B \to C)) \to ((A \to B) \to (A \to C)) \\[2mm]
+\text{(A3)} & (\neg B \to \neg A) \to (A \to B)
+\end{array}
+\]
+
+\noindent\textbf{Claim.} \(\;\vdash P \to P.\)
+
+\begin{proof}
+\[
+\begin{array}{rll}
+(1) & P \to (P \to P) 
+    & \text{instance of (A1) with } A := P,\; B := P \\[2mm]
+
+(2) & P \to ((P \to P) \to P) 
+    & \text{instance of (A1) with } A := P,\; B := (P \to P) \\[2mm]
+
+(3) & (P \to ((P \to P) \to P)) \to ((P \to (P \to P)) \to (P \to P))
+    & \text{instance of (A2) with } A := P,\; B := (P \to P),\; C := P \\[2mm]
+
+(4) & (P \to (P \to P)) \to (P \to P)
+    & \text{from (2) and (3) by Modus Ponens} \\[2mm]
+
+(5) & P \to P
+    & \text{from (1) and (4) by Modus Ponens}
+\end{array}
+\]
+Hence \(\vdash P \to P\).
+\end{proof}
+
+\noindent\textbf{Claim.} \(\;\{\,P \to Q,\; Q \to R\,\} \;\vdash\; P \to R.\)
+
+\begin{proof}
+\[
+\begin{array}{rll}
+(1) & (Q \to R) \to (P \to (Q \to R))
+    & \text{instance of (A1) with } A := (Q \to R),\; B := P \\[2mm]
+
+(2) & Q \to R
+    & \text{given} \\[2mm]
+
+(3) & P \to (Q \to R)
+    & \text{from (1) and (2) by Modus Ponens} \\[2mm]
+
+(4) & (P \to (Q \to R)) 
+      \to \big((P \to Q) \to (P \to R)\big)
+    & \text{instance of (A2) with } 
+      A := P,\; B := Q,\; C := R \\[2mm]
+
+(5) & (P \to Q) \to (P \to R)
+    & \text{from (3) and (4) by Modus Ponens} \\[2mm]
+
+(6) & P \to Q
+    & \text{given} \\[2mm]
+
+(7) & P \to R
+    & \text{from (5) and (6) by Modus Ponens}
+\end{array}
+\]
+Thus \(\;P \to R\) is derivable from the assumptions.
+\end{proof}
+
+\noindent\textbf{Claim.} The formulas underneath are logically equivalent
+\[
+\forall x\,\forall y\,(q(x,y)\to p(x))
+\quad\text{ and}\quad
+\forall x\,(\exists y\,q(x,y)\to p(x))
+\]
+
+
+\begin{proof}
+\[
+\begin{aligned}
+\forall x\forall y\,(q(x,y)\to p(x))
+&\equiv \forall x\forall y\,(\neg q(x,y)\lor p(x))\\
+&\equiv \forall x\bigl(\forall y(\neg q(x,y)\lor p(x))\bigr)\\
+&\equiv \forall x\bigl(\neg\exists y\,q(x,y)\lor p(x)\bigr)\\
+&\equiv \forall x\bigl(p(x)\lor \neg\exists y\,q(x,y)\bigr)\\
+&\equiv \forall x\bigl(\exists y\,q(x,y)\to p(x)\bigr).
+\end{aligned}
+\]
+Thus the two statements are equivalent.
+\end{proof}
+
+\begin{lemma} 
+$\mathcal{I},\sigma \vDash \forall x\, B
+\quad\text{iff}\quad
+\text{for all } d \in D,\;
+\mathcal{I},\, \sigma[x \leftarrow d] \vDash B. $
+\end{lemma}
+
+\begin{lemma}
+$\mathcal{I},\sigma \vDash \exists x\, B
+\quad\text{iff}\quad
+\text{for some } d \in D,\;
+\mathcal{I},\, \sigma[x \leftarrow d] \vDash B.$
+\end{lemma}
+\bigskip
+\textbf{Claim: } 
+$\forall x\, (A(x)\land B(x)) \;\equiv\; (\forall x\,A(x)) \land (\forall x\,B(x)).$
+
+
+\bigskip
+\textbf{Proof.}
+
+We show both directions of logical implication using the semantic definition of
+\(\vDash\).
+
+\paragraph{(1) $\forall x(A(x)\land B(x)) \;\Rightarrow\; (\forall xA(x))\land(\forall xB(x))$}
+
+Let $\mathcal{I}$ be any interpretation with domain $D\neq\varnothing$, and let
+$\sigma$ be any variable assignment.  
+Assume
+
+\[
+\mathcal{I},\sigma \vDash \forall x\,(A(x)\land B(x)).
+\]
+
+By the semantics of the universal quantifier, this means:
+
+\[
+\text{for all } d\in D,\quad 
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)\land B(x).
+\]
+
+By the semantics of conjunction:
+
+\[
+\text{for all } d\in D,\quad 
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)
+\quad\text{and}\quad
+\mathcal{I},\sigma[x\mapsto d] \vDash B(x).
+\]
+
+Hence:
+
+\[
+\mathcal{I},\sigma \vDash \forall x\,A(x)
+\qquad\text{and}\qquad
+\mathcal{I},\sigma \vDash \forall x\,B(x).
+\]
+
+Thus, by semantics of $\land$,
+
+\[
+\mathcal{I},\sigma \vDash (\forall x\,A(x)) \land (\forall x\,B(x)).
+\]
+
+Since $\mathcal{I}$ and $\sigma$ were arbitrary, we obtain:
+
+\[
+\models\; \forall x(A(x)\land B(x)) \to 
+\bigl((\forall x\,A(x))\land(\forall x\,B(x))\bigr).
+\]
+
+
+\paragraph{(2) $(\forall xA(x))\land(\forall xB(x)) \;\Rightarrow\; \forall x(A(x)\land B(x))$}
+
+Again let $\mathcal{I}$ be any interpretation with domain $D\neq\varnothing$ and
+$\sigma$ any assignment.  
+Assume
+
+\[
+\mathcal{I},\sigma \vDash (\forall xA(x))\land(\forall xB(x)).
+\]
+
+By semantics of $\land$:
+
+\[
+\mathcal{I},\sigma \vDash \forall xA(x)
+\qquad\text{and}\qquad
+\mathcal{I},\sigma \vDash \forall xB(x).
+\]
+
+Thus, by semantics of $\forall$:
+
+\[
+\text{for all } d\in D,\quad 
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)
+\qquad\text{and}\qquad
+\mathcal{I},\sigma[x\mapsto d] \vDash B(x).
+\]
+
+Therefore, for all $d\in D$,
+
+\[
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)\land B(x).
+\]
+
+Applying the semantics of $\forall$ again yields:
+
+\[
+\mathcal{I},\sigma \vDash \forall x\, (A(x)\land B(x)).
+\]
+
+Thus,
+
+\[
+\models\; \bigl((\forall xA(x))\land(\forall xB(x))\bigr)
+     \to \forall x(A(x)\land B(x)).
+\]
+
+
+\textbf{Claim: } 
+$\exists x\, (A(x)\lor B(x)) \;\equiv\; (\exists x\,A(x)) \lor (\exists x\,B(x)).$
+
+
+\bigskip
+\textbf{Proof.}
+
+We prove both directions using the semantic definition of $\vDash$.
+
+\paragraph{(1) $\exists x(A(x)\lor B(x)) \;\Rightarrow\; (\exists xA(x))\lor(\exists xB(x))$}
+
+Let $\mathcal{I}$ be any interpretation with domain $D\neq\varnothing$, and
+let $\sigma$ be any variable assignment.  
+Assume
+
+\[
+\mathcal{I},\sigma \vDash \exists x\,(A(x)\lor B(x)).
+\]
+
+By the semantics of the existential quantifier, there exists some
+$d\in D$ such that
+
+\[
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)\lor B(x).
+\]
+
+By the semantics of disjunction, this means:
+
+\[
+\mathcal{I},\sigma[x\mapsto d] \vDash A(x)
+\quad\text{or}\quad
+\mathcal{I},\sigma[x\mapsto d] \vDash B(x).
+\]
+
+\begin{itemize}
+    \item If $\mathcal{I},\sigma[x\mapsto d] \vDash A(x)$, then by the
+    semantics of $\exists$ we have
+    $\mathcal{I},\sigma \vDash \exists x\,A(x)$.
+
+    \item If $\mathcal{I},\sigma[x\mapsto d] \vDash B(x)$, then
+    $\mathcal{I},\sigma \vDash \exists x\,B(x)$.
+\end{itemize}
+
+In either case, 
+
+\[
+\mathcal{I},\sigma \vDash (\exists x\,A(x)) \lor (\exists x\,B(x)).
+\]
+
+Since $\mathcal{I}$ and $\sigma$ were arbitrary, we obtain
+
+\[
+\models\; \exists x(A(x)\lor B(x)) 
+\to \bigl((\exists x\,A(x))\lor(\exists x\,B(x))\bigr).
+\]
+
+\paragraph{(2) $(\exists xA(x))\lor(\exists xB(x)) \;\Rightarrow\; \exists x(A(x)\lor B(x))$}
+
+Again let $\mathcal{I}$ be any interpretation with domain $D\neq\varnothing$
+and $\sigma$ any assignment.  
+Assume
+
+\[
+\mathcal{I},\sigma \vDash (\exists xA(x))\lor(\exists xB(x)).
+\]
+
+By the semantics of $\lor$,
+
+\[
+\mathcal{I},\sigma \vDash \exists xA(x)
+\quad\text{or}\quad
+\mathcal{I},\sigma \vDash \exists xB(x).
+\]
+
+\begin{itemize}
+    \item Suppose $\mathcal{I},\sigma \vDash \exists xA(x)$.  
+    Then there exists $d\in D$ such that
+    $\mathcal{I},\sigma[x\mapsto d] \vDash A(x)$.
+    Hence
+    \[
+       \mathcal{I},\sigma[x\mapsto d] \vDash A(x)\lor B(x),
+    \]
+    so by the semantics of $\exists$,
+    \[
+       \mathcal{I},\sigma \vDash \exists x(A(x)\lor B(x)).
+    \]
+
+    \item Suppose instead $\mathcal{I},\sigma \vDash \exists xB(x)$.  
+    Then there exists $d\in D$ such that
+    $\mathcal{I},\sigma[x\mapsto d] \vDash B(x)$, and hence again
+    \[
+       \mathcal{I},\sigma[x\mapsto d] \vDash A(x)\lor B(x),
+    \]
+    yielding
+    \[
+       \mathcal{I},\sigma \vDash \exists x(A(x)\lor B(x)).
+    \]
+\end{itemize}
+
+Thus in all cases,
+
+\[
+\mathcal{I},\sigma \vDash \exists x(A(x)\lor B(x)).
+\]
+
+Therefore,
+
+\[
+\models\; 
+\bigl((\exists xA(x))\lor(\exists xB(x))\bigr)
+\to \exists x(A(x)\lor B(x)).
+\]
+\newpage
+\begin{proposition}
+In the structure $\mathcal I$ and assignment $\sigma$ (in class example),
+\[
+\mathcal I,\sigma \vDash \forall x\,\exists y\,\mathsf{lt}(x,y)
+\quad\text{and}\quad
+\mathcal I,\sigma \nvDash \exists y\,\forall x\,\mathsf{lt}(x,y).
+\]
+\end{proposition}
+
+\begin{proof}
+First formula. By the semantics of $\forall$,
+\[
+\mathcal I,\sigma \vDash \forall x\,\exists y\,\mathsf{lt}(x,y)
+\]
+iff for every $d\in D$,
+\[
+\mathcal I,\sigma[x\leftarrow d] \vDash \exists y\,\mathsf{lt}(x,y).
+\]
+Fix $d\in D$. By the semantics of $\exists$ this is equivalent to the existence
+of some $e\in D$ such that
+\[
+\mathcal I,\sigma[x\leftarrow d][y\leftarrow e] \vDash \mathsf{lt}(x,y).
+\]
+Choose $e=d$. Then $d\le d$ in $\mathbb N$, so
+$\mathsf{lt}^{\mathcal I}(d,d)$ holds, hence
+\(\mathcal I,\sigma[x\leftarrow d][y\leftarrow d]\vDash \mathsf{lt}(x,y)\).
+Thus for every $d$ such an $e$ exists, and therefore
+\(\mathcal I,\sigma \vDash \forall x\,\exists y\,\mathsf{lt}(x,y)\).
+
+\medskip
+Second formula. Suppose, for contradiction, that
+\[
+\mathcal I,\sigma \vDash \exists y\,\forall x\,\mathsf{lt}(x,y).
+\]
+By the semantics of $\exists$, there is some $d\in D$ such that
+\[
+\mathcal I,\sigma[y\leftarrow d] \vDash \forall x\,\mathsf{lt}(x,y).
+\]
+By the semantics of $\forall$, this means that for every $e\in D$,
+\[
+\mathcal I,\sigma[y\leftarrow d][x\leftarrow e] \vDash \mathsf{lt}(x,y),
+\]
+i.e.\ $\mathsf{lt}^{\mathcal I}(e,d)$ holds for all $e\in D$.
+
+Take $e=d+1\in\mathbb N$. Then $\mathsf{lt}^{\mathcal I}(d+1,d)$ would have
+to hold, i.e.\ we would need $d+1\le d$, which is false in $\mathbb N$.
+Hence
+\[
+\mathcal I,\sigma[y\leftarrow d][x\leftarrow d+1] \nvDash \mathsf{lt}(x,y),
+\]
+contradicting the assumption that
+$\mathcal I,\sigma[y\leftarrow d] \vDash \forall x\,\mathsf{lt}(x,y)$.
+
+Therefore no such $d$ exists, so
+\[
+\mathcal I,\sigma \nvDash \exists y\,\forall x\,\mathsf{lt}(x,y).
+\]
+\end{proof}
+
+\begin{proposition}
+Let $\Gamma$ be a set of first--order formulas and $A$ a formula.
+Then
+\[
+\Gamma \vDash A \quad\Longleftrightarrow\quad
+\Gamma \cup \{\neg A\} \text{ is unsatisfiable}.
+\]
+\end{proposition}
+
+\begin{proof}
+Recall:
+\begin{itemize}
+  \item $\mathcal I,\sigma \vDash \Gamma$ means $\mathcal I,\sigma \vDash B$ for every $B\in\Gamma$.
+  \item $\Gamma \vDash A$ means: for all $\mathcal I,\sigma$, if $\mathcal I,\sigma \vDash \Gamma$
+        then $\mathcal I,\sigma \vDash A$.
+  \item $\Gamma$ is \emph{unsatisfiable} means: there are no $\mathcal I,\sigma$ with
+        $\mathcal I,\sigma \vDash \Gamma$.
+\end{itemize}
+
+($\Rightarrow$) Assume $\Gamma \vDash A$. Suppose, for contradiction, that
+$\Gamma\cup\{\neg A\}$ is satisfiable. Then there exist $\mathcal I,\sigma$ such that
+$\mathcal I,\sigma \vDash \Gamma$ and $\mathcal I,\sigma \vDash \neg A$.
+From $\Gamma \vDash A$ and $\mathcal I,\sigma \vDash \Gamma$ we obtain $\mathcal I,\sigma \vDash A$.
+But $\mathcal I,\sigma \vDash \neg A$ iff $\mathcal I,\sigma \not\vDash A$, a contradiction.
+Hence no such $\mathcal I,\sigma$ exist, so $\Gamma\cup\{\neg A\}$ is unsatisfiable.
+
+\medskip
+($\Leftarrow$) Assume $\Gamma\cup\{\neg A\}$ is unsatisfiable. To show $\Gamma \vDash A$,
+let $\mathcal I,\sigma$ be arbitrary such that $\mathcal I,\sigma \vDash \Gamma$.
+If $\mathcal I,\sigma \not\vDash A$, then by the negation clause we would have
+$\mathcal I,\sigma \vDash \neg A$, and hence
+\[
+\mathcal I,\sigma \vDash \Gamma \cup \{\neg A\},
+\]
+contradicting the unsatisfiability of $\Gamma\cup\{\neg A\}$. Therefore
+$\mathcal I,\sigma \vDash A$. Since $\mathcal I,\sigma$ was arbitrary, we conclude
+$\Gamma \vDash A$.
+
+Thus $\Gamma \vDash A$ iff $\Gamma\cup\{\neg A\}$ is unsatisfiable.
+\end{proof}
+
+Let
+\[
+A := \exists x \,\forall y\, p(x,f(y)),
+\qquad
+B := \forall y\, p(c,f(y)),
+\]
+where $c$ is a fresh constant symbol not appearing in $A$.
+We prove that $A$ and $B$ are \emph{equi-satisfiable}.
+
+\begin{theorem}
+$A$ is satisfiable iff $B$ is satisfiable.
+\end{theorem}
+
+\begin{proof}
+\textbf{($A$ satisfiable $\Rightarrow$ $B$ satisfiable).}
+Assume $A$ is satisfiable.
+Thus there exists a structure $\mathcal{I}$ and an assignment $\sigma$
+such that
+\[
+\mathcal{I},\sigma \models \exists x\,\forall y\,p(x,f(y)).
+\]
+By the semantics of $\exists$, there exists an element $d \in D^{\mathcal{I}}$
+such that
+\[
+\mathcal{I},\sigma[x := d] \models \forall y\,p(x,f(y)).
+\]
+Thus, for every $e \in D^{\mathcal{I}}$,
+\[
+\mathcal{I},\sigma[x:=d,y:=e] \models p(x,f(y)).
+\]
+
+Now define a new structure $\mathcal{I}'$ obtained from $\mathcal{I}$
+by interpreting the new constant $c$ as $d$,
+i.e.\ $c^{\mathcal{I}'} = d$, and leaving all other interpretations unchanged.
+Then for every $e \in D^{\mathcal{I}'}$ we have
+\[
+\mathcal{I}',\sigma[y:=e] \models p(c,f(y)).
+\]
+Hence
+\[
+\mathcal{I}' \models \forall y\,p(c,f(y)),
+\]
+so $\mathcal{I}' \models B$, and therefore $B$ is satisfiable.
+
+\bigskip
+
+\textbf{($B$ satisfiable $\Rightarrow$ $A$ satisfiable).}
+Assume that $B$ is satisfiable.
+Thus there exists a structure $\mathcal{J}$ such that
+\[
+\mathcal{J} \models \forall y\, p(c,f(y)).
+\]
+Let $d := c^{\mathcal{J}}$ be the interpretation of $c$ in $\mathcal{J}$.
+Then for every $e \in D^{\mathcal{J}}$,
+\[
+\mathcal{J},\sigma[y:=e] \models p(c,f(y)).
+\]
+Since $c^{\mathcal{J}} = d$, this means
+\[
+\mathcal{J},\sigma[x:=d,y:=e] \models p(x,f(y)).
+\]
+
+Therefore,
+\[
+\mathcal{J},\sigma[x:=d] \models \forall y\,p(x,f(y))
+\]
+for every assignment $\sigma$.
+By choosing the witness $x := d$ we obtain
+\[
+\mathcal{J},\sigma \models \exists x\,\forall y\, p(x,f(y)).
+\]
+Thus $\mathcal{J},\sigma \models A$, and hence $A$ is satisfiable.
+
+\bigskip
+
+Since each direction holds, $A$ and $B$ are equi-satisfiable.
+\end{proof}
+\newpage
+Let
+\[
+C := \forall y\,\exists x\,p(x,y),
+\qquad
+D := \forall y\,p(g(y),y),
+\]
+where $g$ is a fresh unary function symbol not appearing in $C$.
+We prove that $C$ and $D$ are \emph{equi-satisfiable}.
+
+\begin{theorem}
+$C$ is satisfiable iff $D$ is satisfiable.
+\end{theorem}
+
+\begin{proof}
+\textbf{($C$ satisfiable $\Rightarrow$ $D$ satisfiable).}
+Assume that $C$ is satisfiable.
+Then there exists a structure $\mathcal{I}$ and an assignment $\sigma$
+such that
+\[
+\mathcal{I},\sigma \models \forall y\,\exists x\,p(x,y).
+\]
+By the semantics of $\forall$, this means that for every $d \in D^{\mathcal{I}}$,
+\[
+\mathcal{I},\sigma[y := d] \models \exists x\,p(x,y).
+\]
+By the semantics of $\exists$, for each $d \in D^{\mathcal{I}}$ there exists
+some element $e \in D^{\mathcal{I}}$ (which may depend on $d$) such that
+\[
+\mathcal{I},\sigma[y := d, x := e] \models p(x,y).
+\]
+
+Define a function $h : D^{\mathcal{I}} \to D^{\mathcal{I}}$ by choosing, for
+each $d \in D^{\mathcal{I}}$, one such witness $e$ and setting $h(d) := e$.
+Now define a new structure $\mathcal{I}'$ that extends $\mathcal{I}$ by
+interpreting the new function symbol $g$ as $h$, i.e.\ $g^{\mathcal{I}'} = h$,
+and otherwise agrees with $\mathcal{I}$ on all symbols of the original language.
+
+We claim that $\mathcal{I}' \models D$.
+Let $d \in D^{\mathcal{I}'}$ be arbitrary.
+By definition of $h$ and $g^{\mathcal{I}'}$, we have
+$g^{\mathcal{I}'}(d) = h(d)$, and $h(d)$ is chosen so that
+\[
+\mathcal{I},\sigma[y := d, x := h(d)] \models p(x,y).
+\]
+Since $\mathcal{I}'$ and $\mathcal{I}$ agree on the interpretation of $p$,
+it follows that
+\[
+\mathcal{I}',\sigma[y := d] \models p(g(y),y).
+\]
+Because $d$ was arbitrary, we conclude that
+\[
+\mathcal{I}' \models \forall y\,p(g(y),y),
+\]
+so $\mathcal{I}' \models D$, and therefore $D$ is satisfiable.
+
+\bigskip
+
+\textbf{($D$ satisfiable $\Rightarrow$ $C$ satisfiable).}
+Conversely, suppose that $D$ is satisfiable.
+Then there exists a structure $\mathcal{J}$ such that
+\[
+\mathcal{J} \models \forall y\,p(g(y),y).
+\]
+Let $h := g^{\mathcal{J}} : D^{\mathcal{J}} \to D^{\mathcal{J}}$ be the
+interpretation of $g$ in $\mathcal{J}$.
+
+We show that $\mathcal{J}$ is also a model of $C$ when viewed as a structure
+for the original language (i.e.\ ignoring the extra symbol $g$ in the
+statement of $C$).
+Let $d \in D^{\mathcal{J}}$ be arbitrary.
+Since
+\[
+\mathcal{J} \models \forall y\,p(g(y),y),
+\]
+we have, for every assignment $\sigma$,
+\[
+\mathcal{J},\sigma[y := d] \models p(g(y),y).
+\]
+Unfolding the term $g(y)$, this is the same as
+\[
+\mathcal{J},\sigma[y := d] \models p(h(d),y).
+\]
+Equivalently,
+\[
+\mathcal{J},\sigma[y := d, x := h(d)] \models p(x,y).
+\]
+Thus, for each $d \in D^{\mathcal{J}}$, there exists an element
+$e = h(d) \in D^{\mathcal{J}}$ such that
+\[
+\mathcal{J},\sigma[y := d, x := e] \models p(x,y).
+\]
+By the semantics of $\exists$, this means
+\[
+\mathcal{J},\sigma[y := d] \models \exists x\,p(x,y)
+\]
+for every $d \in D^{\mathcal{J}}$.
+By the semantics of $\forall$, we conclude that
+\[
+\mathcal{J},\sigma \models \forall y\,\exists x\,p(x,y),
+\]
+i.e.\ $\mathcal{J},\sigma \models C$.
+Hence $C$ is satisfiable.
+
+\bigskip
+
+Since each direction holds, we conclude that $C$ and $D$ are equi-satisfiable.
+\end{proof}
+
+\end{document}
