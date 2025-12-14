@@ -1,8 +1,9 @@
+/*
 interface Comparable {
     public void compareTo(Rectangle o);
 }
-
-class Rectangle implements Comparable {
+*/
+class Rectangle implements Comparable<Rectangle> {
     int centreX, centreY, len, width, color;
     public Rectangle(int centreX, int centreY, int len, int width, int color) {
         this.centreX = centreX;
@@ -12,12 +13,12 @@ class Rectangle implements Comparable {
         this.color = color;
     }
     @Override
-    public void compareTo(Rectangle o) {
+    public /*void*/ int compareTo(Rectangle o) {
         int areaT = this.len * this.width;
         int areaO = o.len * o.width;
-        if(areaT < areaO) System.out.println("-1");
-        if(areaT > areaO) System.out.println("1");
-        if(areaT == areaO) System.out.println("0");       
+        if(areaT < areaO) return -1; //System.out.println("-1");
+        else if(areaT > areaO) return 1; //System.out.println("1");
+        else return 0; //System.out.println("0");       
     }
 }
 

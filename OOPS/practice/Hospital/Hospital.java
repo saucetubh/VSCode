@@ -2,7 +2,7 @@ import java.util.*;
 public class Hospital {
     Queue<String> waitingList; //Queue is a predefined interface in java
     Stack<String> emergencyStack; 
-    List<String> attendedPatients;
+    List<String> attendedPatients; //List is a predefined interface in java
 
     public Hospital() {
         this.waitingList = new LinkedList<>(); //LinkedList is a concrete class in java implementing both queue and list interface

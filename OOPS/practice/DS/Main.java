@@ -38,7 +38,7 @@ public class Main {
         al.add("a");
         al.add("b");        
         List<String> ll = new LinkedList<>();
-//methods i can call depends on LHS i.e in this case only the methods deifned in list interface
+//methods i can call depends on LHS i.e in this case only the methods defined in list interface
 //version of the methods implemented depends on the RHS object type (run time polymorphism, overriding methods)
         ll.add("x");
         ll.add("y");        
@@ -56,7 +56,7 @@ public class Main {
         names.set(0, "Eve"); // Updating element at index 0
         names.remove(names.size() - 1); // Removing last element
         printList(names); // Output: Eve, Bob
-        iter(names);
+        iter(names); 
         iter2(names);
     }
 

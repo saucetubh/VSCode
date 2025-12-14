@@ -26,9 +26,9 @@ public class University {
         }
     }
     public void displayStudentReport(String name) {
-        Map<String, Integer> grades = studentData.get(name);
+        //Map<String, Integer> grades = studentData.get(name);
         System.out.println("Report for: " +name);
-        for(Map.Entry<String, Integer> i : grades.entrySet()) {
+        for(Map.Entry<String, Integer> i : studentData.get(name).entrySet()) {
             System.out.println(" Subject: " + i.getKey() + ", Marks: " + i.getValue());
         }
         System.out.println(" Attendance: " + attendance.get(name) + "%");
