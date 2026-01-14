@@ -1,7 +1,7 @@
 USE dbms_lab;
 
-TRUNCATE TABLE Student;
-TRUNCATE TABLE Course;
+TRUNCATE TABLE Student; /*Truncating a table means removing all rows from the table, but the table structure and its columns, constraints, indexes etc. remain intact*/
+TRUNCATE TABLE Course; /*Basically means everytime we source data.sql it rewrites all rows after truncating*/
 
 INSERT INTO Student VALUES
 (1, 'Aman', 19, 'CSE'),
