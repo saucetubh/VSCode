@@ -18,4 +18,13 @@ SELECT * FROM student ORDER BY age;
 
 SELECT * FROM student ORDER BY age DESC, name ASC; /*first condition takes priority*/
 
-SELECT * FROM student WHERE name LIKE 'A%';
+SELECT * FROM student WHERE name LIKE 'A%' ORDER BY name;
+
+WITH ordered_table AS (SELECT * FROM student ORDER BY age DESC, name ASC) SELECT id,name,age from ordered_table WHERE department='CSE'; /*kind of like nesting queries?*/
+
+Select title, CASE 
+                WHEN credits = 3 THEN 'no lab'
+                WHEN credits = 4 THEN 'lab'
+              END 
+                AS credit_description
+FROM course WHERE dept='CSE';
