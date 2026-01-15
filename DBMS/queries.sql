@@ -38,3 +38,7 @@ GROUP BY
   dept
 HAVING
   count(*) > 1;
+
+Select * from professors order by joined ASC LIMIT 3; /*gives first 3 rows after sorting in ascending order of joined date*/
+
+select name, dept from professors where joined > '2016-10-10';

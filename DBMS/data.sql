@@ -2,6 +2,7 @@ USE dbms_lab;
 
 TRUNCATE TABLE Students; /*Truncating a table means removing all rows from the table, but the table structure and its columns, constraints, indexes etc. remain intact*/
 TRUNCATE TABLE Courses; /*Basically means everytime we source data.sql it rewrites all rows after truncating*/
+TRUNCATE TABLE Professors;
 
 INSERT INTO Students VALUES
 (1, 'Aman', 19, 'CSE'),
@@ -39,8 +40,8 @@ INSERT INTO Courses VALUES
 (304, 'Manufacturing Processes', 3, 'DEL', 'ME', 17);
 
 INSERT INTO Professors VALUES 
-(1, 'Dr. Sharma', 'CSE'),
-(2, 'Dr. Verma', 'ECE'),
-(3, 'Dr. Gupta', 'ME'),
-(4, 'Dr. Singh', 'CSE'),
-(5, 'Dr. Patel', 'ECE');
+(1, 'Dr. Sharma', 'CSE', '2015-08-15', '09:00:05'),
+(2, 'Dr. Verma', 'ECE', '2016-09-10', DEFAULT),
+(3, 'Dr. Gupta', 'ME', '2017-07-20', '08:04:50'),
+(4, 'Dr. Singh', 'CSE', '2018-06-25', '08:20:00'),
+(5, 'Dr. Patel', 'ECE', '2019-05-30', '17:10:41');

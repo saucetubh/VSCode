@@ -4,6 +4,7 @@ USE dbms_lab; /*sets the current working database to dbms_lab. All commands will
 
 DROP TABLE IF EXISTS Students; /*deletes the entire table if it exists along with all it's data*/
 DROP TABLE IF EXISTS Courses;
+DROP TABLE IF EXISTS Professors;
 
 CREATE TABLE IF NOT EXISTS Students (
     id INT PRIMARY KEY, /*id is the column name, INT is the column data type, Primary key implies - not null, unique and automatically indexed*/
@@ -34,6 +35,8 @@ ADD COLUMN enrolled INT DEFAULT 0;
 CREATE Table IF NOT EXISTS Professors (
     id INT PRIMARY KEY,
     name VARCHAR(50) NOT NULL, 
-    dept VARCHAR(30) NOT NULL
+    dept VARCHAR(30) NOT NULL,
+    joined date,
+    in_time time DEFAULT '08:00:00'
 );
 
