@@ -30,7 +30,7 @@ Select title, CASE
 FROM Courses WHERE dept='CSE';
 
 SELECT 
-  count(*),
+  count(*) AS professor_count,
   dept 
 FROM 
   Professors
