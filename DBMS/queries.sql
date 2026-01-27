@@ -42,3 +42,5 @@ HAVING
 Select * from professors order by joined ASC LIMIT 3; /*gives first 3 rows after sorting in ascending order of joined date*/
 
 select name, dept from professors where joined > '2016-10-10';
+
+/*Practice concepts of JOIN, Foreign Key and Relational Tables*/
