@@ -1,17 +1,33 @@
 CREATE DATABASE IF NOT EXISTS dbms_lab;
 
 USE dbms_lab; /*sets the current working database to dbms_lab. All commands will be executed within this database*/
-
+/*
+Because of foreign key constraints, the order of dropping tables and creating tables matters. Must create parent tables first before child tables and drop child tables first before parent tables.
+Otherwise u get error. Concept of Relational Integrity.
+*/
+DROP TABLE IF EXiSTS Enrollments; 
 DROP TABLE IF EXISTS Students; /*deletes the entire table if it exists along with all it's data*/
 DROP TABLE IF EXISTS Courses;
 DROP TABLE IF EXISTS Professors;
+DROP TABLE IF EXISTS Branch;
+
+
+CREATE TABLE IF NOT EXISTS Branch (
+    id VARCHAR(2) PRIMARY KEY,
+    name VARCHAR(50) NOT NULL
+);
 
 CREATE TABLE IF NOT EXISTS Students (
     id INT PRIMARY KEY, /*id is the column name, INT is the column data type, Primary key implies - not null, unique and automatically indexed*/
     name VARCHAR(50) NOT NULL, /*VARCHAR(50) means variable length string with max 50 characters, NOT NULL means this field must always have a value, if left as null then it throws error*/
     age INT CHECK (age >= 17),
-    department VARCHAR(30)
-);
+    department VARCHAR(30),
+    branch_id VARCHAR(2),
+    FOREIGN KEY(branch_id) REFERENCES Branch(id) /*one to many relationship between Branch and Students table*/
+    ON DELETE set null
+) ENGINE = InnoDB; /*InnoDB is a storage engine that supports foreign key constraints and transactions*/
+
+ALTER Table Students MODIFY id INT(4) ZEROFILL; /*INT(4) means id will have atleast 4 digits, ZEROFILL will allow the padding to be visible, modifies the id column to have leading zeros up to 4 digits e.g., 0001, 0002*/
 
 CREATE TABLE IF NOT EXISTS Courses (
     id INT PRIMARY KEY,
@@ -27,7 +43,7 @@ This ensures referential integrity and helps maintain consistent and accurate da
 
 ALTER Table Students
 RENAME COLUMN department TO dept,
-ADD CONSTRAINT chk_dept CHECK (dept IN ('CSE', 'ECE', 'ME', 'EEE', 'ENI'));
+ADD CONSTRAINT chk_dept CHECK (dept IN ('CSE', 'ECE', 'ME', 'EEE', 'ENI', 'ECON', 'BIO')); /*adding a constraint to ensure dept column only contains specified values*/
 
 ALTER Table Courses
 ADD COLUMN enrolled INT DEFAULT 0;
@@ -40,3 +56,10 @@ CREATE Table IF NOT EXISTS Professors (
     in_time time DEFAULT '08:00:00'
 );
 
+CREATE TABLE IF NOT EXISTS Enrollments (
+    student_id INT(4) ZEROFILL,
+    course_id INT,
+    PRIMARY KEY (student_id, course_id), /*composite primary key, many to many relationship*/
+    FOREIGN KEY (student_id) REFERENCES Students(id) ON DELETE CASCADE,
+    FOREIGN KEY (course_id) REFERENCES Courses(id) ON DELETE CASCADE
+);
