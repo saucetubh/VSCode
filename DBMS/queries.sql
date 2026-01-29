@@ -47,6 +47,10 @@ SELECT age,dept,count(name) as student_count FROM Students GROUP BY age,dept HAV
 
 select dept,min(age) as youngest_student from students group by dept;
 
+select name from students where name like '%S%'; /*names containing S anywhere. Pattern matching is case insensitive so it outputs containing s and S*/
+
+select dept,avg(age) as avg_age from students group by dept order by avg_age desc;
+
 /*Practice concepts of JOIN, Foreign Key and Relational Tables*/
 
 SELECT 
@@ -70,4 +74,3 @@ FROM Enrollments e
 JOIN Students s ON e.student_id = s.id
 JOIN Courses c ON e.course_id = c.id
 WHERE s.id = 1;
-

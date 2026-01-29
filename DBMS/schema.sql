@@ -15,6 +15,7 @@ DROP TABLE IF EXISTS Branch;
 CREATE TABLE IF NOT EXISTS Branch (
     id VARCHAR(2) PRIMARY KEY,
     name VARCHAR(50) NOT NULL
+    /* CONSTRAINT id_chk CHECK (id like 'A%' OR id like 'B%') -> givees error not sure why (adding a constraint to ensure id column only contains values starting with A or B)*/
 );
 
 CREATE TABLE IF NOT EXISTS Students (
@@ -29,12 +30,16 @@ CREATE TABLE IF NOT EXISTS Students (
 
 ALTER Table Students MODIFY id INT(4) ZEROFILL; /*INT(4) means id will have atleast 4 digits, ZEROFILL will allow the padding to be visible, modifies the id column to have leading zeros up to 4 digits e.g., 0001, 0002*/
 
+ALTER TABLE Students DROP FOREIGN KEY Students_ibfk_1; /*drops the foreign key constraint previously added*/
+ALTER TABLE Students ADD CONSTRAINT custom_fk_name FOREIGN KEY(branch_id) REFERENCES Branch(id) ON DELETE SET NULL ON UPDATE CASCADE; /*renames the foreign key constraint to custom_fk_name, also adds ON UPDATE CASCADE which means if the referenced Branch id is updated, it will automatically update in Students table*/
+
 CREATE TABLE IF NOT EXISTS Courses (
-    id INT PRIMARY KEY,
+    id INT,
     title VARCHAR(100) NOT NULL,
     credits INT CHECK (credits > 0),
     type VARCHAR(20) NOT NULL,
-    dept VARCHAR(20) NOT NULL
+    dept VARCHAR(20) NOT NULL,
+    CONSTRAINT pk_course_id PRIMARY KEY (id)
 );
 
 /*Primary Keys and Foreign Keys are used to establish relationships between tables in a database. 
