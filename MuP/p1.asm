@@ -5,7 +5,7 @@
     str db 100
         db ?
         db 100 dup(?)    
-    msg1 db 'Input Text:','$'
+    msg1 db 'Input:','$'
     msg2 db 'Output:','$'
     newLine db 13,10,'$'
 
@@ -29,21 +29,31 @@ main proc
     xor cx,cx
     mov cl,str[1]
     mov si,2
-    convert:
+    check:
+        cmp str[si],'A'
+        jb skip
+        cmp str[si],'Z'
+        ja check2
+        mov al,str[si]
+        add al,20h
+        mov str[si],al
+        jmp skip
+    check2:
         cmp str[si],'a'
-        jb
+        jb skip
         cmp str[si],'z'
         ja skip
         mov al,str[si]
         sub al,20h
         mov str[si],al
+        jmp skip
     skip: 
         inc si
-    loop convert
+    loop check
 
     xor bx,bx
     mov bl,str[1]
-    mov str[bx+2],'$'
+    mov str[bx+2],'$' ;null terminating the string
 
     mov ah,09h
     lea dx,msg2
