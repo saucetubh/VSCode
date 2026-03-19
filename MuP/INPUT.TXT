@@ -1,0 +1,15 @@
+Subject: English
+Student: s3
+Marks: 88
+Subject: Math
+Student: s1
+Marks: 91
+Subject: Biology
+Student: s3
+Marks: 73
+Subject: Physics
+Student: s2
+Marks: 84
+Subject: History
+Student: s1
+Marks: 76

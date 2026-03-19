@@ -1,0 +1,9 @@
+Type: Quiz
+Code: CS101
+Score: 18
+Type: Midsem
+Code: ME205
+Score: 42
+Type: Quiz
+Code: CS101
+Score: 15
