@@ -1,0 +1,5 @@
+start s2
+pause 99
+resume 99
+terminate 99
+wait 3

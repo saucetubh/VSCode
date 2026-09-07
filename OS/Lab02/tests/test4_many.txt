@@ -1,0 +1,7 @@
+start s2
+start s5
+start s3
+pause 2
+resume 2
+terminate 3
+wait 5

@@ -1,0 +1,7 @@
+{
+    "name": "tc06: all six files",
+    "sources": ["tc_hello.c", "tc_math.c", "tc_strings.c", "tc_bad_semicolon.c", "tc_bad_undeclared.c", "tc_bad_brace.c"],
+    "output": "app",
+    "expected_failed": ["tc_bad_semicolon.c", "tc_bad_undeclared.c", "tc_bad_brace.c"],
+    "expected_exit": 1
+}

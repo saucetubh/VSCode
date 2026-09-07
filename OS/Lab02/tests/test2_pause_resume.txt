@@ -1,0 +1,5 @@
+start s4
+pause 1
+wait 1
+resume 1
+wait 4

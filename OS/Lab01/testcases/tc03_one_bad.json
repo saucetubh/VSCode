@@ -1,0 +1,7 @@
+{
+    "name": "tc03: 3 files (1 broken)",
+    "sources": ["tc_hello.c", "tc_math.c", "tc_bad_semicolon.c"],
+    "output": "app",
+    "expected_failed": ["tc_bad_semicolon.c"],
+    "expected_exit": 1
+}

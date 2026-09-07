@@ -1,0 +1,159 @@
+====================================================================
+ Test Cases - simple_sort_wrapper.cpp (Array Sort Visualizer)
+ Compiled using command: g++ -o simple_sort_wrapper simple_sort_wrapper.cpp
+====================================================================
+
+These cases cover the categories described in the report's Testing
+Process: sorted, reverse-sorted, duplicates, single element, empty,
+and negative numbers. (Bold-highlight swap elements from printArray 
+for readability are stripped here; console output shows the two just
+swapped values in bold.)
+
+
+--------------------------------------------------------------
+Test 1: Reverse-sorted input, worst case (n = 5)
+--------------------------------------------------------------
+Input:
+5
+5 4 3 2 1
+
+Output:
+Enter number of elements: Enter 5 integers:
+Initial array: [ 5 4 3 2 1 ]  (inversions = 10)
+
+Iter 1: [ 4 5 3 2 1 ]  inversions = 9
+Iter 2: [ 4 3 5 2 1 ]  inversions = 8
+Iter 3: [ 4 3 2 5 1 ]  inversions = 7
+Iter 4: [ 4 3 2 1 5 ]  inversions = 6
+Iter 5: [ 3 4 2 1 5 ]  inversions = 5
+Iter 6: [ 3 2 4 1 5 ]  inversions = 4
+Iter 7: [ 3 2 1 4 5 ]  inversions = 3
+Iter 8: [ 2 3 1 4 5 ]  inversions = 2
+Iter 9: [ 2 1 3 4 5 ]  inversions = 1
+Iter 10: [ 1 2 3 4 5 ]  inversions = 0
+
+Final array: [ 1 2 3 4 5 ]  (inversions = 0)
+Total swap-iterations: 10
+
+
+--------------------------------------------------------------
+Test 2: Random input with duplicates (n = 8)
+--------------------------------------------------------------
+Input:
+8
+3 1 4 1 5 9 2 6
+
+Output:
+Enter number of elements: Enter 8 integers:
+Initial array: [ 3 1 4 1 5 9 2 6 ]  (inversions = 8)
+
+Iter 1: [ 1 3 4 1 5 9 2 6 ]  inversions = 7
+Iter 2: [ 1 3 1 4 5 9 2 6 ]  inversions = 6
+Iter 3: [ 1 3 1 4 5 2 9 6 ]  inversions = 5
+Iter 4: [ 1 3 1 4 5 2 6 9 ]  inversions = 4
+Iter 5: [ 1 1 3 4 5 2 6 9 ]  inversions = 3
+Iter 6: [ 1 1 3 4 2 5 6 9 ]  inversions = 2
+Iter 7: [ 1 1 3 2 4 5 6 9 ]  inversions = 1
+Iter 8: [ 1 1 2 3 4 5 6 9 ]  inversions = 0
+
+Final array: [ 1 1 2 3 4 5 6 9 ]  (inversions = 0)
+Total swap-iterations: 8
+
+
+--------------------------------------------------------------
+Test 3: Already-sorted input, best case (n = 5)
+--------------------------------------------------------------
+Input:
+5
+1 2 3 4 5
+
+Output:
+Enter number of elements: Enter 5 integers:
+Initial array: [ 1 2 3 4 5 ]  (inversions = 0)
+
+Final array: [ 1 2 3 4 5 ]  (inversions = 0)
+Total swap-iterations: 0
+
+
+--------------------------------------------------------------
+Test 4: Single element (n = 1)
+--------------------------------------------------------------
+Input:
+1
+42
+
+Output:
+Enter number of elements: Enter 1 integers:
+Initial array: [ 42 ]  (inversions = 0)
+
+Final array: [ 42 ]  (inversions = 0)
+Total swap-iterations: 0
+
+
+--------------------------------------------------------------
+Test 5: Empty array (n = 0)
+--------------------------------------------------------------
+Input:
+0
+
+Output:
+Enter number of elements: Enter 0 integers:
+Initial array: [ ]  (inversions = 0)
+
+Final array: [ ]  (inversions = 0)
+Total swap-iterations: 0
+
+
+--------------------------------------------------------------
+Test 6: Negative numbers (n = 6)
+--------------------------------------------------------------
+Input:
+6
+-3 5 -1 0 -8 2
+
+Output:
+Enter number of elements: Enter 6 integers:
+Initial array: [ -3 5 -1 0 -8 2 ]  (inversions = 7)
+
+Iter 1: [ -3 -1 5 0 -8 2 ]  inversions = 6
+Iter 2: [ -3 -1 0 5 -8 2 ]  inversions = 5
+Iter 3: [ -3 -1 0 -8 5 2 ]  inversions = 4
+Iter 4: [ -3 -1 0 -8 2 5 ]  inversions = 3
+Iter 5: [ -3 -1 -8 0 2 5 ]  inversions = 2
+Iter 6: [ -3 -8 -1 0 2 5 ]  inversions = 1
+Iter 7: [ -8 -3 -1 0 2 5 ]  inversions = 0
+
+Final array: [ -8 -3 -1 0 2 5 ]  (inversions = 0)
+Total swap-iterations: 7
+
+
+--------------------------------------------------------------
+Test 7: All duplicates (n = 4)
+--------------------------------------------------------------
+Input:
+4
+7 7 7 7
+
+Output:
+Enter number of elements: Enter 4 integers:
+Initial array: [ 7 7 7 7 ]  (inversions = 0)
+
+Final array: [ 7 7 7 7 ]  (inversions = 0)
+Total swap-iterations: 0
+
+
+====================================================================
+Summary
+====================================================================
+Test 1 - Reverse-sorted (n=5):        10 swap-iterations, ends sorted
+Test 2 - Duplicates, random (n=8):     8 swap-iterations, ends sorted
+Test 3 - Already sorted (n=5):         0 swap-iterations
+Test 4 - Single element (n=1):         0 swap-iterations
+Test 5 - Empty array (n=0):            0 swap-iterations
+Test 6 - Negative numbers (n=6):       7 swap-iterations, ends sorted
+Test 7 - All duplicates (n=4):         0 swap-iterations
+
+All outputs confirm: the total swap-iteration count equals the
+initial inversion count, and the inversion count decreases by
+exactly 1 at each recorded iteration, reaching 0 when the array
+is fully sorted.

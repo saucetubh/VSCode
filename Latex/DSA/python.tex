@@ -1,0 +1,5513 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage[margin=1in,top=1.1in,bottom=1.1in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage[colorlinks=true,linkcolor=blue!60!black,urlcolor=blue!70!black]{hyperref}
+\usepackage[most,breakable]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{multicol}
+\usepackage{mdframed}
+
+% ── Colours ──────────────────────────────────────────────────
+\definecolor{codebg}{RGB}{250,250,252}
+\definecolor{pyblue}{RGB}{0,0,188}
+\definecolor{pygreen}{RGB}{0,128,0}
+\definecolor{pyorange}{RGB}{186,74,0}
+\definecolor{pygray}{RGB}{120,120,120}
+\definecolor{accentblue}{RGB}{0,82,165}
+\definecolor{noteblue}{RGB}{232,244,255}
+\definecolor{noteborder}{RGB}{0,100,200}
+\definecolor{compyellow}{RGB}{255,251,222}
+\definecolor{compborder}{RGB}{190,140,0}
+\definecolor{tipgreen}{RGB}{232,255,232}
+\definecolor{tipborder}{RGB}{0,140,0}
+\definecolor{warnred}{RGB}{255,235,235}
+\definecolor{warnborder}{RGB}{190,0,0}
+
+% ── Listing Styles ────────────────────────────────────────────
+\lstdefinestyle{py}{
+  language=Python,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{pyblue}\bfseries,
+  stringstyle=\color{pyorange},
+  commentstyle=\color{pygreen}\itshape,
+  numberstyle=\tiny\color{pygray},
+  numbers=left, stepnumber=1, numbersep=8pt,
+  frame=single, framerule=0.4pt, rulecolor=\color{gray!40},
+  breaklines=true, tabsize=4, showstringspaces=false, keepspaces=true,
+  xleftmargin=18pt, xrightmargin=4pt, aboveskip=8pt, belowskip=8pt,
+  morekeywords={None,True,False,self,cls,print,range,len,int,str,list,
+    dict,set,tuple,float,bool,type,super,enumerate,zip,map,filter,
+    sorted,reversed,sum,min,max,abs,isinstance,hasattr,getattr,
+    setattr,append,extend,pop,insert,remove,index,count,values,keys,
+    items,get,update,clear,copy,defaultdict,Counter,deque,heapq,
+    bisect,lru_cache,cache,dataclass,property,staticmethod,
+    classmethod,yield,lambda,assert,pass,raise,del,with,as,
+    from,import,global,nonlocal},
+}
+\lstdefinestyle{cpp}{
+  language=C++,
+  backgroundcolor=\color{codebg},
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{pyblue}\bfseries,
+  stringstyle=\color{pyorange},
+  commentstyle=\color{pygreen}\itshape,
+  numberstyle=\tiny\color{pygray},
+  numbers=left, frame=single, breaklines=true, tabsize=4,
+  showstringspaces=false, xleftmargin=18pt, aboveskip=8pt, belowskip=8pt,
+}
+\lstset{style=py}
+
+% ── tcolorbox environments ────────────────────────────────────
+\newtcolorbox{notebox}[1][Note]{
+  colback=noteblue, colframe=noteborder,
+  title=\textbf{#1}, fonttitle=\small,
+  breakable, boxrule=0.5pt, left=4pt, right=4pt, top=4pt, bottom=4pt}
+\newtcolorbox{compbox}[1][Complexity]{
+  colback=compyellow, colframe=compborder,
+  title=\textbf{#1}, fonttitle=\small,
+  breakable, boxrule=0.5pt, left=4pt, right=4pt, top=4pt, bottom=4pt}
+\newtcolorbox{tipbox}[1][Tip]{
+  colback=tipgreen, colframe=tipborder,
+  title=\textbf{#1}, fonttitle=\small,
+  breakable, boxrule=0.5pt, left=4pt, right=4pt, top=4pt, bottom=4pt}
+\newtcolorbox{warnbox}[1][Warning]{
+  colback=warnred, colframe=warnborder,
+  title=\textbf{#1}, fonttitle=\small,
+  breakable, boxrule=0.5pt, left=4pt, right=4pt, top=4pt, bottom=4pt}
+
+% ── Page style ───────────────────────────────────────────────
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\color{gray}\textit{\leftmark}}
+\fancyhead[R]{\small\thepage}
+\fancyfoot[C]{\small\color{gray}\textit{DSA in Python --- Complete Reference Guide}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% ── Chapter/Section Formatting ───────────────────────────────
+\titleformat{\chapter}[display]
+  {\normalfont\huge\bfseries\color{accentblue}}
+  {\large\chaptertitlename\ \thechapter}{12pt}{\Huge}
+\titlespacing*{\chapter}{0pt}{10pt}{20pt}
+\titleformat{\section}{\large\bfseries\color{accentblue!80!black}}{{\thesection}}{0.6em}{}
+\titleformat{\subsection}{\normalsize\bfseries\color{accentblue!60!black}}{{\thesubsection}}{0.5em}{}
+
+% ── Macros ───────────────────────────────────────────────────
+\newcommand{\bigO}[1]{\ensuremath{\mathcal{O}(#1)}}
+\newcommand{\py}[1]{\texttt{\color{pyblue}#1}}
+\newcommand{\TC}[1]{\textbf{Time:}\ $\mathcal{O}(#1)$\quad}
+\newcommand{\SC}[1]{\textbf{Space:}\ $\mathcal{O}(#1)$}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%── Title Page ──────────────────────────────────────────────
+\begin{titlepage}
+\centering\vspace*{1.8cm}
+{\Huge\bfseries\color{accentblue}Data Structures \&\\[6pt]Algorithms in Python\par}
+\vspace{0.5cm}
+{\color{gray}\rule{0.65\linewidth}{1pt}\par}
+\vspace{0.4cm}
+{\Large A Complete Reference for C\texttt{++} Programmers\par}
+\vspace{0.3cm}
+{\small\color{gray}
+Arrays $\cdot$ Linked Lists $\cdot$ Stacks $\cdot$ Queues $\cdot$ Trees $\cdot$ Heaps $\cdot$
+Hash Tables $\cdot$ Tries\\
+Segment Trees $\cdot$ Fenwick Trees $\cdot$ Sparse Tables $\cdot$ DSU\\
+Graphs $\cdot$ Sorting $\cdot$ Searching $\cdot$ Backtracking $\cdot$ Dynamic Programming\\
+Greedy $\cdot$ Divide \& Conquer $\cdot$ String Algorithms $\cdot$
+Mathematical Algorithms $\cdot$ Bit Manipulation\par}
+\vspace{0.5cm}
+{\color{gray}\rule{0.65\linewidth}{1pt}\par}
+\vspace{1.5cm}
+{\large\textit{Every Algorithm $\cdot$ Every Data Structure $\cdot$ Every Complexity}\par}
+\vfill{\today}
+\end{titlepage}
+
+\tableofcontents\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Foundations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Python for C\texttt{++} Programmers}
+%%%==========================================================
+
+This guide assumes full fluency in C\texttt{++} DSA\@. Python is dynamically typed,
+garbage-collected, and has arbitrary-precision integers --- no overflow, no manual memory.
+The trade-off is speed: expect Python to be 10--100$\times$ slower than C\texttt{++}.
+
+%─────────────────────────────────────────────────────────────
+\section{C\texttt{++} $\leftrightarrow$ Python Quick-Reference}
+%─────────────────────────────────────────────────────────────
+
+\begin{longtable}{@{}lll@{}}
+\toprule
+\textbf{Concept} & \textbf{C++} & \textbf{Python 3} \\
+\midrule
+\endhead
+Dynamic array       & \texttt{vector<int>}             & \texttt{list} \\
+Stack               & \texttt{stack<T>}                & \texttt{list} or \texttt{collections.deque} \\
+Queue               & \texttt{queue<T>}                & \texttt{collections.deque} \\
+Deque               & \texttt{deque<T>}                & \texttt{collections.deque} \\
+Priority queue (max)& \texttt{priority\_queue<T>}      & \texttt{heapq} (negate for max-heap) \\
+Ordered map         & \texttt{map<K,V>}                & \texttt{dict} (insertion-ordered 3.7+) \\
+Unordered map       & \texttt{unordered\_map<K,V>}     & \texttt{dict} \\
+Ordered set         & \texttt{set<T>}                  & \texttt{sortedcontainers.SortedList} \\
+Unordered set       & \texttt{unordered\_set<T>}       & \texttt{set} \\
+Pair                & \texttt{pair<A,B>}               & \texttt{tuple} \\
+Tuple               & \texttt{tuple<...>}              & \texttt{tuple} \\
+String              & \texttt{std::string} (mutable)   & \texttt{str} (immutable) \\
+Null pointer        & \texttt{nullptr}                 & \texttt{None} \\
+Boolean literals    & \texttt{true / false}            & \texttt{True / False} \\
+Integer overflow    & Yes --- use \texttt{long long}   & Never (arbitrary precision) \\
+Infinity            & \texttt{INT\_MAX, LLONG\_MAX}    & \texttt{float('inf')} \\
+Auto type           & \texttt{auto x = ...}            & No declaration needed \\
+Lambda              & \texttt{[](int x)\{return x*2;\}}& \texttt{lambda x: x*2} \\
+Range-based for     & \texttt{for(auto x : vec)}       & \texttt{for x in lst} \\
+Ternary             & \texttt{cond ? a : b}            & \texttt{a if cond else b} \\
+Sort (custom cmp)   & \texttt{sort(a,b,cmp)}           & \texttt{sorted(lst, key=func)} \\
+Modular inverse     & Manual (ext. Euclidean)          & \texttt{pow(a, -1, mod)} \\
+GCD                 & \texttt{\_\_gcd(a,b)}            & \texttt{math.gcd(a,b)} \\
+Swap                & \texttt{swap(a,b)}               & \texttt{a, b = b, a} \\
+Bit operations      & \texttt{\&, |, \^{}, $\sim$, <<, >>} & same operators \\
+Input               & \texttt{cin >> x}                & \texttt{x = int(input())} \\
+\bottomrule
+\end{longtable}
+
+%─────────────────────────────────────────────────────────────
+\section{Essential Python Idioms}
+%─────────────────────────────────────────────────────────────
+
+\begin{lstlisting}
+# ── Swap (no temp variable) ───────────────────────────────────
+a, b = b, a
+
+# ── Multiple assignment ───────────────────────────────────────
+x, y, z = 1, 2, 3
+first, *rest = [1, 2, 3, 4]    # first=1, rest=[2,3,4]
+*init, last  = [1, 2, 3, 4]    # init=[1,2,3], last=4
+
+# ── List comprehension (replaces C++ for-loop building vector) 
+squares = [x**2 for x in range(10)]
+evens   = [x for x in range(20) if x % 2 == 0]
+flat    = [item for sub in matrix for item in sub]  # flatten 2D
+
+# ── Dict / Set comprehensions ────────────────────────────────
+freq  = {ch: s.count(ch) for ch in set(s)}
+uniq  = {x for x in arr}
+
+# ── Chained comparisons ───────────────────────────────────────
+if 0 <= i < n:   pass       # C++: i >= 0 && i < n
+
+# ── Enumerate (index + value) ─────────────────────────────────
+for i, val in enumerate(arr):
+    pass
+
+# ── Zip (iterate two sequences in parallel) ──────────────────
+for a, b in zip(list1, list2):
+    pass
+pairs = list(zip(keys, values))
+
+# ── Negative indexing ─────────────────────────────────────────
+arr[-1]       # last element
+arr[-2]       # second to last
+
+# ── Slicing arr[start:stop:step] ──────────────────────────────
+arr[1:4]      # elements at index 1, 2, 3
+arr[::-1]     # reversed copy
+arr[::2]      # every other element
+arr[i:j] = [] # delete elements i to j-1 in-place
+
+# ── String building (use join, NOT +=) ────────────────────────
+# SLOW: result = ""; for ch in s: result += ch   # O(n^2)
+# FAST:
+parts = []
+for ch in s:
+    parts.append(ch)
+result = "".join(parts)    # O(n)
+
+# ── Ternary ───────────────────────────────────────────────────
+result = x if condition else y
+
+# ── Truthiness ────────────────────────────────────────────────
+# Falsy: None, 0, 0.0, "", [], {}, set()
+# All others: truthy
+
+# ── Unpacking in function args ────────────────────────────────
+def f(a, b, c): pass
+args = [1, 2, 3]
+f(*args)              # positional unpacking
+kwargs = {'a':1, 'b':2, 'c':3}
+f(**kwargs)           # keyword unpacking
+
+# ── walrus operator (:=) assigns and evaluates ────────────────
+if (n := len(arr)) > 10:
+    print(f"Array has {n} elements")
+\end{lstlisting}
+
+%─────────────────────────────────────────────────────────────
+\section{Standard Library for DSA}
+%─────────────────────────────────────────────────────────────
+
+\begin{lstlisting}
+import sys, math, heapq, bisect
+from collections import defaultdict, Counter, deque, OrderedDict
+from functools import lru_cache, cache, reduce
+from itertools import permutations, combinations, combinations_with_replacement, \
+                      product, chain, accumulate
+
+# ── sys ──────────────────────────────────────────────────────
+sys.setrecursionlimit(300000)      # essential for deep DFS
+INF = float('inf')
+NINF = float('-inf')
+input = sys.stdin.readline         # fast input for competitive programming
+
+# ── math ─────────────────────────────────────────────────────
+math.gcd(12, 8)          # 4
+math.lcm(4, 6)           # 12  (Python 3.9+)
+math.isqrt(17)           # 4  (integer sqrt, no float rounding)
+math.log2(1024)          # 10.0
+math.comb(10, 3)         # 120  (nCr, exact integer)
+math.factorial(10)       # 3628800
+math.ceil(3.2)           # 4
+math.floor(3.9)          # 3
+pow(2, 10, 1000)         # modular exponentiation: 2^10 mod 1000 = 24
+pow(3, -1, 7)            # modular inverse: 3^{-1} mod 7 = 5
+
+# ── heapq (min-heap) ─────────────────────────────────────────
+h = []
+heapq.heappush(h, 5)
+top = heapq.heappop(h)           # smallest element
+heapq.heapify(lst)               # O(n) in-place
+heapq.nlargest(k, lst)           # k largest in O(n log k)
+heapq.nsmallest(k, lst)          # k smallest
+# Max-heap trick: push negative values
+heapq.heappush(h, -val)
+max_val = -heapq.heappop(h)
+
+# ── bisect (sorted list binary search) ───────────────────────
+arr = [1, 3, 5, 7, 9]
+bisect.bisect_left(arr, 5)       # 2  (leftmost insert position)
+bisect.bisect_right(arr, 5)      # 3  (rightmost insert position)
+bisect.insort(arr, 6)            # insert 6 maintaining sort: O(n)
+
+# ── defaultdict ───────────────────────────────────────────────
+graph = defaultdict(list)        # adjacency list
+freq  = defaultdict(int)         # frequency map (default 0)
+dp    = defaultdict(lambda: INF) # custom default
+
+# ── Counter ───────────────────────────────────────────────────
+c = Counter("banana")            # {'a':3,'n':2,'b':1}
+c.most_common(2)                 # [('a',3),('n',2)]
+c['z']                           # 0 (missing key safe)
+c1 + c2                          # union of counters
+c1 - c2                          # difference
+
+# ── deque ────────────────────────────────────────────────────
+dq = deque([1, 2, 3])
+dq.appendleft(0)                 # O(1)  -- front push
+dq.popleft()                     # O(1)  -- front pop
+dq.rotate(k)                     # rotate right by k
+dq.maxlen                        # fixed-size sliding window: deque(maxlen=k)
+
+# ── itertools ────────────────────────────────────────────────
+list(permutations([1,2,3]))      # all 3! orderings
+list(combinations([1,2,3], 2))   # [(1,2),(1,3),(2,3)]
+list(product([0,1], repeat=3))   # all 2^3 binary strings
+list(accumulate([1,2,3,4]))      # [1, 3, 6, 10]  (prefix sums)
+list(chain([1,2], [3,4]))        # [1, 2, 3, 4]
+
+# ── lru_cache for memoization ────────────────────────────────
+@lru_cache(maxsize=None)
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+
+# Python 3.9+ shorthand
+@cache
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+\end{lstlisting}
+
+\begin{warnbox}[Recursion Limit]
+Python's default recursion limit is 1000. For DFS on large graphs or deep DP recursion, always add \py{sys.setrecursionlimit(300000)} at the top of your file. Alternatively, convert recursive DFS to iterative with an explicit stack.
+\end{warnbox}
+
+%%%==========================================================
+\chapter{Complexity Analysis}
+%%%==========================================================
+
+\section{Big-O Hierarchy}
+
+\[
+O(1) < O(\log n) < O(\sqrt{n}) < O(n) < O(n \log n) < O(n^2) < O(n^3) < O(2^n) < O(n!)
+\]
+
+Practical rule of thumb for competitive programming: at $10^8$ operations per second,
+$n \le 10^8$ tolerates $O(n)$; $n \le 10^4$ tolerates $O(n^2)$; $n \le 500$ tolerates $O(n^3)$;
+$n \le 20$ tolerates $O(2^n)$; $n \le 12$ tolerates $O(n!)$.
+
+\section{Python Built-in Complexity Reference}
+
+\begin{longtable}{@{}llll@{}}
+\toprule
+\textbf{Operation} & \textbf{Container} & \textbf{Avg} & \textbf{Worst} \\
+\midrule
+\endhead
+\texttt{lst[i]}              & list    & $O(1)$        & $O(1)$ \\
+\texttt{lst.append(x)}       & list    & $O(1)$ amort  & $O(n)$ \\
+\texttt{lst.pop()}           & list    & $O(1)$        & $O(1)$ \\
+\texttt{lst.pop(0)}          & list    & $O(n)$        & $O(n)$ \\
+\texttt{lst.insert(i,x)}     & list    & $O(n)$        & $O(n)$ \\
+\texttt{x in lst}            & list    & $O(n)$        & $O(n)$ \\
+\texttt{lst.sort()}          & list    & $O(n\log n)$  & $O(n\log n)$ \\
+\texttt{lst[a:b]}            & list    & $O(b{-}a)$    & $O(n)$ \\
+\texttt{d[k]}                & dict    & $O(1)$        & $O(n)$ \\
+\texttt{d[k] = v}            & dict    & $O(1)$        & $O(n)$ \\
+\texttt{k in d}              & dict    & $O(1)$        & $O(n)$ \\
+\texttt{del d[k]}            & dict    & $O(1)$        & $O(n)$ \\
+\texttt{x in s}              & set     & $O(1)$        & $O(n)$ \\
+\texttt{s.add(x)}            & set     & $O(1)$        & $O(n)$ \\
+\texttt{s.remove(x)}         & set     & $O(1)$        & $O(n)$ \\
+\texttt{s1 | s2} (union)     & set     & $O(m{+}n)$    & --- \\
+\texttt{s1 \& s2} (inter.)   & set     & $O(\min(m,n))$& --- \\
+\texttt{dq.append()}         & deque   & $O(1)$        & $O(1)$ \\
+\texttt{dq.appendleft()}     & deque   & $O(1)$        & $O(1)$ \\
+\texttt{dq.pop()}            & deque   & $O(1)$        & $O(1)$ \\
+\texttt{dq.popleft()}        & deque   & $O(1)$        & $O(1)$ \\
+\texttt{heapq.heappush()}    & heap    & $O(\log n)$   & $O(\log n)$ \\
+\texttt{heapq.heappop()}     & heap    & $O(\log n)$   & $O(\log n)$ \\
+\texttt{heapq.heapify()}     & heap    & $O(n)$        & $O(n)$ \\
+\texttt{bisect.bisect()}     & sorted list & $O(\log n)$ & $O(\log n)$ \\
+\texttt{str + str}           & str     & $O(n)$        & $O(n)$ \\
+\texttt{"".join(lst)}        & str     & $O(n)$        & $O(n)$ \\
+\texttt{len(container)}      & any     & $O(1)$        & $O(1)$ \\
+\bottomrule
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Linear Data Structures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Arrays and Strings}
+%%%==========================================================
+
+\section{Python Lists --- Dynamic Arrays}
+
+\begin{lstlisting}
+# Declaration
+arr = []                           # empty, like vector<int>
+arr = [0] * n                      # n zeros
+arr = list(range(n))               # [0, 1, ..., n-1]
+matrix = [[0]*cols for _ in range(rows)]  # 2D --- NOT [[0]*cols]*rows !
+
+# Core operations
+arr.append(x)          # push_back  O(1) amortised
+arr.pop()              # pop_back   O(1)
+arr.pop(i)             # erase(it)  O(n)
+arr.insert(i, x)       # insert at i O(n)
+arr.remove(x)          # erase first x O(n)
+arr.index(x)           # first index of x O(n); raises ValueError if absent
+x in arr               # O(n) search; use set for O(1)
+arr.sort()             # in-place Timsort O(n log n)
+arr.sort(reverse=True)
+arr.sort(key=lambda x: x[1])      # sort by second element
+sorted(arr)            # returns NEW sorted list (original unchanged)
+arr.reverse()          # in-place O(n)
+arr.count(x)           # count occurrences O(n)
+arr.copy()             # shallow copy O(n)
+arr[:]                 # also shallow copy
+arr.clear()            # O(n)
+arr.extend(other)      # append all elements of other O(k)
+\end{lstlisting}
+
+\begin{warnbox}[2D Array Pitfall]
+\texttt{[[0]*cols]*rows} creates \emph{rows} references to the \emph{same} inner list --- modifying one row modifies all. Always use \texttt{[[0]*cols for \_ in range(rows)]}.
+\end{warnbox}
+
+\section{Strings}
+
+\begin{lstlisting}
+s = "hello world"
+
+# Strings are IMMUTABLE -- to mutate, convert to list first
+lst = list(s)
+lst[0] = 'H'
+s = "".join(lst)
+
+# Common methods
+s.upper()             # "HELLO WORLD"
+s.lower()             # "hello world"
+s.strip()             # strip leading/trailing whitespace
+s.lstrip(); s.rstrip()
+s.split()             # split by whitespace -> list
+s.split(',')          # split by delimiter
+",".join(["a","b"])   # "a,b"
+s.replace('l','r')    # replace ALL occurrences
+s.find('lo')          # index of first match, -1 if missing
+s.rfind('lo')         # last match
+s.count('l')          # count non-overlapping occurrences
+s.startswith('he')    # bool
+s.endswith('ld')      # bool
+s.isalpha()           # all letters?
+s.isdigit()           # all digits?
+s.isalnum()           # all alphanumeric?
+s.isspace()           # all whitespace?
+s.zfill(5)            # zero-pad: "007"
+ord('a')              # 97   (like (int)'a' in C++)
+chr(97)               # 'a'  (like (char)97  in C++)
+s[i:j]                # substring, O(j-i)
+s[::-1]               # reverse string
+\end{lstlisting}
+
+\section{Two Pointers}
+
+\begin{lstlisting}
+# ── Two Sum in Sorted Array ── TC: O(n)  SC: O(1) ─────────────
+def two_sum_sorted(arr, target):
+    lo, hi = 0, len(arr) - 1
+    while lo < hi:
+        s = arr[lo] + arr[hi]
+        if s == target:   return [lo, hi]
+        elif s < target:  lo += 1
+        else:             hi -= 1
+    return []
+
+# ── Three Sum (unique triplets summing to 0) ── O(n^2) ────────
+def three_sum(nums):
+    nums.sort()
+    result = []
+    for i in range(len(nums) - 2):
+        if i > 0 and nums[i] == nums[i-1]:
+            continue
+        lo, hi = i + 1, len(nums) - 1
+        while lo < hi:
+            s = nums[i] + nums[lo] + nums[hi]
+            if s == 0:
+                result.append([nums[i], nums[lo], nums[hi]])
+                while lo < hi and nums[lo] == nums[lo+1]: lo += 1
+                while lo < hi and nums[hi] == nums[hi-1]: hi -= 1
+                lo += 1; hi -= 1
+            elif s < 0: lo += 1
+            else:       hi -= 1
+    return result
+
+# ── Container with Most Water ── O(n) ────────────────────────
+def max_water(height):
+    lo, hi = 0, len(height) - 1
+    res = 0
+    while lo < hi:
+        res = max(res, min(height[lo], height[hi]) * (hi - lo))
+        if height[lo] < height[hi]: lo += 1
+        else:                        hi -= 1
+    return res
+
+# ── Trapping Rain Water ── O(n) ────────────────────────────────
+def trap(height):
+    n = len(height)
+    if n == 0: return 0
+    left_max  = [0] * n
+    right_max = [0] * n
+    left_max[0] = height[0]
+    for i in range(1, n):
+        left_max[i] = max(left_max[i-1], height[i])
+    right_max[n-1] = height[n-1]
+    for i in range(n-2, -1, -1):
+        right_max[i] = max(right_max[i+1], height[i])
+    water = 0
+    for i in range(n):
+        water += min(left_max[i], right_max[i]) - height[i]
+    return water
+
+# O(1) space two-pointer version
+def trap_two_ptr(height):
+    lo, hi = 0, len(height) - 1
+    left_max = right_max = 0
+    water = 0
+    while lo <= hi:
+        if height[lo] <= height[hi]:
+            if height[lo] >= left_max: left_max = height[lo]
+            else:                       water += left_max - height[lo]
+            lo += 1
+        else:
+            if height[hi] >= right_max: right_max = height[hi]
+            else:                        water += right_max - height[hi]
+            hi -= 1
+    return water
+\end{lstlisting}
+
+\section{Sliding Window}
+
+\begin{lstlisting}
+# ── Fixed Window: Max Sum of Subarray Size k ── O(n) ──────────
+def max_sum_k(arr, k):
+    window = sum(arr[:k])
+    best = window
+    for i in range(k, len(arr)):
+        window += arr[i] - arr[i-k]
+        best = max(best, window)
+    return best
+
+# ── Variable Window: Longest Substring Without Repeating ──────
+def longest_unique_substr(s):        # TC: O(n)  SC: O(1)
+    seen = {}
+    lo = best = 0
+    for hi, ch in enumerate(s):
+        if ch in seen and seen[ch] >= lo:
+            lo = seen[ch] + 1
+        seen[ch] = hi
+        best = max(best, hi - lo + 1)
+    return best
+
+# ── Minimum Window Substring ── O(|s|+|t|) ────────────────────
+from collections import Counter
+def min_window(s, t):
+    need = Counter(t)
+    have = total = 0
+    total = len(need)
+    window = {}
+    lo = 0
+    res_len = float('inf')
+    res = ""
+    for hi, ch in enumerate(s):
+        window[ch] = window.get(ch, 0) + 1
+        if ch in need and window[ch] == need[ch]:
+            have += 1
+        while have == total:
+            if hi - lo + 1 < res_len:
+                res_len = hi - lo + 1
+                res = s[lo:hi+1]
+            window[s[lo]] -= 1
+            if s[lo] in need and window[s[lo]] < need[s[lo]]:
+                have -= 1
+            lo += 1
+    return res
+
+# ── Sliding Window Maximum (deque) ── O(n) ────────────────────
+from collections import deque
+def max_sliding_window(nums, k):
+    dq = deque()       # stores indices, decreasing values
+    result = []
+    for i, x in enumerate(nums):
+        # remove indices out of window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+        # remove smaller elements from back
+        while dq and nums[dq[-1]] < x:
+            dq.pop()
+        dq.append(i)
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+    return result
+\end{lstlisting}
+
+\section{Prefix Sums}
+
+\begin{lstlisting}
+# ── 1D Prefix Sum ─────────────────────────────────────────────
+def build_prefix(arr):              # TC: O(n)  SC: O(n)
+    n = len(arr)
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i+1] = prefix[i] + arr[i]
+    return prefix
+# Range sum [l, r] in O(1)
+def range_sum(prefix, l, r): return prefix[r+1] - prefix[l]
+
+# Using itertools.accumulate (Pythonic)
+from itertools import accumulate
+prefix = list(accumulate(arr, initial=0))   # [0, a0, a0+a1, ...]
+
+# ── Subarray Sum Equals k ── O(n) ─────────────────────────────
+def subarray_sum_k(nums, k):
+    count = curr = 0
+    freq = {0: 1}
+    for x in nums:
+        curr += x
+        count += freq.get(curr - k, 0)
+        freq[curr] = freq.get(curr, 0) + 1
+    return count
+
+# ── Product of Array Except Self ── O(n)  SC: O(1) output excl
+def product_except_self(nums):
+    n = len(nums)
+    res = [1] * n
+    left = 1
+    for i in range(n):
+        res[i] = left; left *= nums[i]
+    right = 1
+    for i in range(n-1, -1, -1):
+        res[i] *= right; right *= nums[i]
+    return res
+
+# ── 2D Prefix Sum ─────────────────────────────────────────────
+def build_2d_prefix(mat):
+    m, n = len(mat), len(mat[0])
+    P = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            P[i][j] = mat[i-1][j-1] + P[i-1][j] + P[i][j-1] - P[i-1][j-1]
+    return P
+
+def rect_sum(P, r1, c1, r2, c2):  # O(1) query
+    return P[r2+1][c2+1] - P[r1][c2+1] - P[r2+1][c1] + P[r1][c1]
+\end{lstlisting}
+
+\section{Kadane's Algorithm}
+
+\begin{lstlisting}
+# ── Maximum Subarray Sum ── O(n)  SC: O(1) ────────────────────
+def max_subarray(nums):
+    best = curr = nums[0]
+    for x in nums[1:]:
+        curr = max(x, curr + x)
+        best = max(best, curr)
+    return best
+
+# ── With Indices ──────────────────────────────────────────────
+def max_subarray_indices(nums):
+    best = curr = nums[0]
+    start = end = temp_start = 0
+    for i in range(1, len(nums)):
+        if nums[i] > curr + nums[i]:
+            curr = nums[i]; temp_start = i
+        else:
+            curr += nums[i]
+        if curr > best:
+            best = curr; start = temp_start; end = i
+    return best, start, end
+
+# ── Maximum Circular Subarray Sum ── O(n) ────────────────────
+def max_circular(nums):
+    def kadane_max(a):
+        cur = res = a[0]
+        for x in a[1:]: cur = max(x, cur+x); res = max(res, cur)
+        return res
+    def kadane_min(a):
+        cur = res = a[0]
+        for x in a[1:]: cur = min(x, cur+x); res = min(res, cur)
+        return res
+    max_straight = kadane_max(nums)
+    circular     = sum(nums) - kadane_min(nums)
+    return max(max_straight, circular) if circular != 0 else max_straight
+\end{lstlisting}
+
+\section{Other Important Array Algorithms}
+
+\begin{lstlisting}
+# ── Boyer-Moore Majority Vote ── O(n)  SC: O(1) ───────────────
+def majority_element(nums):     # element appearing > n/2 times
+    candidate = count = 0
+    for x in nums:
+        if count == 0: candidate = x
+        count += 1 if x == candidate else -1
+    return candidate
+
+# ── Dutch National Flag (3-way partition) ── O(n) ─────────────
+def sort_colors(nums):          # sort 0s, 1s, 2s in one pass
+    lo = mid = 0; hi = len(nums) - 1
+    while mid <= hi:
+        if   nums[mid] == 0: nums[lo], nums[mid] = nums[mid], nums[lo]; lo += 1; mid += 1
+        elif nums[mid] == 1: mid += 1
+        else:                 nums[mid], nums[hi] = nums[hi], nums[mid]; hi -= 1
+
+# ── Rotate Array Right by k ── O(n)  SC: O(1) ────────────────
+def rotate(nums, k):
+    n = len(nums); k %= n
+    def rev(l, r):
+        while l < r: nums[l], nums[r] = nums[r], nums[l]; l += 1; r -= 1
+    rev(0, n-1); rev(0, k-1); rev(k, n-1)
+
+# ── Next Permutation ── O(n) ──────────────────────────────────
+def next_permutation(nums):
+    n = len(nums); i = n - 2
+    while i >= 0 and nums[i] >= nums[i+1]: i -= 1
+    if i >= 0:
+        j = n - 1
+        while nums[j] <= nums[i]: j -= 1
+        nums[i], nums[j] = nums[j], nums[i]
+    lo, hi = i+1, n-1
+    while lo < hi: nums[lo], nums[hi] = nums[hi], nums[lo]; lo += 1; hi -= 1
+
+# ── Find All Duplicates (using sign trick) ── O(n)  SC: O(1) ──
+def find_duplicates(nums):      # elements in [1, n]
+    result = []
+    for x in nums:
+        idx = abs(x) - 1
+        if nums[idx] < 0: result.append(abs(x))
+        else:              nums[idx] = -nums[idx]
+    return result
+
+# ── Longest Consecutive Sequence ── O(n) ─────────────────────
+def longest_consecutive(nums):
+    num_set = set(nums)
+    best = 0
+    for x in num_set:
+        if x - 1 not in num_set:   # start of a sequence
+            cur = x; length = 1
+            while cur + 1 in num_set: cur += 1; length += 1
+            best = max(best, length)
+    return best
+\end{lstlisting}
+
+
+%%%==========================================================
+\chapter{Linked Lists}
+%%%==========================================================
+
+\section{Node Class and Singly Linked List}
+
+\begin{lstlisting}
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val  = val
+        self.next = next
+
+class SinglyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.size = 0
+
+    # ── Insert at head ── O(1) ──────────────────────────────
+    def push_front(self, val):
+        self.head = ListNode(val, self.head)
+        self.size += 1
+
+    # ── Insert at tail ── O(n) or O(1) with tail pointer ───
+    def push_back(self, val):
+        if not self.head:
+            self.head = ListNode(val); self.size += 1; return
+        cur = self.head
+        while cur.next: cur = cur.next
+        cur.next = ListNode(val)
+        self.size += 1
+
+    # ── Insert at position k (0-indexed) ── O(k) ───────────
+    def insert(self, k, val):
+        if k == 0: self.push_front(val); return
+        cur = self.head
+        for _ in range(k - 1):
+            if not cur: return
+            cur = cur.next
+        node = ListNode(val, cur.next)
+        cur.next = node
+        self.size += 1
+
+    # ── Delete first node with given value ── O(n) ─────────
+    def delete(self, val):
+        dummy = ListNode(0, self.head)
+        cur = dummy
+        while cur.next:
+            if cur.next.val == val:
+                cur.next = cur.next.next; self.size -= 1; break
+            cur = cur.next
+        self.head = dummy.next
+
+    # ── Search ── O(n) ──────────────────────────────────────
+    def search(self, val):
+        cur = self.head
+        while cur:
+            if cur.val == val: return True
+            cur = cur.next
+        return False
+
+    # ── Reverse in-place ── O(n)  SC: O(1) ─────────────────
+    def reverse(self):
+        prev = None; cur = self.head
+        while cur:
+            nxt = cur.next
+            cur.next = prev
+            prev = cur; cur = nxt
+        self.head = prev
+
+    # ── Print ───────────────────────────────────────────────
+    def to_list(self):
+        res = []; cur = self.head
+        while cur: res.append(cur.val); cur = cur.next
+        return res
+\end{lstlisting}
+
+\section{Doubly Linked List}
+
+\begin{lstlisting}
+class DNode:
+    def __init__(self, val=0, prev=None, next=None):
+        self.val  = val
+        self.prev = prev
+        self.next = next
+
+class DoublyLinkedList:
+    def __init__(self):
+        # sentinel head and tail (dummy nodes)
+        self.head = DNode()
+        self.tail = DNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+        self.size = 0
+
+    def _insert_after(self, node, val):   # internal helper
+        new = DNode(val, node, node.next)
+        node.next.prev = new
+        node.next = new
+        self.size += 1
+
+    def push_front(self, val): self._insert_after(self.head, val)
+    def push_back(self, val):  self._insert_after(self.tail.prev, val)
+
+    def _remove(self, node):              # internal helper
+        node.prev.next = node.next
+        node.next.prev = node.prev
+        self.size -= 1
+
+    def pop_front(self):
+        if self.head.next == self.tail: return None
+        val = self.head.next.val
+        self._remove(self.head.next); return val
+
+    def pop_back(self):
+        if self.tail.prev == self.head: return None
+        val = self.tail.prev.val
+        self._remove(self.tail.prev); return val
+\end{lstlisting}
+
+\section{Common Linked List Algorithms}
+
+\begin{lstlisting}
+# ── Reverse a Linked List ── O(n)  SC: O(1) ───────────────────
+def reverse_list(head):
+    prev = None; cur = head
+    while cur:
+        nxt = cur.next; cur.next = prev; prev = cur; cur = nxt
+    return prev
+
+# ── Find Middle (slow-fast pointers) ── O(n)  SC: O(1) ────────
+def find_middle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next; fast = fast.next.next
+    return slow      # for even length: returns second middle
+
+# ── Floyd's Cycle Detection ── O(n)  SC: O(1) ─────────────────
+def has_cycle(head):
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next; fast = fast.next.next
+        if slow is fast: return True
+    return False
+
+def find_cycle_start(head):     # start of cycle or None
+    slow = fast = head
+    while fast and fast.next:
+        slow = slow.next; fast = fast.next.next
+        if slow is fast:
+            # move one pointer to head; advance both at speed 1
+            slow = head
+            while slow is not fast:
+                slow = slow.next; fast = fast.next
+            return slow
+    return None
+
+# ── Merge Two Sorted Lists ── O(m+n)  SC: O(1) ────────────────
+def merge_two_sorted(l1, l2):
+    dummy = cur = ListNode(0)
+    while l1 and l2:
+        if l1.val <= l2.val: cur.next = l1; l1 = l1.next
+        else:                 cur.next = l2; l2 = l2.next
+        cur = cur.next
+    cur.next = l1 if l1 else l2
+    return dummy.next
+
+# ── Remove nth Node from End ── O(n)  SC: O(1) ────────────────
+def remove_nth_from_end(head, n):
+    dummy = ListNode(0, head)
+    fast = slow = dummy
+    for _ in range(n + 1): fast = fast.next
+    while fast:
+        fast = fast.next; slow = slow.next
+    slow.next = slow.next.next
+    return dummy.next
+
+# ── Reverse Nodes in k-Groups ── O(n)  SC: O(k) call stack ────
+def reverse_k_group(head, k):
+    def reverse(node, k):
+        prev = None; cur = node; count = 0
+        while cur and count < k:
+            nxt = cur.next; cur.next = prev; prev = cur
+            cur = nxt; count += 1
+        return prev, node, cur   # (new_head, old_head/new_tail, next_group_head)
+
+    def count_nodes(node):
+        c = 0
+        while node: c += 1; node = node.next
+        return c
+
+    if count_nodes(head) < k: return head
+    new_head, tail, nxt = reverse(head, k)
+    tail.next = reverse_k_group(nxt, k)
+    return new_head
+
+# ── Intersection of Two Linked Lists ── O(m+n)  SC: O(1) ──────
+def get_intersection(headA, headB):
+    a, b = headA, headB
+    while a is not b:
+        a = a.next if a else headB
+        b = b.next if b else headA
+    return a    # None if no intersection
+
+# ── Add Two Numbers (digits as linked lists) ── O(max(m,n)) ───
+def add_two_numbers(l1, l2):
+    dummy = cur = ListNode(0)
+    carry = 0
+    while l1 or l2 or carry:
+        v1 = l1.val if l1 else 0
+        v2 = l2.val if l2 else 0
+        total = v1 + v2 + carry
+        carry = total // 10
+        cur.next = ListNode(total % 10)
+        cur = cur.next
+        if l1: l1 = l1.next
+        if l2: l2 = l2.next
+    return dummy.next
+
+# ── Flatten a Multilevel Doubly Linked List ─────────────────
+def flatten(head):
+    cur = head
+    while cur:
+        if cur.child:
+            nxt = cur.next
+            cur.next = cur.child
+            cur.child.prev = cur
+            cur.child = None
+            tail = cur.next
+            while tail.next: tail = tail.next
+            tail.next = nxt
+            if nxt: nxt.prev = tail
+        cur = cur.next
+    return head
+
+# ── Sort Linked List (Merge Sort) ── O(n log n)  SC: O(log n) ─
+def sort_list(head):
+    if not head or not head.next: return head
+    mid = find_middle(head)
+    second = mid.next; mid.next = None
+    left  = sort_list(head)
+    right = sort_list(second)
+    return merge_two_sorted(left, right)
+
+# ── LRU Cache using OrderedDict ── all ops O(1) ────────────────
+from collections import OrderedDict
+class LRUCache:
+    def __init__(self, capacity):
+        self.cap = capacity
+        self.cache = OrderedDict()    # key -> value, MRU at end
+
+    def get(self, key):
+        if key not in self.cache: return -1
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key, value):
+        if key in self.cache: self.cache.move_to_end(key)
+        self.cache[key] = value
+        if len(self.cache) > self.cap:
+            self.cache.popitem(last=False)    # remove LRU (front)
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Stacks}
+%%%==========================================================
+
+\section{Stack Implementations}
+
+\begin{lstlisting}
+# ── Using list (most common) ──────────────────────────────────
+stack = []
+stack.append(x)        # push  O(1)
+stack.pop()            # pop   O(1)  -- raises IndexError if empty
+stack[-1]              # peek  O(1)
+len(stack) == 0        # is_empty
+
+# ── Using deque (slightly faster for large data) ──────────────
+from collections import deque
+stack = deque()
+stack.append(x)        # push
+stack.pop()            # pop
+stack[-1]              # peek
+
+# ── Stack class wrapper ───────────────────────────────────────
+class Stack:
+    def __init__(self):         self._data = []
+    def push(self, x):          self._data.append(x)
+    def pop(self):              return self._data.pop()
+    def peek(self):             return self._data[-1]
+    def is_empty(self):         return len(self._data) == 0
+    def __len__(self):          return len(self._data)
+\end{lstlisting}
+
+\section{Classic Stack Problems}
+
+\begin{lstlisting}
+# ── Valid Parentheses ── O(n)  SC: O(n) ───────────────────────
+def is_valid(s):
+    match = {')':'(', ']':'[', '}':'{'}
+    stack = []
+    for ch in s:
+        if ch in '([{':
+            stack.append(ch)
+        else:
+            if not stack or stack[-1] != match[ch]:
+                return False
+            stack.pop()
+    return len(stack) == 0
+
+# ── Min Stack (push, pop, peek, getMin all O(1)) ─────────────
+class MinStack:
+    def __init__(self):
+        self.stack = []
+        self.min_stack = []
+
+    def push(self, val):
+        self.stack.append(val)
+        if not self.min_stack or val <= self.min_stack[-1]:
+            self.min_stack.append(val)
+
+    def pop(self):
+        val = self.stack.pop()
+        if val == self.min_stack[-1]:
+            self.min_stack.pop()
+
+    def top(self):      return self.stack[-1]
+    def getMin(self):   return self.min_stack[-1]
+
+# ── Infix to Postfix (Shunting-Yard) ── O(n) ─────────────────
+def infix_to_postfix(expr):
+    prec = {'+':1, '-':1, '*':2, '/':2, '^':3}
+    assoc = {'^': 'R'}          # all others left-associative
+    output = []; stack = []
+    for token in expr.split():
+        if token.lstrip('-').isdigit():
+            output.append(token)
+        elif token == '(':
+            stack.append(token)
+        elif token == ')':
+            while stack and stack[-1] != '(':
+                output.append(stack.pop())
+            stack.pop()
+        else:   # operator
+            while (stack and stack[-1] != '(' and
+                   stack[-1] in prec and
+                   (prec[stack[-1]] > prec[token] or
+                    (prec[stack[-1]] == prec[token] and assoc.get(token) != 'R'))):
+                output.append(stack.pop())
+            stack.append(token)
+    while stack: output.append(stack.pop())
+    return " ".join(output)
+
+# ── Evaluate Postfix ── O(n) ──────────────────────────────────
+def eval_postfix(expr):
+    stack = []
+    for token in expr.split():
+        if token.lstrip('-').isdigit():
+            stack.append(int(token))
+        else:
+            b, a = stack.pop(), stack.pop()
+            if   token == '+': stack.append(a + b)
+            elif token == '-': stack.append(a - b)
+            elif token == '*': stack.append(a * b)
+            elif token == '/': stack.append(int(a / b))
+    return stack[0]
+\end{lstlisting}
+
+\section{Monotonic Stack}
+
+A monotonic stack maintains elements in either increasing or decreasing order.
+It solves \textbf{Next Greater/Smaller Element}-style problems in $O(n)$.
+
+\begin{lstlisting}
+# ── Next Greater Element (to the right) ── O(n) ───────────────
+def next_greater(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []   # stores indices, values decrease top-to-bottom
+    for i, x in enumerate(arr):
+        while stack and arr[stack[-1]] < x:
+            idx = stack.pop()
+            result[idx] = x
+        stack.append(i)
+    return result
+
+# ── Previous Smaller Element ── O(n) ─────────────────────────
+def prev_smaller(arr):
+    n = len(arr)
+    result = [-1] * n
+    stack = []
+    for i, x in enumerate(arr):
+        while stack and arr[stack[-1]] >= x:
+            stack.pop()
+        result[i] = arr[stack[-1]] if stack else -1
+        stack.append(i)
+    return result
+
+# ── Stock Span Problem ── O(n) ────────────────────────────────
+def stock_span(prices):
+    stack = []   # stores (price, span)
+    result = []
+    for p in prices:
+        span = 1
+        while stack and stack[-1][0] <= p:
+            span += stack.pop()[1]
+        stack.append((p, span))
+        result.append(span)
+    return result
+
+# ── Largest Rectangle in Histogram ── O(n)  SC: O(n) ─────────
+def largest_rectangle(heights):
+    heights = heights + [0]   # sentinel
+    stack = [-1]              # stack of indices
+    max_area = 0
+    for i, h in enumerate(heights):
+        while stack[-1] != -1 and heights[stack[-1]] >= h:
+            height = heights[stack.pop()]
+            width  = i - stack[-1] - 1
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area
+
+# ── Maximal Rectangle (in binary matrix) ── O(m*n) ───────────
+def maximal_rectangle(matrix):
+    if not matrix: return 0
+    n = len(matrix[0])
+    heights = [0] * n
+    max_area = 0
+    for row in matrix:
+        for j in range(n):
+            heights[j] = heights[j] + 1 if row[j] == '1' else 0
+        max_area = max(max_area, largest_rectangle(heights))
+    return max_area
+
+# ── Daily Temperatures (Next Warmer Day) ── O(n) ──────────────
+def daily_temperatures(T):
+    n = len(T)
+    result = [0] * n
+    stack = []
+    for i, t in enumerate(T):
+        while stack and T[stack[-1]] < t:
+            idx = stack.pop()
+            result[idx] = i - idx
+        stack.append(i)
+    return result
+
+# ── Remove k Digits to Get Smallest Number ── O(n) ───────────
+def remove_k_digits(num, k):
+    stack = []
+    for d in num:
+        while k and stack and stack[-1] > d:
+            stack.pop(); k -= 1
+        stack.append(d)
+    # Remove remaining k digits from the end
+    stack = stack[:len(stack)-k]
+    # Remove leading zeros
+    result = "".join(stack).lstrip('0')
+    return result if result else "0"
+
+# ── Score of Parentheses ── O(n)  SC: O(n) ────────────────────
+def score_of_parentheses(s):
+    stack = [0]
+    for ch in s:
+        if ch == '(':
+            stack.append(0)
+        else:
+            v = stack.pop()
+            stack[-1] += max(2 * v, 1)
+    return stack[0]
+
+# ── Decode String (e.g. "3[a2[c]]" -> "accaccacc") ── O(n) ───
+def decode_string(s):
+    stack = []
+    cur_str = ""
+    cur_num = 0
+    for ch in s:
+        if ch.isdigit():
+            cur_num = cur_num * 10 + int(ch)
+        elif ch == '[':
+            stack.append((cur_str, cur_num))
+            cur_str = ""; cur_num = 0
+        elif ch == ']':
+            prev_str, num = stack.pop()
+            cur_str = prev_str + cur_str * num
+        else:
+            cur_str += ch
+    return cur_str
+\end{lstlisting}
+
+\begin{compbox}[Stack Complexities]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Operation} & \textbf{Time} & \textbf{Space} \\
+\midrule
+Push / Pop / Peek & $O(1)$ & --- \\
+Valid Parentheses & $O(n)$ & $O(n)$ \\
+Next Greater Element & $O(n)$ & $O(n)$ \\
+Largest Rectangle & $O(n)$ & $O(n)$ \\
+\bottomrule
+\end{tabular}
+\end{compbox}
+
+%%%==========================================================
+\chapter{Queues and Deques}
+%%%==========================================================
+
+\section{Queue}
+
+\begin{lstlisting}
+from collections import deque
+
+# ── Queue using deque ── all ops O(1) ─────────────────────────
+queue = deque()
+queue.append(x)        # enqueue (rear)
+queue.popleft()        # dequeue (front)
+queue[0]               # front element (peek)
+len(queue) == 0        # is_empty
+
+# ── queue.Queue (thread-safe) ─────────────────────────────────
+import queue
+q = queue.Queue(maxsize=10)    # bounded queue
+q.put(x)                       # blocks if full
+q.get()                        # blocks if empty
+q.empty()
+q.full()
+
+# ── Circular Queue implementation ────────────────────────────
+class CircularQueue:
+    def __init__(self, k):
+        self.k = k
+        self.q = [0] * k
+        self.head = self.tail = -1
+        self.size = 0
+
+    def enqueue(self, val):
+        if self.is_full(): return False
+        self.tail = (self.tail + 1) % self.k
+        self.q[self.tail] = val
+        if self.head == -1: self.head = 0
+        self.size += 1; return True
+
+    def dequeue(self):
+        if self.is_empty(): return False
+        if self.head == self.tail: self.head = self.tail = -1
+        else: self.head = (self.head + 1) % self.k
+        self.size -= 1; return True
+
+    def front(self):    return self.q[self.head] if not self.is_empty() else -1
+    def rear(self):     return self.q[self.tail] if not self.is_empty() else -1
+    def is_empty(self): return self.size == 0
+    def is_full(self):  return self.size == self.k
+\end{lstlisting}
+
+\section{Priority Queue}
+
+\begin{lstlisting}
+import heapq
+
+# ── Min-heap (default) ────────────────────────────────────────
+h = []
+heapq.heappush(h, 3)
+heapq.heappush(h, 1)
+heapq.heappush(h, 2)
+print(heapq.heappop(h))    # 1
+
+# ── Max-heap (negate values) ──────────────────────────────────
+h = []
+for x in [3, 1, 4, 1, 5]:
+    heapq.heappush(h, -x)
+print(-heapq.heappop(h))   # 5
+
+# ── Heap with (priority, value) tuples ────────────────────────
+tasks = []
+heapq.heappush(tasks, (2, "low priority"))
+heapq.heappush(tasks, (0, "urgent"))
+priority, task = heapq.heappop(tasks)   # (0, "urgent")
+
+# ── Build heap from list ── O(n) ──────────────────────────────
+arr = [3, 1, 4, 1, 5, 9, 2, 6]
+heapq.heapify(arr)           # in-place min-heap
+
+# ── K-th Largest Element ── O(n log k) ───────────────────────
+def kth_largest(nums, k):
+    h = []
+    for x in nums:
+        heapq.heappush(h, x)
+        if len(h) > k: heapq.heappop(h)
+    return h[0]
+
+# ── Merge K Sorted Lists ── O(n log k) ────────────────────────
+def merge_k_sorted(lists):
+    h = []
+    for i, lst in enumerate(lists):
+        if lst: heapq.heappush(h, (lst[0], i, 0))
+    result = []
+    while h:
+        val, i, j = heapq.heappop(h)
+        result.append(val)
+        if j + 1 < len(lists[i]):
+            heapq.heappush(h, (lists[i][j+1], i, j+1))
+    return result
+
+# ── Median of Data Stream ─────────────────────────────────────
+class MedianFinder:
+    def __init__(self):
+        self.lo = []   # max-heap (negated) for lower half
+        self.hi = []   # min-heap for upper half
+
+    def add_num(self, num):
+        heapq.heappush(self.lo, -num)
+        # Balance: lo's max must <= hi's min
+        if self.hi and -self.lo[0] > self.hi[0]:
+            heapq.heappush(self.hi, -heapq.heappop(self.lo))
+        # Keep sizes equal or lo has one extra
+        if len(self.lo) > len(self.hi) + 1:
+            heapq.heappush(self.hi, -heapq.heappop(self.lo))
+        elif len(self.hi) > len(self.lo):
+            heapq.heappush(self.lo, -heapq.heappop(self.hi))
+
+    def find_median(self):
+        if len(self.lo) > len(self.hi): return float(-self.lo[0])
+        return (-self.lo[0] + self.hi[0]) / 2.0
+
+# ── Task Scheduler ── O(n log n) ──────────────────────────────
+from collections import Counter
+import heapq
+def least_interval(tasks, n):
+    freq = Counter(tasks)
+    max_heap = [-f for f in freq.values()]
+    heapq.heapify(max_heap)
+    time = 0
+    queue = []   # (available_time, -count)
+    while max_heap or queue:
+        if queue and queue[0][0] <= time:
+            _, count = queue.pop(0)
+            heapq.heappush(max_heap, count)
+        if max_heap:
+            count = heapq.heappop(max_heap) + 1   # +1 since negated
+            if count < 0:
+                queue.append((time + n + 1, count))
+        time += 1
+    return time
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Non-Linear Data Structures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Trees}
+%%%==========================================================
+
+\section{Binary Tree --- Traversals}
+
+\begin{lstlisting}
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val   = val
+        self.left  = left
+        self.right = right
+
+# ── Recursive Traversals ─────────────────────────────────────
+def inorder(root):      # left, root, right
+    if not root: return []
+    return inorder(root.left) + [root.val] + inorder(root.right)
+
+def preorder(root):     # root, left, right
+    if not root: return []
+    return [root.val] + preorder(root.left) + preorder(root.right)
+
+def postorder(root):    # left, right, root
+    if not root: return []
+    return postorder(root.left) + postorder(root.right) + [root.val]
+
+# ── Iterative Inorder ── O(n)  SC: O(h) ──────────────────────
+def inorder_iter(root):
+    stack = []; result = []; cur = root
+    while cur or stack:
+        while cur: stack.append(cur); cur = cur.left
+        cur = stack.pop()
+        result.append(cur.val)
+        cur = cur.right
+    return result
+
+# ── Iterative Preorder ── O(n) ────────────────────────────────
+def preorder_iter(root):
+    if not root: return []
+    stack = [root]; result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+        if node.right: stack.append(node.right)
+        if node.left:  stack.append(node.left)
+    return result
+
+# ── Iterative Postorder ── O(n) ───────────────────────────────
+def postorder_iter(root):
+    if not root: return []
+    stack = [root]; result = []
+    while stack:
+        node = stack.pop()
+        result.append(node.val)
+        if node.left:  stack.append(node.left)
+        if node.right: stack.append(node.right)
+    return result[::-1]
+
+# ── Level Order (BFS) ── O(n)  SC: O(w) w=max width ──────────
+from collections import deque
+def level_order(root):
+    if not root: return []
+    queue = deque([root]); result = []
+    while queue:
+        level = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            level.append(node.val)
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+        result.append(level)
+    return result
+
+# ── Morris Inorder (O(1) space, no stack/recursion) ── O(n) ──
+def morris_inorder(root):
+    result = []; cur = root
+    while cur:
+        if not cur.left:
+            result.append(cur.val); cur = cur.right
+        else:
+            prev = cur.left
+            while prev.right and prev.right is not cur:
+                prev = prev.right
+            if not prev.right:
+                prev.right = cur; cur = cur.left
+            else:
+                prev.right = None; result.append(cur.val); cur = cur.right
+    return result
+\end{lstlisting}
+
+\section{Binary Tree Properties}
+
+\begin{lstlisting}
+# ── Height ── O(n) ────────────────────────────────────────────
+def height(root):
+    if not root: return 0
+    return 1 + max(height(root.left), height(root.right))
+
+# ── Diameter (longest path between any two nodes) ── O(n) ────
+def diameter(root):
+    max_d = [0]
+    def dfs(node):
+        if not node: return 0
+        l = dfs(node.left); r = dfs(node.right)
+        max_d[0] = max(max_d[0], l + r)
+        return 1 + max(l, r)
+    dfs(root); return max_d[0]
+
+# ── Check if Balanced ── O(n) ────────────────────────────────
+def is_balanced(root):
+    def check(node):
+        if not node: return 0
+        l = check(node.left);  if l == -1: return -1
+        r = check(node.right); if r == -1: return -1
+        return -1 if abs(l - r) > 1 else 1 + max(l, r)
+    return check(root) != -1
+
+# ── Count Nodes ── O(log^2 n) for complete tree ────────────── 
+def count_nodes(root):
+    if not root: return 0
+    lh = rh = 0
+    l = r = root
+    while l: lh += 1; l = l.left
+    while r: rh += 1; r = r.right
+    if lh == rh: return (1 << lh) - 1   # perfect tree
+    return 1 + count_nodes(root.left) + count_nodes(root.right)
+
+# ── Lowest Common Ancestor ── O(n) ───────────────────────────
+def lca(root, p, q):
+    if not root or root is p or root is q: return root
+    left  = lca(root.left, p, q)
+    right = lca(root.right, p, q)
+    if left and right: return root
+    return left if left else right
+
+# ── Maximum Path Sum ── O(n) ──────────────────────────────────
+def max_path_sum(root):
+    best = [float('-inf')]
+    def dfs(node):
+        if not node: return 0
+        l = max(0, dfs(node.left))
+        r = max(0, dfs(node.right))
+        best[0] = max(best[0], node.val + l + r)
+        return node.val + max(l, r)
+    dfs(root); return best[0]
+
+# ── Serialize / Deserialize ── O(n) ───────────────────────────
+def serialize(root):
+    if not root: return "null"
+    return str(root.val) + "," + serialize(root.left) + "," + serialize(root.right)
+
+def deserialize(data):
+    vals = iter(data.split(","))
+    def build():
+        v = next(vals)
+        if v == "null": return None
+        node = TreeNode(int(v))
+        node.left  = build()
+        node.right = build()
+        return node
+    return build()
+
+# ── Check if Two Trees are Identical ── O(n) ─────────────────
+def is_same(p, q):
+    if not p and not q: return True
+    if not p or not q or p.val != q.val: return False
+    return is_same(p.left, q.left) and is_same(p.right, q.right)
+
+# ── Invert (Mirror) a Binary Tree ── O(n) ────────────────────
+def invert_tree(root):
+    if not root: return None
+    root.left, root.right = invert_tree(root.right), invert_tree(root.left)
+    return root
+
+# ── Right Side View (rightmost node at each level) ── O(n) ───
+def right_side_view(root):
+    result = []; queue = deque([root]) if root else deque()
+    while queue:
+        for i in range(len(queue)):
+            node = queue.popleft()
+            if i == 0: result.append(node.val)   # last in level (reversed BFS) 
+            # OR: rightmost = last seen at each level using BFS left-to-right
+        # Re-do: standard right-side-view
+    return result
+
+def right_side_view_v2(root):
+    if not root: return []
+    result = []; queue = deque([root])
+    while queue:
+        for i in range(len(queue)):
+            node = queue.popleft()
+            if i == len(queue): result.append(node.val)  # this logic is wrong
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+    return result
+
+# Correct right side view:
+def right_side_view(root):
+    if not root: return []
+    result = []; queue = deque([root])
+    while queue:
+        level_size = len(queue)
+        for i in range(level_size):
+            node = queue.popleft()
+            if i == level_size - 1: result.append(node.val)
+            if node.left:  queue.append(node.left)
+            if node.right: queue.append(node.right)
+    return result
+\end{lstlisting}
+
+\section{Binary Search Tree (BST)}
+
+\begin{lstlisting}
+class BST:
+    def __init__(self): self.root = None
+
+    # ── Insert ── O(h) avg O(log n), worst O(n) ──────────────
+    def insert(self, val):
+        def _insert(node, val):
+            if not node: return TreeNode(val)
+            if val < node.val:   node.left  = _insert(node.left, val)
+            elif val > node.val: node.right = _insert(node.right, val)
+            return node
+        self.root = _insert(self.root, val)
+
+    # ── Search ── O(h) ────────────────────────────────────────
+    def search(self, val):
+        cur = self.root
+        while cur:
+            if   val == cur.val: return cur
+            elif val < cur.val:  cur = cur.left
+            else:                cur = cur.right
+        return None
+
+    # ── Delete ── O(h) ────────────────────────────────────────
+    def delete(self, val):
+        def _delete(node, val):
+            if not node: return None
+            if val < node.val:
+                node.left = _delete(node.left, val)
+            elif val > node.val:
+                node.right = _delete(node.right, val)
+            else:
+                if not node.left:  return node.right
+                if not node.right: return node.left
+                # Find inorder successor (min of right subtree)
+                succ = node.right
+                while succ.left: succ = succ.left
+                node.val = succ.val
+                node.right = _delete(node.right, succ.val)
+            return node
+        self.root = _delete(self.root, val)
+
+    # ── Floor and Ceil ── O(h) ───────────────────────────────
+    def floor(self, val):      # largest value <= val
+        res = None; cur = self.root
+        while cur:
+            if   cur.val == val: return val
+            elif cur.val < val:  res = cur.val; cur = cur.right
+            else:                cur = cur.left
+        return res
+
+    def ceil(self, val):       # smallest value >= val
+        res = None; cur = self.root
+        while cur:
+            if   cur.val == val: return val
+            elif cur.val > val:  res = cur.val; cur = cur.left
+            else:                cur = cur.right
+        return res
+
+# ── Validate BST ── O(n)  SC: O(h) ───────────────────────────
+def is_valid_bst(root, lo=float('-inf'), hi=float('inf')):
+    if not root: return True
+    if not (lo < root.val < hi): return False
+    return (is_valid_bst(root.left, lo, root.val) and
+            is_valid_bst(root.right, root.val, hi))
+
+# ── Kth Smallest Element ── O(k)  SC: O(h) ───────────────────
+def kth_smallest(root, k):
+    stack = []; cur = root
+    while True:
+        while cur: stack.append(cur); cur = cur.left
+        cur = stack.pop(); k -= 1
+        if k == 0: return cur.val
+        cur = cur.right
+
+# ── Inorder Successor ── O(h) ────────────────────────────────
+def inorder_successor(root, p):
+    succ = None
+    while root:
+        if p.val < root.val: succ = root; root = root.left
+        else:                              root = root.right
+    return succ
+
+# ── Convert Sorted Array to Balanced BST ── O(n) ─────────────
+def sorted_array_to_bst(nums):
+    if not nums: return None
+    mid  = len(nums) // 2
+    node = TreeNode(nums[mid])
+    node.left  = sorted_array_to_bst(nums[:mid])
+    node.right = sorted_array_to_bst(nums[mid+1:])
+    return node
+
+# ── BST to Sorted Doubly Linked List ── O(n) ─────────────────
+def bst_to_dll(root):
+    head = prev = [None, None]   # head[0], prev[0]
+    def inorder(node):
+        if not node: return
+        inorder(node.left)
+        if not prev[0]:
+            head[0] = node
+        else:
+            prev[0].right = node
+            node.left = prev[0]
+        prev[0] = node
+        inorder(node.right)
+    inorder(root)
+    return head[0]
+\end{lstlisting}
+
+\section{AVL Tree}
+
+An AVL tree is a self-balancing BST where the heights of left and right subtrees differ by at most 1.
+Four rotations maintain balance: LL, RR, LR, RL.
+
+\begin{lstlisting}
+class AVLNode:
+    def __init__(self, val):
+        self.val    = val
+        self.left   = None
+        self.right  = None
+        self.height = 1
+
+class AVLTree:
+    def _h(self, node): return node.height if node else 0
+    def _bf(self, node): return self._h(node.left) - self._h(node.right)
+    def _update_h(self, node): node.height = 1 + max(self._h(node.left), self._h(node.right))
+
+    def _rotate_right(self, y):
+        x  = y.left; T2 = x.right
+        x.right = y; y.left = T2
+        self._update_h(y); self._update_h(x)
+        return x
+
+    def _rotate_left(self, x):
+        y  = x.right; T2 = y.left
+        y.left = x; x.right = T2
+        self._update_h(x); self._update_h(y)
+        return y
+
+    def _rebalance(self, node):
+        self._update_h(node)
+        bf = self._bf(node)
+        # LL
+        if bf > 1 and self._bf(node.left) >= 0:
+            return self._rotate_right(node)
+        # LR
+        if bf > 1 and self._bf(node.left) < 0:
+            node.left = self._rotate_left(node.left)
+            return self._rotate_right(node)
+        # RR
+        if bf < -1 and self._bf(node.right) <= 0:
+            return self._rotate_left(node)
+        # RL
+        if bf < -1 and self._bf(node.right) > 0:
+            node.right = self._rotate_right(node.right)
+            return self._rotate_left(node)
+        return node
+
+    def insert(self, node, val):
+        if not node: return AVLNode(val)
+        if val < node.val:   node.left  = self.insert(node.left, val)
+        elif val > node.val: node.right = self.insert(node.right, val)
+        else: return node
+        return self._rebalance(node)
+
+    def delete(self, node, val):
+        if not node: return None
+        if val < node.val:   node.left  = self.delete(node.left, val)
+        elif val > node.val: node.right = self.delete(node.right, val)
+        else:
+            if not node.left:  return node.right
+            if not node.right: return node.left
+            succ = node.right
+            while succ.left: succ = succ.left
+            node.val = succ.val
+            node.right = self.delete(node.right, succ.val)
+        return self._rebalance(node)
+\end{lstlisting}
+
+\begin{compbox}[BST / AVL Complexities]
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Operation} & \textbf{BST Avg} & \textbf{BST Worst} & \textbf{AVL} \\
+\midrule
+Search  & $O(\log n)$ & $O(n)$ & $O(\log n)$ \\
+Insert  & $O(\log n)$ & $O(n)$ & $O(\log n)$ \\
+Delete  & $O(\log n)$ & $O(n)$ & $O(\log n)$ \\
+Space   & $O(n)$ & $O(n)$ & $O(n)$ \\
+\bottomrule
+\end{tabular}
+\end{compbox}
+
+\begin{tipbox}[Python Alternative to Balanced BST]
+Python lacks a built-in balanced BST. Use \texttt{sortedcontainers.SortedList} from PyPI for $O(\log n)$ insert/delete/search on a sorted sequence. In competitive programming, use it in place of C++'s \texttt{std::set} or \texttt{std::multiset}.
+\begin{lstlisting}
+from sortedcontainers import SortedList
+sl = SortedList()
+sl.add(3); sl.add(1); sl.add(2)
+sl.discard(1)
+sl.bisect_left(2)    # index
+\end{lstlisting}
+\end{tipbox}
+
+%%%==========================================================
+\chapter{Heaps and Priority Queues}
+%%%==========================================================
+
+\section{Heap Operations via \texttt{heapq}}
+
+\begin{lstlisting}
+import heapq
+
+# Python provides a MIN-HEAP only.
+# For max-heap, negate all values.
+
+# ── Basic min-heap ────────────────────────────────────────────
+h = []
+heapq.heappush(h, 5)
+heapq.heappush(h, 2)
+heapq.heappush(h, 8)
+heapq.heappop(h)           # returns 2 (minimum)
+h[0]                       # peek minimum without popping
+
+# ── Heapify in O(n) ──────────────────────────────────────────
+arr = [5, 3, 8, 1, 9]
+heapq.heapify(arr)
+
+# ── Max-heap via negation ─────────────────────────────────────
+max_h = []
+for x in [5, 3, 8, 1, 9]:
+    heapq.heappush(max_h, -x)
+-heapq.heappop(max_h)      # returns 9
+
+# ── heappushpop / heapreplace ─────────────────────────────────
+heapq.heappushpop(h, x)    # push x then pop min (more efficient)
+heapq.heapreplace(h, x)    # pop min then push x (min <= x required)
+
+# ── Custom objects: use (priority, counter, obj) ──────────────
+import itertools
+counter = itertools.count()   # tie-breaker for equal priorities
+
+class PQ:
+    def __init__(self):
+        self._h = []
+        self._counter = itertools.count()
+        self._removed = set()
+
+    def push(self, priority, item):
+        cnt = next(self._counter)
+        heapq.heappush(self._h, (priority, cnt, item))
+
+    def pop(self):
+        while self._h:
+            priority, cnt, item = heapq.heappop(self._h)
+            if cnt not in self._removed:
+                return priority, item
+        raise KeyError("pop from empty priority queue")
+
+    def remove(self, cnt):
+        self._removed.add(cnt)
+\end{lstlisting}
+
+\section{Heap Sort}
+
+\begin{lstlisting}
+# ── Heap Sort using heapq ── O(n log n)  SC: O(n) ─────────────
+def heap_sort(arr):
+    heapq.heapify(arr)
+    return [heapq.heappop(arr) for _ in range(len(arr))]
+
+# ── In-place Heap Sort ── O(n log n)  SC: O(1) ─────────────── 
+def heap_sort_inplace(arr):
+    n = len(arr)
+    # Build max-heap
+    for i in range(n // 2 - 1, -1, -1):
+        _sift_down(arr, n, i)
+    # Extract elements one by one
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        _sift_down(arr, i, 0)
+
+def _sift_down(arr, n, i):
+    largest = i
+    l, r = 2*i + 1, 2*i + 2
+    if l < n and arr[l] > arr[largest]: largest = l
+    if r < n and arr[r] > arr[largest]: largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        _sift_down(arr, n, largest)
+\end{lstlisting}
+
+\section{Heap Applications}
+
+\begin{lstlisting}
+# ── Top K Frequent Elements ── O(n log k) ─────────────────────
+from collections import Counter
+import heapq
+def top_k_frequent(nums, k):
+    freq = Counter(nums)
+    return heapq.nlargest(k, freq.keys(), key=freq.get)
+
+# ── K Closest Points to Origin ── O(n log k) ─────────────────
+def k_closest(points, k):
+    h = []
+    for x, y in points:
+        dist = x*x + y*y
+        heapq.heappush(h, (-dist, x, y))
+        if len(h) > k: heapq.heappop(h)
+    return [[x, y] for _, x, y in h]
+
+# ── Find Kth Smallest in Matrix (sorted rows & cols) ── O(k log n)
+def kth_smallest_matrix(matrix, k):
+    n = len(matrix)
+    h = [(matrix[0][0], 0, 0)]
+    visited = {(0, 0)}
+    for _ in range(k - 1):
+        val, r, c = heapq.heappop(h)
+        for dr, dc in [(0, 1), (1, 0)]:
+            nr, nc = r + dr, c + dc
+            if nr < n and nc < n and (nr, nc) not in visited:
+                heapq.heappush(h, (matrix[nr][nc], nr, nc))
+                visited.add((nr, nc))
+    return heapq.heappop(h)[0]
+
+# ── Minimum Cost to Connect Ropes ── O(n log n) ───────────────
+def min_cost_ropes(ropes):
+    heapq.heapify(ropes)
+    total = 0
+    while len(ropes) > 1:
+        a = heapq.heappop(ropes)
+        b = heapq.heappop(ropes)
+        cost = a + b
+        total += cost
+        heapq.heappush(ropes, cost)
+    return total
+
+# ── Sliding Window Median ── O(n log n) ───────────────────────
+def sliding_window_median(nums, k):
+    from sortedcontainers import SortedList
+    window = SortedList()
+    result = []
+    for i, x in enumerate(nums):
+        window.add(x)
+        if len(window) > k:
+            window.remove(nums[i - k])
+        if len(window) == k:
+            mid = k // 2
+            if k % 2 == 1: result.append(float(window[mid]))
+            else:          result.append((window[mid-1] + window[mid]) / 2.0)
+    return result
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Hash Tables and Sets}
+%%%==========================================================
+
+\section{Python dict}
+
+\begin{lstlisting}
+# ── dict (like unordered_map in C++) ─────────────────────────
+d = {}
+d = {'a': 1, 'b': 2}
+d = dict(zip(keys, values))
+d = dict.fromkeys(keys, 0)     # all values = 0
+
+d['key'] = 'val'               # O(1) avg
+d.get('key', default)          # safe get; no KeyError
+d.pop('key')                   # remove and return
+d.pop('key', None)             # safe pop
+del d['key']
+'key' in d                     # O(1) avg
+d.keys(); d.values(); d.items()
+
+# Merge dicts (Python 3.9+)
+merged = d1 | d2               # new merged dict
+d1 |= d2                       # update d1 with d2
+
+# ── defaultdict ───────────────────────────────────────────────
+from collections import defaultdict
+graph   = defaultdict(list)      # missing key -> []
+freq    = defaultdict(int)       # missing key -> 0
+visited = defaultdict(bool)      # missing key -> False
+
+# ── Counter ───────────────────────────────────────────────────
+from collections import Counter
+c = Counter([1,2,2,3,3,3])      # {3:3, 2:2, 1:1}
+c.most_common(2)                 # [(3,3), (2,2)]
+c['z']                           # 0 -- no KeyError
+c.update([3, 4])                 # add more elements
+c.subtract([1, 2])               # subtract counts
+c1 + c2                          # sum (keeps positive)
+c1 - c2                          # difference (drops non-positive)
+c1 & c2                          # min of each
+c1 | c2                          # max of each
++c                               # remove zero and negative counts
+
+# ── OrderedDict ───────────────────────────────────────────────
+from collections import OrderedDict
+od = OrderedDict()
+od.move_to_end('key')            # move to back (LRU cache)
+od.move_to_end('key', last=False)# move to front
+od.popitem(last=True)            # pop from back (LIFO)
+od.popitem(last=False)           # pop from front (FIFO)
+\end{lstlisting}
+
+\section{Python set and frozenset}
+
+\begin{lstlisting}
+# ── set (like unordered_set in C++) ──────────────────────────
+s = set()
+s = {1, 2, 3}
+s.add(4)                   # O(1)
+s.remove(3)                # KeyError if absent
+s.discard(3)               # safe remove
+s.pop()                    # remove arbitrary element
+3 in s                     # O(1)
+
+# Set operations
+s1 | s2                    # union
+s1 & s2                    # intersection
+s1 - s2                    # difference (in s1, not s2)
+s1 ^ s2                    # symmetric difference
+s1.issubset(s2)
+s1.issuperset(s2)
+s1.isdisjoint(s2)
+
+# frozenset -- immutable, can be used as dict key
+fs = frozenset([1, 2, 3])
+\end{lstlisting}
+
+\section{Hash Table Applications}
+
+\begin{lstlisting}
+# ── Two Sum ── O(n)  SC: O(n) ────────────────────────────────
+def two_sum(nums, target):
+    seen = {}
+    for i, x in enumerate(nums):
+        complement = target - x
+        if complement in seen: return [seen[complement], i]
+        seen[x] = i
+    return []
+
+# ── Group Anagrams ── O(n*k)  SC: O(n*k) ─────────────────────
+def group_anagrams(strs):
+    groups = defaultdict(list)
+    for s in strs:
+        key = tuple(sorted(s))
+        groups[key].append(s)
+    return list(groups.values())
+
+# ── Longest Consecutive Sequence ── O(n) ─────────────────────
+def longest_consecutive(nums):
+    num_set = set(nums)
+    best = 0
+    for x in num_set:
+        if x - 1 not in num_set:
+            cur, length = x, 1
+            while cur + 1 in num_set: cur += 1; length += 1
+            best = max(best, length)
+    return best
+
+# ── Subarray with Zero Sum (exists?) ── O(n) ─────────────────
+def has_zero_sum_subarray(arr):
+    seen = {0}; prefix = 0
+    for x in arr:
+        prefix += x
+        if prefix in seen: return True
+        seen.add(prefix)
+    return False
+
+# ── Implement Custom HashMap ──────────────────────────────────
+class MyHashMap:
+    def __init__(self):
+        self.SIZE = 1024
+        self.buckets = [[] for _ in range(self.SIZE)]
+
+    def _bucket(self, key): return key % self.SIZE
+
+    def put(self, key, value):
+        b = self._bucket(key)
+        for i, (k, v) in enumerate(self.buckets[b]):
+            if k == key: self.buckets[b][i] = (key, value); return
+        self.buckets[b].append((key, value))
+
+    def get(self, key):
+        for k, v in self.buckets[self._bucket(key)]:
+            if k == key: return v
+        return -1
+
+    def remove(self, key):
+        b = self._bucket(key)
+        self.buckets[b] = [(k, v) for k, v in self.buckets[b] if k != key]
+
+# ── Isomorphic Strings ── O(n) ────────────────────────────────
+def is_isomorphic(s, t):
+    s2t = {}; t2s = {}
+    for a, b in zip(s, t):
+        if (a in s2t and s2t[a] != b) or (b in t2s and t2s[b] != a):
+            return False
+        s2t[a] = b; t2s[b] = a
+    return True
+
+# ── Word Pattern ── O(n) ──────────────────────────────────────
+def word_pattern(pattern, s):
+    words = s.split()
+    if len(pattern) != len(words): return False
+    p2w = {}; w2p = {}
+    for p, w in zip(pattern, words):
+        if (p in p2w and p2w[p] != w) or (w in w2p and w2p[w] != p):
+            return False
+        p2w[p] = w; w2p[w] = p
+    return True
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Tries}
+%%%==========================================================
+
+\section{Trie Implementation}
+
+\begin{lstlisting}
+class TrieNode:
+    def __init__(self):
+        self.children = {}    # char -> TrieNode
+        self.is_end   = False
+        self.count    = 0     # number of words through this node
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    # ── Insert ── O(m) where m = word length ─────────────────
+    def insert(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children:
+                node.children[ch] = TrieNode()
+            node = node.children[ch]
+            node.count += 1
+        node.is_end = True
+
+    # ── Search exact word ── O(m) ────────────────────────────
+    def search(self, word):
+        node = self.root
+        for ch in word:
+            if ch not in node.children: return False
+            node = node.children[ch]
+        return node.is_end
+
+    # ── Prefix exists ── O(m) ────────────────────────────────
+    def starts_with(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children: return False
+            node = node.children[ch]
+        return True
+
+    # ── Delete ── O(m) ───────────────────────────────────────
+    def delete(self, word):
+        def _del(node, word, i):
+            if i == len(word):
+                if not node.is_end: return False
+                node.is_end = False
+                return len(node.children) == 0
+            ch = word[i]
+            if ch not in node.children: return False
+            should_del = _del(node.children[ch], word, i+1)
+            if should_del:
+                node.children[ch].count -= 1
+                if node.children[ch].count == 0:
+                    del node.children[ch]
+                    return not node.is_end and len(node.children) == 0
+            return False
+        _del(self.root, word, 0)
+
+    # ── Count words with prefix ── O(m) ──────────────────────
+    def count_with_prefix(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children: return 0
+            node = node.children[ch]
+        return node.count
+
+    # ── Longest Common Prefix of all words ── O(S) ───────────
+    def longest_common_prefix(self):
+        prefix = []
+        node = self.root
+        while len(node.children) == 1 and not node.is_end:
+            ch = next(iter(node.children))
+            prefix.append(ch)
+            node = node.children[ch]
+        return "".join(prefix)
+
+    # ── Auto-complete: all words with prefix ── O(m + total)─
+    def autocomplete(self, prefix):
+        node = self.root
+        for ch in prefix:
+            if ch not in node.children: return []
+            node = node.children[ch]
+        result = []
+        def dfs(n, curr):
+            if n.is_end: result.append(prefix[:-len(curr)] + curr if curr else prefix)
+            for ch, child in n.children.items():
+                dfs(child, curr + ch)
+        def dfs2(n, path):
+            if n.is_end: result.append(path)
+            for ch, child in n.children.items():
+                dfs2(child, path + ch)
+        dfs2(node, prefix)
+        return result
+\end{lstlisting}
+
+\section{Trie Applications}
+
+\begin{lstlisting}
+# ── Word Search II (find all dictionary words in grid) ────────
+def find_words(board, words):
+    trie = Trie()
+    for w in words: trie.insert(w)
+    m, n = len(board), len(board[0])
+    result = set()
+
+    def dfs(node, r, c, path):
+        ch = board[r][c]
+        if ch not in node.children: return
+        next_node = node.children[ch]
+        path += ch
+        if next_node.is_end: result.add(path)
+        board[r][c] = '#'      # mark visited
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and board[nr][nc] != '#':
+                dfs(next_node, nr, nc, path)
+        board[r][c] = ch       # restore
+
+    for r in range(m):
+        for c in range(n):
+            dfs(trie.root, r, c, "")
+    return list(result)
+
+# ── Maximum XOR of Two Numbers using Trie ── O(n * 32) ────────
+class BitTrie:
+    def __init__(self): self.root = {}
+
+    def insert(self, num):
+        node = self.root
+        for i in range(31, -1, -1):
+            bit = (num >> i) & 1
+            if bit not in node: node[bit] = {}
+            node = node[bit]
+
+    def max_xor(self, num):
+        node = self.root
+        xor = 0
+        for i in range(31, -1, -1):
+            bit = (num >> i) & 1
+            want = 1 - bit
+            if want in node:
+                xor |= (1 << i); node = node[want]
+            else:
+                node = node.get(bit, {})
+        return xor
+
+def find_maximum_xor(nums):
+    bt = BitTrie()
+    for x in nums: bt.insert(x)
+    return max(bt.max_xor(x) for x in nums)
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Advanced Data Structures}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Disjoint Set Union (DSU / Union-Find)}
+%%%==========================================================
+
+DSU efficiently answers \textbf{connectivity queries}: are two elements in the same set?
+Two optimisations make every operation nearly $O(1)$: \textbf{path compression} and \textbf{union by rank/size}.
+
+\section{Full DSU Implementation}
+
+\begin{lstlisting}
+class DSU:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank   = [0] * n
+        self.size   = [1] * n
+        self.num_components = n
+
+    # Find with path compression -- O(alpha(n)) amortised
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+
+    # Iterative path halving (avoids recursion-limit issues)
+    def find_iter(self, x):
+        while self.parent[x] != x:
+            self.parent[x] = self.parent[self.parent[x]]   # path halving
+            x = self.parent[x]
+        return x
+
+    # Union by rank -- O(alpha(n)) amortised
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py: return False    # already connected
+        if self.rank[px] < self.rank[py]: px, py = py, px
+        self.parent[py] = px
+        self.size[px] += self.size[py]
+        if self.rank[px] == self.rank[py]: self.rank[px] += 1
+        self.num_components -= 1
+        return True
+
+    def connected(self, x, y): return self.find(x) == self.find(y)
+    def get_size(self, x):      return self.size[self.find(x)]
+    def components(self):       return self.num_components
+\end{lstlisting}
+
+\section{DSU Applications}
+
+\begin{lstlisting}
+from collections import defaultdict
+
+# Detect Cycle in Undirected Graph -- O(E * alpha(V))
+def has_cycle(n, edges):
+    dsu = DSU(n)
+    for u, v in edges:
+        if not dsu.union(u, v): return True
+    return False
+
+# Kruskal's MST -- O(E log E)
+def kruskal_mst(n, edges):
+    edges.sort(key=lambda e: e[2])
+    dsu = DSU(n)
+    mst_cost = 0; mst_edges = []
+    for u, v, w in edges:
+        if dsu.union(u, v):
+            mst_cost += w; mst_edges.append((u, v, w))
+    return mst_cost, mst_edges
+
+# Number of Connected Components
+def count_components(n, edges):
+    dsu = DSU(n)
+    for u, v in edges: dsu.union(u, v)
+    return dsu.components()
+
+# Redundant Connection -- find edge that creates a cycle
+def find_redundant_connection(edges):
+    n = len(edges)
+    dsu = DSU(n + 1)
+    for u, v in edges:
+        if not dsu.union(u, v): return [u, v]
+    return []
+
+# Accounts Merge -- group emails by owner
+def accounts_merge(accounts):
+    email_id = {}
+    dsu = DSU(len(accounts))
+    for i, acc in enumerate(accounts):
+        for email in acc[1:]:
+            if email in email_id: dsu.union(i, email_id[email])
+            email_id[email] = i
+    groups = defaultdict(set)
+    for email, i in email_id.items():
+        groups[dsu.find(i)].add(email)
+    return [[accounts[i][0]] + sorted(emails) for i, emails in groups.items()]
+
+# Minimum Number of Operations to Make Network Connected
+def make_connected(n, connections):
+    if len(connections) < n - 1: return -1   # not enough cables
+    dsu = DSU(n)
+    extra = 0
+    for u, v in connections:
+        if not dsu.union(u, v): extra += 1   # redundant edge
+    components = dsu.components()
+    return components - 1 if extra >= components - 1 else -1
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Segment Trees}
+%%%==========================================================
+
+\section{Range Sum Segment Tree}
+
+\begin{lstlisting}
+class SegTree:
+    def __init__(self, arr):
+        self.n = len(arr)
+        self.tree = [0] * (4 * self.n)
+        if arr: self._build(arr, 0, 0, self.n - 1)
+
+    def _build(self, arr, nd, lo, hi):
+        if lo == hi: self.tree[nd] = arr[lo]; return
+        mid = (lo + hi) // 2
+        self._build(arr, 2*nd+1, lo, mid)
+        self._build(arr, 2*nd+2, mid+1, hi)
+        self.tree[nd] = self.tree[2*nd+1] + self.tree[2*nd+2]
+
+    # Point Update -- O(log n)
+    def update(self, idx, val, nd=0, lo=None, hi=None):
+        if lo is None: lo, hi = 0, self.n - 1
+        if lo == hi: self.tree[nd] = val; return
+        mid = (lo + hi) // 2
+        if idx <= mid: self.update(idx, val, 2*nd+1, lo, mid)
+        else:          self.update(idx, val, 2*nd+2, mid+1, hi)
+        self.tree[nd] = self.tree[2*nd+1] + self.tree[2*nd+2]
+
+    # Range Sum Query -- O(log n)
+    def query(self, l, r, nd=0, lo=None, hi=None):
+        if lo is None: lo, hi = 0, self.n - 1
+        if r < lo or hi < l: return 0
+        if l <= lo and hi <= r: return self.tree[nd]
+        mid = (lo + hi) // 2
+        return (self.query(l, r, 2*nd+1, lo, mid) +
+                self.query(l, r, 2*nd+2, mid+1, hi))
+\end{lstlisting}
+
+\section{Segment Tree with Lazy Propagation}
+
+\begin{lstlisting}
+class LazySegTree:
+    # Range-add update on [l,r]; range sum query
+    def __init__(self, arr):
+        n = self.n = len(arr)
+        self.tree = [0] * (4 * n)
+        self.lazy = [0] * (4 * n)
+        self._build(arr, 0, 0, n - 1)
+
+    def _build(self, arr, nd, lo, hi):
+        if lo == hi: self.tree[nd] = arr[lo]; return
+        mid = (lo + hi) // 2
+        self._build(arr, 2*nd+1, lo, mid)
+        self._build(arr, 2*nd+2, mid+1, hi)
+        self.tree[nd] = self.tree[2*nd+1] + self.tree[2*nd+2]
+
+    def _push_down(self, nd, lo, hi):
+        if not self.lazy[nd]: return
+        mid = (lo + hi) // 2; d = self.lazy[nd]
+        self.tree[2*nd+1] += d * (mid - lo + 1); self.lazy[2*nd+1] += d
+        self.tree[2*nd+2] += d * (hi - mid);     self.lazy[2*nd+2] += d
+        self.lazy[nd] = 0
+
+    # Range add delta to arr[l..r] -- O(log n)
+    def range_add(self, l, r, delta, nd=0, lo=None, hi=None):
+        if lo is None: lo, hi = 0, self.n - 1
+        if r < lo or hi < l: return
+        if l <= lo and hi <= r:
+            self.tree[nd] += delta * (hi - lo + 1); self.lazy[nd] += delta; return
+        self._push_down(nd, lo, hi)
+        mid = (lo + hi) // 2
+        self.range_add(l, r, delta, 2*nd+1, lo, mid)
+        self.range_add(l, r, delta, 2*nd+2, mid+1, hi)
+        self.tree[nd] = self.tree[2*nd+1] + self.tree[2*nd+2]
+
+    # Range sum query -- O(log n)
+    def query(self, l, r, nd=0, lo=None, hi=None):
+        if lo is None: lo, hi = 0, self.n - 1
+        if r < lo or hi < l: return 0
+        if l <= lo and hi <= r: return self.tree[nd]
+        self._push_down(nd, lo, hi)
+        mid = (lo + hi) // 2
+        return (self.query(l,r,2*nd+1,lo,mid) + self.query(l,r,2*nd+2,mid+1,hi))
+\end{lstlisting}
+
+\begin{compbox}[Segment Tree Complexities]
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Operation} & \textbf{Time} & \textbf{Space} \\
+\midrule
+Build           & $O(n)$        & $O(4n)$ \\
+Point update    & $O(\log n)$   & --- \\
+Range query     & $O(\log n)$   & --- \\
+Range update (lazy) & $O(\log n)$ & $O(4n)$ for lazy array \\
+\bottomrule
+\end{tabular}
+\end{compbox}
+
+%%%==========================================================
+\chapter{Fenwick Tree (Binary Indexed Tree)}
+%%%==========================================================
+
+\begin{lstlisting}
+class BIT:
+    # 1-indexed BIT. Supports point update and prefix sum query.
+    def __init__(self, n):
+        self.n    = n
+        self.tree = [0] * (n + 1)
+
+    # Add delta to position i -- O(log n)
+    def update(self, i, delta):
+        while i <= self.n:
+            self.tree[i] += delta
+            i += i & (-i)      # add lowest set bit
+
+    # Prefix sum [1..i] -- O(log n)
+    def prefix(self, i):
+        total = 0
+        while i > 0:
+            total += self.tree[i]
+            i -= i & (-i)      # remove lowest set bit
+        return total
+
+    # Range sum [l..r]
+    def range_sum(self, l, r): return self.prefix(r) - self.prefix(l - 1)
+
+    # O(n) build from array (0-indexed input)
+    def build(self, arr):
+        for i, x in enumerate(arr, start=1):
+            self.tree[i] += x
+            j = i + (i & -i)
+            if j <= self.n: self.tree[j] += self.tree[i]
+
+    # Find kth element (1-indexed)
+    def kth(self, k):
+        idx = 0
+        for pw in range(self.n.bit_length(), -1, -1):
+            nxt = idx + (1 << pw)
+            if nxt <= self.n and self.tree[nxt] < k:
+                idx = nxt; k -= self.tree[nxt]
+        return idx + 1
+
+
+# Range Update, Point Query BIT
+class BIT_RangeUpdate:
+    # Add delta to range [l,r]; query single point i.
+    def __init__(self, n): self.bit = BIT(n)
+
+    def range_update(self, l, r, delta):
+        self.bit.update(l, delta)
+        self.bit.update(r + 1, -delta)
+
+    def point_query(self, i): return self.bit.prefix(i)
+
+
+# Range Update, Range Query using two BITs
+class BIT_RangeRange:
+    # Add delta to [l,r]; query sum of [l,r].
+    def __init__(self, n):
+        self.B1 = BIT(n); self.B2 = BIT(n); self.n = n
+
+    def _prefix(self, i):
+        return self.B1.prefix(i) * i - self.B2.prefix(i)
+
+    def range_update(self, l, r, delta):
+        self.B1.update(l, delta);       self.B1.update(r+1, -delta)
+        self.B2.update(l, delta*(l-1)); self.B2.update(r+1, -delta*r)
+
+    def range_query(self, l, r):
+        return self._prefix(r) - self._prefix(l-1)
+
+
+# 2D BIT -- O(log m * log n) per operation
+class BIT2D:
+    def __init__(self, m, n):
+        self.m = m; self.n = n
+        self.tree = [[0]*(n+1) for _ in range(m+1)]
+
+    def update(self, r, c, delta):
+        i = r
+        while i <= self.m:
+            j = c
+            while j <= self.n:
+                self.tree[i][j] += delta; j += j & (-j)
+            i += i & (-i)
+
+    def prefix(self, r, c):
+        total = 0; i = r
+        while i > 0:
+            j = c
+            while j > 0: total += self.tree[i][j]; j -= j & (-j)
+            i -= i & (-i)
+        return total
+
+    def rect_query(self, r1, c1, r2, c2):
+        return (self.prefix(r2,c2) - self.prefix(r1-1,c2)
+                - self.prefix(r2,c1-1) + self.prefix(r1-1,c1-1))
+
+
+# Count Inversions -- O(n log n)
+def count_inversions(arr):
+    if not arr: return 0
+    compressed = {v: i+1 for i, v in enumerate(sorted(set(arr)))}
+    bit = BIT(len(compressed))
+    inversions = 0
+    for x in arr:
+        rank = compressed[x]
+        inversions += bit.prefix(len(compressed)) - bit.prefix(rank)
+        bit.update(rank, 1)
+    return inversions
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Sparse Table (Static RMQ)}
+%%%==========================================================
+
+A Sparse Table answers \textbf{Range Min/Max Queries} in $O(1)$ after $O(n \log n)$ preprocessing.
+Requires an \textbf{idempotent} operation (min, max, gcd); does \emph{not} support updates.
+
+\begin{lstlisting}
+import math
+
+class SparseTable:
+    # Range Minimum Query in O(1) after O(n log n) build.
+    def __init__(self, arr):
+        n = len(arr)
+        LOG = max(1, n.bit_length())
+        self.log = [0] * (n + 1)
+        for i in range(2, n + 1):
+            self.log[i] = self.log[i // 2] + 1
+        # st[k][i] = min of arr[i .. i + 2^k - 1]
+        self.st = [arr[:]]
+        for k in range(1, LOG):
+            prev = self.st[k-1]
+            half = 1 << (k-1)
+            self.st.append([min(prev[i], prev[i + half])
+                            for i in range(n - (1 << k) + 1)])
+
+    # O(1) range minimum query
+    def query(self, l, r):
+        k = self.log[r - l + 1]
+        return min(self.st[k][l], self.st[k][r - (1 << k) + 1])
+
+
+class SparseTableMax:
+    # Range Maximum Query in O(1).
+    def __init__(self, arr):
+        n = len(arr); LOG = max(1, n.bit_length())
+        self.log = [0]*(n+1)
+        for i in range(2,n+1): self.log[i] = self.log[i//2]+1
+        self.st = [arr[:]]
+        for k in range(1, LOG):
+            prev = self.st[k-1]; half = 1 << (k-1)
+            self.st.append([max(prev[i], prev[i+half])
+                            for i in range(n-(1<<k)+1)])
+
+    def query(self, l, r):
+        k = self.log[r-l+1]
+        return max(self.st[k][l], self.st[k][r-(1<<k)+1])
+
+
+# GCD Sparse Table
+class GCDSparseTable:
+    def __init__(self, arr):
+        import math
+        n = len(arr); LOG = max(1, n.bit_length())
+        self.log = [0]*(n+1)
+        for i in range(2,n+1): self.log[i]=self.log[i//2]+1
+        self.st = [arr[:]]
+        for k in range(1, LOG):
+            prev = self.st[k-1]; half = 1 << (k-1)
+            self.st.append([math.gcd(prev[i], prev[i+half])
+                            for i in range(n-(1<<k)+1)])
+
+    def query(self, l, r):
+        k = self.log[r-l+1]
+        return math.gcd(self.st[k][l], self.st[k][r-(1<<k)+1])
+\end{lstlisting}
+
+\begin{compbox}[Sparse Table vs Segment Tree vs BIT]
+\begin{tabular}{@{}llll@{}}
+\toprule
+\textbf{Structure} & \textbf{Build} & \textbf{Query} & \textbf{Update} \\
+\midrule
+Sparse Table     & $O(n \log n)$ & $O(1)$        & None \\
+Segment Tree     & $O(n)$        & $O(\log n)$   & $O(\log n)$ \\
+BIT              & $O(n)$        & $O(\log n)$   & $O(\log n)$ \\
+\bottomrule
+\end{tabular}\\[4pt]
+Use Sparse Table for static arrays needing ultra-fast idempotent range queries.
+\end{compbox}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Graph Algorithms}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Graph Representations and Traversals}
+%%%==========================================================
+
+\section{Graph Representations}
+
+\begin{lstlisting}
+from collections import defaultdict, deque
+
+# -- Adjacency List (most common) -- Space: O(V + E)
+graph = defaultdict(list)
+# Undirected
+graph[0].append(1); graph[1].append(0)
+# Directed weighted
+graph[u].append((v, w))
+
+# -- Adjacency Matrix -- Space: O(V^2)
+n = 5
+adj = [[0]*n for _ in range(n)]
+adj[u][v] = 1           # unweighted
+adj[u][v] = w           # weighted
+
+# -- Edge List
+edges = [(0,1,5), (1,2,3), ...]    # (u, v, weight)
+
+# -- Building from input
+def build_graph(n, edge_list, directed=False):
+    g = defaultdict(list)
+    for u, v, *w in edge_list:
+        wt = w[0] if w else 1
+        g[u].append((v, wt))
+        if not directed: g[v].append((u, wt))
+    return g
+\end{lstlisting}
+
+\section{Depth-First Search (DFS)}
+
+\begin{lstlisting}
+# -- Recursive DFS -- O(V + E)
+def dfs_recursive(graph, start):
+    visited = set()
+    order   = []
+    def dfs(u):
+        visited.add(u)
+        order.append(u)
+        for v in graph[u]:
+            if v not in visited:
+                dfs(v)
+    dfs(start)
+    return order
+
+# -- Iterative DFS (avoids recursion limit on large graphs)
+def dfs_iterative(graph, start):
+    visited = set([start])
+    stack   = [start]
+    order   = []
+    while stack:
+        u = stack.pop()
+        order.append(u)
+        for v in graph[u]:
+            if v not in visited:
+                visited.add(v)
+                stack.append(v)
+    return order
+
+# -- DFS on entire graph (handles disconnected components)
+def dfs_all(graph, n):
+    visited = set()
+    components = []
+    for src in range(n):
+        if src not in visited:
+            comp = []
+            stack = [src]
+            visited.add(src)
+            while stack:
+                u = stack.pop()
+                comp.append(u)
+                for v in graph[u]:
+                    if v not in visited:
+                        visited.add(v)
+                        stack.append(v)
+            components.append(comp)
+    return components
+\end{lstlisting}
+
+\section{Breadth-First Search (BFS)}
+
+\begin{lstlisting}
+# -- BFS -- O(V + E), finds shortest path in unweighted graph
+def bfs(graph, start):
+    visited = set([start])
+    queue   = deque([start])
+    order   = []
+    while queue:
+        u = queue.popleft()
+        order.append(u)
+        for v in graph[u]:
+            if v not in visited:
+                visited.add(v)
+                queue.append(v)
+    return order
+
+# -- BFS with shortest distance tracking
+def bfs_distance(graph, start):
+    dist    = {start: 0}
+    queue   = deque([start])
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if v not in dist:
+                dist[v] = dist[u] + 1
+                queue.append(v)
+    return dist
+
+# -- BFS with path reconstruction
+def bfs_path(graph, start, end):
+    parent  = {start: None}
+    queue   = deque([start])
+    while queue:
+        u = queue.popleft()
+        if u == end:
+            path = []
+            while u is not None:
+                path.append(u); u = parent[u]
+            return path[::-1]
+        for v in graph[u]:
+            if v not in parent:
+                parent[v] = u
+                queue.append(v)
+    return []    # no path
+
+# -- Multi-source BFS
+def bfs_multi_source(grid, sources):
+    m, n = len(grid), len(grid[0])
+    dist  = [[-1]*n for _ in range(m)]
+    queue = deque()
+    for r, c in sources:
+        dist[r][c] = 0
+        queue.append((r, c))
+    while queue:
+        r, c = queue.popleft()
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n and dist[nr][nc] == -1:
+                dist[nr][nc] = dist[r][c] + 1
+                queue.append((nr, nc))
+    return dist
+\end{lstlisting}
+
+\section{Topological Sort}
+
+\begin{lstlisting}
+# -- Kahn's Algorithm (BFS-based) -- O(V + E)
+def topo_sort_kahn(graph, n):
+    in_degree = [0] * n
+    for u in range(n):
+        for v in graph[u]: in_degree[v] += 1
+    queue = deque(u for u in range(n) if in_degree[u] == 0)
+    order = []
+    while queue:
+        u = queue.popleft()
+        order.append(u)
+        for v in graph[u]:
+            in_degree[v] -= 1
+            if in_degree[v] == 0: queue.append(v)
+    return order if len(order) == n else []  # empty => cycle
+
+# -- DFS-based Topological Sort -- O(V + E)
+def topo_sort_dfs(graph, n):
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = [WHITE] * n
+    order = []
+    has_cycle = [False]
+
+    def dfs(u):
+        color[u] = GRAY
+        for v in graph[u]:
+            if color[v] == GRAY:
+                has_cycle[0] = True; return
+            if color[v] == WHITE: dfs(v)
+        color[u] = BLACK
+        order.append(u)
+
+    for u in range(n):
+        if color[u] == WHITE: dfs(u)
+    return [] if has_cycle[0] else order[::-1]
+
+# -- Course Schedule (detect cycle via topo sort) -- O(V+E)
+def can_finish(num_courses, prerequisites):
+    graph = defaultdict(list)
+    for a, b in prerequisites: graph[b].append(a)
+    return len(topo_sort_kahn(graph, num_courses)) == num_courses
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Shortest Path Algorithms}
+%%%==========================================================
+
+\section{Dijkstra's Algorithm}
+
+\begin{lstlisting}
+import heapq
+
+# -- Dijkstra -- O((V + E) log V) with binary heap
+def dijkstra(graph, src, n):
+    # graph[u] = [(v, w), ...]
+    dist = [float('inf')] * n
+    dist[src] = 0
+    heap = [(0, src)]    # (dist, node)
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue    # stale entry
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                heapq.heappush(heap, (dist[v], v))
+    return dist
+
+# -- Dijkstra with path reconstruction
+def dijkstra_path(graph, src, dst, n):
+    dist   = [float('inf')] * n
+    parent = [-1] * n
+    dist[src] = 0
+    heap = [(0, src)]
+    while heap:
+        d, u = heapq.heappop(heap)
+        if d > dist[u]: continue
+        if u == dst: break
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                parent[v] = u
+                heapq.heappush(heap, (dist[v], v))
+    if dist[dst] == float('inf'): return [], float('inf')
+    path = []
+    cur  = dst
+    while cur != -1: path.append(cur); cur = parent[cur]
+    return path[::-1], dist[dst]
+
+# -- Dijkstra on grid
+def dijkstra_grid(grid, start, end):
+    m, n = len(grid), len(grid[0])
+    dist = [[float('inf')]*n for _ in range(m)]
+    sr, sc = start; er, ec = end
+    dist[sr][sc] = 0
+    heap = [(0, sr, sc)]
+    while heap:
+        d, r, c = heapq.heappop(heap)
+        if d > dist[r][c]: continue
+        if (r, c) == (er, ec): return d
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < m and 0 <= nc < n:
+                nd = d + grid[nr][nc]
+                if nd < dist[nr][nc]:
+                    dist[nr][nc] = nd
+                    heapq.heappush(heap, (nd, nr, nc))
+    return dist[er][ec]
+\end{lstlisting}
+
+\section{Bellman-Ford Algorithm}
+
+\begin{lstlisting}
+# -- Bellman-Ford -- O(V * E), handles negative weights
+def bellman_ford(n, edges, src):
+    # edges: [(u, v, w), ...]
+    dist = [float('inf')] * n
+    dist[src] = 0
+    for _ in range(n - 1):       # relax all edges n-1 times
+        updated = False
+        for u, v, w in edges:
+            if dist[u] != float('inf') and dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                updated = True
+        if not updated: break    # early termination
+
+    # Detect negative cycle
+    for u, v, w in edges:
+        if dist[u] != float('inf') and dist[u] + w < dist[v]:
+            return None          # negative cycle exists
+    return dist
+
+# -- SPFA (queue-based Bellman-Ford, faster in practice)
+def spfa(n, graph, src):
+    dist    = [float('inf')] * n
+    in_queue = [False] * n
+    cnt     = [0] * n           # count relaxations
+    dist[src] = 0
+    queue = deque([src])
+    in_queue[src] = True
+    while queue:
+        u = queue.popleft()
+        in_queue[u] = False
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                cnt[v] += 1
+                if cnt[v] >= n: return None   # negative cycle
+                if not in_queue[v]:
+                    queue.append(v); in_queue[v] = True
+    return dist
+\end{lstlisting}
+
+\section{Floyd-Warshall Algorithm}
+
+\begin{lstlisting}
+# -- Floyd-Warshall -- O(V^3), all-pairs shortest paths
+def floyd_warshall(n, edges):
+    INF = float('inf')
+    dist = [[INF]*n for _ in range(n)]
+    for i in range(n): dist[i][i] = 0
+    for u, v, w in edges:
+        dist[u][v] = min(dist[u][v], w)
+        dist[v][u] = min(dist[v][u], w)    # remove for directed
+
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+
+    # Check for negative cycles (dist[i][i] < 0)
+    for i in range(n):
+        if dist[i][i] < 0: return None    # negative cycle
+
+    return dist
+
+# -- Reconstruct path from Floyd-Warshall
+def floyd_warshall_path(n, edges):
+    INF = float('inf')
+    dist = [[INF]*n for _ in range(n)]
+    next_node = [[None]*n for _ in range(n)]
+    for i in range(n): dist[i][i] = 0
+    for u, v, w in edges:
+        if w < dist[u][v]: dist[u][v] = w; next_node[u][v] = v
+    for k in range(n):
+        for i in range(n):
+            for j in range(n):
+                if dist[i][k] + dist[k][j] < dist[i][j]:
+                    dist[i][j] = dist[i][k] + dist[k][j]
+                    next_node[i][j] = next_node[i][k]
+    def get_path(u, v):
+        if next_node[u][v] is None: return []
+        path = [u]
+        while u != v: u = next_node[u][v]; path.append(u)
+        return path
+    return dist, get_path
+\end{lstlisting}
+
+\begin{compbox}[Shortest Path Algorithm Comparison]
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Algorithm} & \textbf{Time} & \textbf{Negative Weights} & \textbf{Neg. Cycles} & \textbf{Use When} \\
+\midrule
+BFS              & $O(V+E)$      & No           & No   & Unweighted graph \\
+Dijkstra         & $O((V+E)\log V)$ & No        & No   & Non-negative weights \\
+Bellman-Ford     & $O(VE)$       & Yes          & Detect & Negative weights \\
+Floyd-Warshall   & $O(V^3)$      & Yes          & Detect & All-pairs, small $V$ \\
+\bottomrule
+\end{tabular}
+\end{compbox}
+
+%%%==========================================================
+\chapter{Minimum Spanning Trees}
+%%%==========================================================
+
+\section{Kruskal's Algorithm}
+
+\begin{lstlisting}
+# -- Kruskal's MST -- O(E log E)
+def kruskal(n, edges):
+    # edges: [(w, u, v), ...]
+    edges.sort()
+    dsu = DSU(n)
+    mst_weight = 0
+    mst_edges  = []
+    for w, u, v in edges:
+        if dsu.union(u, v):
+            mst_weight += w
+            mst_edges.append((u, v, w))
+            if len(mst_edges) == n - 1: break
+    return mst_weight, mst_edges
+\end{lstlisting}
+
+\section{Prim's Algorithm}
+
+\begin{lstlisting}
+# -- Prim's MST (heap-based) -- O((V + E) log V)
+def prim(graph, n):
+    # graph[u] = [(v, w), ...]
+    in_mst  = [False] * n
+    key     = [float('inf')] * n
+    parent  = [-1] * n
+    key[0]  = 0
+    heap    = [(0, 0)]    # (weight, vertex)
+    mst_cost = 0
+
+    while heap:
+        w, u = heapq.heappop(heap)
+        if in_mst[u]: continue
+        in_mst[u]  = True
+        mst_cost  += w
+        for v, wt in graph[u]:
+            if not in_mst[v] and wt < key[v]:
+                key[v]    = wt
+                parent[v] = u
+                heapq.heappush(heap, (wt, v))
+
+    return mst_cost, [(parent[i], i, key[i]) for i in range(1, n)]
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Cycle Detection and Graph Properties}
+%%%==========================================================
+
+\section{Cycle Detection}
+
+\begin{lstlisting}
+# -- Cycle in Directed Graph (DFS coloring) -- O(V + E)
+def has_cycle_directed(graph, n):
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = [WHITE] * n
+
+    def dfs(u):
+        color[u] = GRAY
+        for v in graph[u]:
+            if color[v] == GRAY: return True    # back edge
+            if color[v] == WHITE and dfs(v): return True
+        color[u] = BLACK
+        return False
+
+    return any(color[u] == WHITE and dfs(u) for u in range(n))
+
+# -- Cycle in Undirected Graph (DFS) -- O(V + E)
+def has_cycle_undirected(graph, n):
+    visited = [False] * n
+
+    def dfs(u, parent):
+        visited[u] = True
+        for v in graph[u]:
+            if not visited[v]:
+                if dfs(v, u): return True
+            elif v != parent:
+                return True              # back edge to non-parent
+        return False
+
+    return any(not visited[u] and dfs(u, -1) for u in range(n))
+\end{lstlisting}
+
+\section{Strongly Connected Components (SCCs)}
+
+\begin{lstlisting}
+# -- Kosaraju's Algorithm -- O(V + E)
+def kosaraju(graph, n):
+    # graph: adjacency list (0-indexed)
+    visited = [False] * n
+    order   = []
+
+    def dfs1(u):
+        visited[u] = True
+        for v in graph[u]:
+            if not visited[v]: dfs1(v)
+        order.append(u)
+
+    for u in range(n):
+        if not visited[u]: dfs1(u)
+
+    # Build reverse graph
+    rev = defaultdict(list)
+    for u in range(n):
+        for v in graph[u]: rev[v].append(u)
+
+    visited = [False] * n
+    sccs    = []
+
+    def dfs2(u, comp):
+        visited[u] = True; comp.append(u)
+        for v in rev[u]:
+            if not visited[v]: dfs2(v, comp)
+
+    for u in reversed(order):
+        if not visited[u]:
+            comp = []; dfs2(u, comp); sccs.append(comp)
+
+    return sccs
+
+# -- Tarjan's Algorithm -- O(V + E), single DFS
+def tarjan_scc(graph, n):
+    index    = [0]
+    idx      = [-1] * n
+    low      = [0]  * n
+    on_stack = [False] * n
+    stack    = []
+    sccs     = []
+
+    def dfs(u):
+        idx[u] = low[u] = index[0]; index[0] += 1
+        stack.append(u); on_stack[u] = True
+
+        for v in graph[u]:
+            if idx[v] == -1:
+                dfs(v); low[u] = min(low[u], low[v])
+            elif on_stack[v]:
+                low[u] = min(low[u], idx[v])
+
+        if low[u] == idx[u]:   # root of SCC
+            scc = []
+            while True:
+                w = stack.pop(); on_stack[w] = False
+                scc.append(w)
+                if w == u: break
+            sccs.append(scc)
+
+    for u in range(n):
+        if idx[u] == -1: dfs(u)
+
+    return sccs
+\end{lstlisting}
+
+\section{Bridges and Articulation Points}
+
+\begin{lstlisting}
+# -- Find Bridges (edges whose removal disconnects graph) -- O(V+E)
+def find_bridges(graph, n):
+    disc   = [-1] * n
+    low    = [0]  * n
+    timer  = [0]
+    bridges = []
+
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]; timer[0] += 1
+        for v in graph[u]:
+            if v == parent: continue
+            if disc[v] == -1:
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                if low[v] > disc[u]:
+                    bridges.append((u, v))
+            else:
+                low[u] = min(low[u], disc[v])
+
+    for u in range(n):
+        if disc[u] == -1: dfs(u, -1)
+    return bridges
+
+# -- Find Articulation Points -- O(V + E)
+def find_articulation_points(graph, n):
+    disc     = [-1] * n
+    low      = [0]  * n
+    timer    = [0]
+    is_ap    = [False] * n
+
+    def dfs(u, parent):
+        disc[u] = low[u] = timer[0]; timer[0] += 1
+        children = 0
+        for v in graph[u]:
+            if v == parent: continue
+            if disc[v] == -1:
+                children += 1
+                dfs(v, u)
+                low[u] = min(low[u], low[v])
+                # u is AP if: root with 2+ children, or non-root with low[v] >= disc[u]
+                if parent == -1 and children > 1: is_ap[u] = True
+                if parent != -1 and low[v] >= disc[u]: is_ap[u] = True
+            else:
+                low[u] = min(low[u], disc[v])
+
+    for u in range(n):
+        if disc[u] == -1: dfs(u, -1)
+    return [u for u in range(n) if is_ap[u]]
+\end{lstlisting}
+
+\section{Bipartite Check}
+
+\begin{lstlisting}
+# -- Bipartite Check (2-coloring via BFS) -- O(V + E)
+def is_bipartite(graph, n):
+    color = [-1] * n
+    for start in range(n):
+        if color[start] != -1: continue
+        queue = deque([start])
+        color[start] = 0
+        while queue:
+            u = queue.popleft()
+            for v in graph[u]:
+                if color[v] == -1:
+                    color[v] = 1 - color[u]
+                    queue.append(v)
+                elif color[v] == color[u]:
+                    return False
+    return True
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Advanced Graph Algorithms}
+%%%==========================================================
+
+\section{Flood Fill / Island Problems}
+
+\begin{lstlisting}
+# -- Number of Islands (DFS) -- O(m*n)
+def num_islands(grid):
+    if not grid: return 0
+    m, n   = len(grid), len(grid[0])
+    count  = 0
+
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or grid[r][c] != '1': return
+        grid[r][c] = '0'    # mark visited (in-place)
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]: dfs(r+dr, c+dc)
+
+    for r in range(m):
+        for c in range(n):
+            if grid[r][c] == '1': count += 1; dfs(r, c)
+    return count
+
+# -- Surrounded Regions -- O(m*n)
+def solve_surrounded(board):
+    if not board: return
+    m, n = len(board), len(board[0])
+
+    def dfs(r, c):
+        if r < 0 or r >= m or c < 0 or c >= n or board[r][c] != 'O': return
+        board[r][c] = 'S'    # safe
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]: dfs(r+dr, c+dc)
+
+    # Mark border-connected O's as safe
+    for r in range(m):
+        if board[r][0] == 'O': dfs(r, 0)
+        if board[r][n-1] == 'O': dfs(r, n-1)
+    for c in range(n):
+        if board[0][c] == 'O': dfs(0, c)
+        if board[m-1][c] == 'O': dfs(m-1, c)
+
+    for r in range(m):
+        for c in range(n):
+            if   board[r][c] == 'O': board[r][c] = 'X'
+            elif board[r][c] == 'S': board[r][c] = 'O'
+\end{lstlisting}
+
+\section{0-1 BFS}
+
+\begin{lstlisting}
+# -- 0-1 BFS: edges have weight 0 or 1 -- O(V + E)
+# Use deque: append front for weight-0, append back for weight-1
+def bfs_01(graph, src, n):
+    dist  = [float('inf')] * n
+    dist[src] = 0
+    dq    = deque([src])
+    while dq:
+        u = dq.popleft()
+        for v, w in graph[u]:
+            if dist[u] + w < dist[v]:
+                dist[v] = dist[u] + w
+                if w == 0: dq.appendleft(v)
+                else:      dq.append(v)
+    return dist
+\end{lstlisting}
+
+\section{Euler Path and Circuit}
+
+\begin{lstlisting}
+# -- Hierholzer's Algorithm -- Eulerian Circuit -- O(E)
+def eulerian_circuit(graph, n):
+    # Precondition: all vertices have even degree
+    # graph is adjacency list with edge counts (multigraph)
+    adj   = [list(graph[u]) for u in range(n)]
+    stack = [0]
+    path  = []
+    ptr   = [0] * n    # iterator pointer (avoid O(n) per removal)
+    # Use iterator approach for efficiency
+    adj_iter = [iter(graph[u]) for u in range(n)]
+    # Simpler version with sets:
+    edge_used = set()
+    adj2 = {u: list(v for v in graph[u]) for u in range(n)}
+    stack2 = [0]; circuit = []
+    while stack2:
+        v = stack2[-1]
+        if adj2[v]:
+            u = adj2[v].pop()
+            adj2[u].remove(v)   # undirected: remove back edge
+            stack2.append(u)
+        else:
+            circuit.append(stack2.pop())
+    return circuit[::-1]
+
+# -- Check Eulerian conditions
+def has_eulerian_circuit(graph, n):
+    return all(len(graph[u]) % 2 == 0 for u in range(n))
+
+def has_eulerian_path(graph, n):
+    odd = sum(1 for u in range(n) if len(graph[u]) % 2 == 1)
+    return odd == 0 or odd == 2
+\end{lstlisting}
+
+\section{Bellman-Ford for Cheapest Flights within K Stops}
+
+\begin{lstlisting}
+# -- Cheapest flights within k stops -- O(k * E)
+def find_cheapest_price(n, flights, src, dst, k):
+    INF  = float('inf')
+    dist = [INF] * n
+    dist[src] = 0
+    for _ in range(k + 1):
+        tmp = dist[:]
+        for u, v, w in flights:
+            if dist[u] != INF and dist[u] + w < tmp[v]:
+                tmp[v] = dist[u] + w
+        dist = tmp
+    return dist[dst] if dist[dst] != INF else -1
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Sorting and Searching}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Sorting Algorithms}
+%%%==========================================================
+
+\begin{notebox}[Python's Built-in Sort]
+\texttt{list.sort()} and \texttt{sorted()} use \textbf{Timsort} --- $O(n \log n)$ worst case, $O(n)$ on nearly-sorted data. Always prefer these in practice. Implement manual sorts only when the algorithm itself is being tested.
+\end{notebox}
+
+\section{Comparison-Based Sorts}
+
+\begin{lstlisting}
+# ============================================================
+# BUBBLE SORT -- O(n^2) avg/worst, O(n) best, Stable
+# ============================================================
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        swapped = False
+        for j in range(n - i - 1):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+                swapped = True
+        if not swapped: break    # already sorted
+
+# ============================================================
+# SELECTION SORT -- O(n^2), Not stable
+# ============================================================
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_idx = i
+        for j in range(i+1, n):
+            if arr[j] < arr[min_idx]: min_idx = j
+        arr[i], arr[min_idx] = arr[min_idx], arr[i]
+
+# ============================================================
+# INSERTION SORT -- O(n^2) avg/worst, O(n) best, Stable
+# ============================================================
+def insertion_sort(arr):
+    for i in range(1, len(arr)):
+        key = arr[i]; j = i - 1
+        while j >= 0 and arr[j] > key:
+            arr[j+1] = arr[j]; j -= 1
+        arr[j+1] = key
+
+# ============================================================
+# MERGE SORT -- O(n log n) all cases, Stable, O(n) space
+# ============================================================
+def merge_sort(arr):
+    if len(arr) <= 1: return arr
+    mid   = len(arr) // 2
+    left  = merge_sort(arr[:mid])
+    right = merge_sort(arr[mid:])
+    return _merge(left, right)
+
+def _merge(left, right):
+    result = []; i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]: result.append(left[i]); i += 1
+        else:                    result.append(right[j]); j += 1
+    result.extend(left[i:]); result.extend(right[j:])
+    return result
+
+# Bottom-up (iterative) merge sort
+def merge_sort_iterative(arr):
+    n = len(arr)
+    width = 1
+    while width < n:
+        for lo in range(0, n, 2*width):
+            mid  = min(lo + width, n)
+            hi   = min(lo + 2*width, n)
+            arr[lo:hi] = _merge(arr[lo:mid], arr[mid:hi])
+        width *= 2
+    return arr
+
+# ============================================================
+# QUICK SORT -- O(n log n) avg, O(n^2) worst, Not stable
+# ============================================================
+def quick_sort(arr, lo=0, hi=None):
+    if hi is None: hi = len(arr) - 1
+    if lo >= hi: return
+    p = _partition(arr, lo, hi)
+    quick_sort(arr, lo, p - 1)
+    quick_sort(arr, p + 1, hi)
+
+def _partition(arr, lo, hi):
+    # Median-of-three pivot
+    mid = (lo + hi) // 2
+    if arr[mid] < arr[lo]: arr[lo], arr[mid] = arr[mid], arr[lo]
+    if arr[hi]  < arr[lo]: arr[lo], arr[hi]  = arr[hi],  arr[lo]
+    if arr[mid] < arr[hi]: arr[mid], arr[hi] = arr[hi],  arr[mid]
+    pivot = arr[hi]
+    i = lo - 1
+    for j in range(lo, hi):
+        if arr[j] <= pivot:
+            i += 1; arr[i], arr[j] = arr[j], arr[i]
+    arr[i+1], arr[hi] = arr[hi], arr[i+1]
+    return i + 1
+
+# Randomised quick sort
+import random
+def quick_sort_rand(arr, lo=0, hi=None):
+    if hi is None: hi = len(arr) - 1
+    if lo >= hi: return
+    rand_idx = random.randint(lo, hi)
+    arr[rand_idx], arr[hi] = arr[hi], arr[rand_idx]
+    p = _partition(arr, lo, hi)
+    quick_sort_rand(arr, lo, p - 1)
+    quick_sort_rand(arr, p + 1, hi)
+
+# 3-way partition (Dutch National Flag) for many duplicates
+def quick_sort_3way(arr, lo=0, hi=None):
+    if hi is None: hi = len(arr) - 1
+    if lo >= hi: return
+    lt, gt = lo, hi
+    pivot  = arr[lo]; i = lo + 1
+    while i <= gt:
+        if   arr[i] < pivot: arr[lt], arr[i] = arr[i], arr[lt]; lt += 1; i += 1
+        elif arr[i] > pivot: arr[i], arr[gt]  = arr[gt], arr[i]; gt -= 1
+        else: i += 1
+    quick_sort_3way(arr, lo, lt - 1)
+    quick_sort_3way(arr, gt + 1, hi)
+
+# ============================================================
+# HEAP SORT -- O(n log n) all cases, Not stable, O(1) space
+# ============================================================
+def heap_sort(arr):
+    n = len(arr)
+    for i in range(n//2 - 1, -1, -1):
+        _sift_down(arr, n, i)
+    for i in range(n-1, 0, -1):
+        arr[0], arr[i] = arr[i], arr[0]
+        _sift_down(arr, i, 0)
+
+def _sift_down(arr, n, i):
+    largest = i; l = 2*i+1; r = 2*i+2
+    if l < n and arr[l] > arr[largest]: largest = l
+    if r < n and arr[r] > arr[largest]: largest = r
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        _sift_down(arr, n, largest)
+
+# ============================================================
+# SHELL SORT -- O(n log^2 n) with Ciura gaps, Not stable
+# ============================================================
+def shell_sort(arr):
+    gaps = [701, 301, 132, 57, 23, 10, 4, 1]   # Ciura gap sequence
+    for gap in gaps:
+        for i in range(gap, len(arr)):
+            temp = arr[i]; j = i
+            while j >= gap and arr[j-gap] > temp:
+                arr[j] = arr[j-gap]; j -= gap
+            arr[j] = temp
+\end{lstlisting}
+
+\section{Non-Comparison Sorts}
+
+\begin{lstlisting}
+# ============================================================
+# COUNTING SORT -- O(n + k), Stable, for integers in [0, k]
+# ============================================================
+def counting_sort(arr, k=None):
+    if not arr: return arr
+    if k is None: k = max(arr)
+    count = [0] * (k + 1)
+    for x in arr: count[x] += 1
+    for i in range(1, k+1): count[i] += count[i-1]   # prefix sums
+    output = [0] * len(arr)
+    for x in reversed(arr):    # reversed for stability
+        count[x] -= 1
+        output[count[x]] = x
+    return output
+
+# ============================================================
+# RADIX SORT -- O(d * (n + b)), Stable, d=digits, b=base
+# ============================================================
+def radix_sort(arr, base=10):
+    if not arr: return arr
+    max_val = max(arr)
+    exp = 1
+    while max_val // exp > 0:
+        arr = _counting_sort_by_digit(arr, exp, base)
+        exp *= base
+    return arr
+
+def _counting_sort_by_digit(arr, exp, base):
+    n = len(arr)
+    count  = [0] * base
+    output = [0] * n
+    for x in arr: count[(x // exp) % base] += 1
+    for i in range(1, base): count[i] += count[i-1]
+    for x in reversed(arr):
+        idx = (x // exp) % base
+        count[idx] -= 1
+        output[count[idx]] = x
+    return output
+
+# ============================================================
+# BUCKET SORT -- O(n + k) avg for uniformly distributed floats
+# ============================================================
+def bucket_sort(arr):
+    if not arr: return arr
+    n       = len(arr)
+    buckets = [[] for _ in range(n)]
+    min_v, max_v = min(arr), max(arr)
+    span = max_v - min_v + 1e-9
+    for x in arr:
+        idx = int((x - min_v) / span * (n - 1))
+        buckets[idx].append(x)
+    result = []
+    for b in buckets:
+        b.sort()
+        result.extend(b)
+    return result
+\end{lstlisting}
+
+\section{Python Sort Customisation}
+
+\begin{lstlisting}
+# -- Custom key functions
+arr.sort(key=lambda x: x[1])              # sort by 2nd element
+arr.sort(key=lambda x: (-x[0], x[1]))     # desc by first, asc by second
+arr.sort(key=len)                          # sort strings by length
+arr.sort(key=str.lower)                    # case-insensitive
+
+# -- functools.cmp_to_key (for custom comparator like C++ cmp)
+from functools import cmp_to_key
+def my_cmp(a, b):
+    return -1 if str(a)+str(b) > str(b)+str(a) else 1  # largest number
+nums = [3, 30, 34, 5, 9]
+nums.sort(key=cmp_to_key(my_cmp))
+print("".join(map(str, nums)))   # "9534330"
+
+# -- Stable sort: Python's sort is always stable
+# Equal elements maintain original relative order
+
+# -- Sort with multiple criteria (tuples)
+students = [("Alice", 90, 20), ("Bob", 85, 22), ("Carol", 90, 19)]
+students.sort(key=lambda s: (-s[1], s[2]))  # high grade first, then younger
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Searching Algorithms}
+%%%==========================================================
+
+\section{Binary Search}
+
+\begin{lstlisting}
+# -- Standard Binary Search -- O(log n)
+def binary_search(arr, target):
+    lo, hi = 0, len(arr) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if   arr[mid] == target: return mid
+        elif arr[mid] <  target: lo = mid + 1
+        else:                    hi = mid - 1
+    return -1
+
+# -- First occurrence (leftmost)
+def lower_bound(arr, target):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] < target: lo = mid + 1
+        else:                  hi = mid
+    return lo    # == bisect.bisect_left(arr, target)
+
+# -- First position > target (rightmost + 1)
+def upper_bound(arr, target):
+    lo, hi = 0, len(arr)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if arr[mid] <= target: lo = mid + 1
+        else:                   hi = mid
+    return lo    # == bisect.bisect_right(arr, target)
+
+# -- Binary search on answer ("minimise the maximum" / feasibility)
+def binary_search_answer(lo, hi, feasible_fn):
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if feasible_fn(mid): hi = mid
+        else:                lo = mid + 1
+    return lo
+
+# Example: Minimum days to make m bouquets
+def min_days_bouquets(bloomDay, m, k):
+    if m * k > len(bloomDay): return -1
+    def feasible(day):
+        bouquets = consec = 0
+        for d in bloomDay:
+            if d <= day: consec += 1
+            else:         consec = 0
+            if consec == k: bouquets += 1; consec = 0
+        return bouquets >= m
+    return binary_search_answer(1, max(bloomDay), feasible)
+
+# -- Find Peak Element -- O(log n)
+def find_peak(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] < nums[mid+1]: lo = mid + 1
+        else:                        hi = mid
+    return lo
+
+# -- Search in Rotated Sorted Array -- O(log n)
+def search_rotated(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        if nums[mid] == target: return mid
+        if nums[lo] <= nums[mid]:    # left half sorted
+            if nums[lo] <= target < nums[mid]: hi = mid - 1
+            else:                               lo = mid + 1
+        else:                        # right half sorted
+            if nums[mid] < target <= nums[hi]: lo = mid + 1
+            else:                               hi = mid - 1
+    return -1
+
+# -- Find Minimum in Rotated Sorted Array -- O(log n)
+def find_min_rotated(nums):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if nums[mid] > nums[hi]: lo = mid + 1
+        else:                     hi = mid
+    return nums[lo]
+
+# -- Binary search on 2D matrix (sorted rows and cols) -- O(m+n)
+def search_matrix(matrix, target):
+    m, n = len(matrix), len(matrix[0])
+    r, c = 0, n - 1           # start from top-right corner
+    while r < m and c >= 0:
+        if   matrix[r][c] == target: return True
+        elif matrix[r][c] <  target: r += 1
+        else:                         c -= 1
+    return False
+
+# -- Median of Two Sorted Arrays -- O(log(min(m,n)))
+def find_median_sorted(nums1, nums2):
+    if len(nums1) > len(nums2): nums1, nums2 = nums2, nums1
+    m, n   = len(nums1), len(nums2)
+    lo, hi = 0, m
+    while lo <= hi:
+        i  = (lo + hi) // 2
+        j  = (m + n + 1) // 2 - i
+        max_l1 = float('-inf') if i == 0 else nums1[i-1]
+        min_r1 = float('inf')  if i == m else nums1[i]
+        max_l2 = float('-inf') if j == 0 else nums2[j-1]
+        min_r2 = float('inf')  if j == n else nums2[j]
+        if max_l1 <= min_r2 and max_l2 <= min_r1:
+            if (m + n) % 2 == 1: return float(max(max_l1, max_l2))
+            return (max(max_l1, max_l2) + min(min_r1, min_r2)) / 2.0
+        elif max_l1 > min_r2: hi = i - 1
+        else:                  lo = i + 1
+\end{lstlisting}
+
+\section{Ternary Search}
+
+\begin{lstlisting}
+# -- Ternary Search (find maximum of unimodal function) -- O(log n)
+def ternary_search(lo, hi, f, eps=1e-9):
+    while hi - lo > eps:
+        m1 = lo + (hi - lo) / 3
+        m2 = hi - (hi - lo) / 3
+        if f(m1) < f(m2): lo = m1
+        else:              hi = m2
+    return (lo + hi) / 2
+
+# Integer version
+def ternary_search_int(lo, hi, arr):
+    while hi - lo > 2:
+        m1 = lo + (hi - lo) // 3
+        m2 = hi - (hi - lo) // 3
+        if arr[m1] < arr[m2]: lo = m1
+        else:                   hi = m2
+    return max(range(lo, hi+1), key=lambda i: arr[i])
+\end{lstlisting}
+
+\begin{compbox}[Sorting Complexity Summary]
+\begin{tabular}{@{}lllll@{}}
+\toprule
+\textbf{Algorithm} & \textbf{Best} & \textbf{Average} & \textbf{Worst} & \textbf{Stable} \\
+\midrule
+Bubble Sort    & $O(n)$       & $O(n^2)$      & $O(n^2)$      & Yes \\
+Selection Sort & $O(n^2)$     & $O(n^2)$      & $O(n^2)$      & No  \\
+Insertion Sort & $O(n)$       & $O(n^2)$      & $O(n^2)$      & Yes \\
+Merge Sort     & $O(n\log n)$ & $O(n\log n)$  & $O(n\log n)$  & Yes \\
+Quick Sort     & $O(n\log n)$ & $O(n\log n)$  & $O(n^2)$      & No  \\
+Heap Sort      & $O(n\log n)$ & $O(n\log n)$  & $O(n\log n)$  & No  \\
+Counting Sort  & $O(n+k)$     & $O(n+k)$      & $O(n+k)$      & Yes \\
+Radix Sort     & $O(dn)$      & $O(dn)$       & $O(dn)$       & Yes \\
+Timsort (Python) & $O(n)$     & $O(n\log n)$  & $O(n\log n)$  & Yes \\
+\bottomrule
+\end{tabular}
+\end{compbox}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Algorithm Design Paradigms}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Dynamic Programming}
+%%%==========================================================
+
+\begin{notebox}[DP in Python vs C++]
+Python's \texttt{@cache} / \texttt{@lru\_cache} makes top-down memoisation trivially easy. For bottom-up, use lists. Always call \texttt{sys.setrecursionlimit} for deep recursion.
+\end{notebox}
+
+\section{1-D DP}
+
+\begin{lstlisting}
+import sys
+from functools import cache
+sys.setrecursionlimit(300000)
+
+# -- Fibonacci -- O(n) time, O(n) -> O(1) space
+@cache
+def fib(n):
+    if n <= 1: return n
+    return fib(n-1) + fib(n-2)
+
+# Bottom-up O(1) space
+def fib_iterative(n):
+    a, b = 0, 1
+    for _ in range(n): a, b = b, a + b
+    return a
+
+# -- Climbing Stairs -- O(n)
+def climb_stairs(n):
+    if n <= 2: return n
+    a, b = 1, 2
+    for _ in range(3, n+1): a, b = b, a + b
+    return b
+
+# -- House Robber -- O(n) time, O(1) space
+def rob(nums):
+    prev2 = prev1 = 0
+    for x in nums:
+        prev2, prev1 = prev1, max(prev1, prev2 + x)
+    return prev1
+
+# House Robber II (circular array)
+def rob2(nums):
+    def rob_linear(arr):
+        p2 = p1 = 0
+        for x in arr: p2, p1 = p1, max(p1, p2 + x)
+        return p1
+    return max(nums[0], rob_linear(nums[1:]), rob_linear(nums[:-1]))
+
+# -- Coin Change (minimum coins) -- O(n * amount)
+def coin_change(coins, amount):
+    dp = [float('inf')] * (amount + 1)
+    dp[0] = 0
+    for c in coins:
+        for a in range(c, amount + 1):
+            dp[a] = min(dp[a], dp[a - c] + 1)
+    return dp[amount] if dp[amount] != float('inf') else -1
+
+# -- Coin Change II (number of ways) -- O(n * amount)
+def change(amount, coins):
+    dp = [0] * (amount + 1)
+    dp[0] = 1
+    for c in coins:                  # outer loop on coins -> unbounded knapsack
+        for a in range(c, amount+1):
+            dp[a] += dp[a - c]
+    return dp[amount]
+
+# -- Word Break -- O(n^2 * m) where m = avg word length
+def word_break(s, word_dict):
+    word_set = set(word_dict)
+    n  = len(s)
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(1, n + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True; break
+    return dp[n]
+
+# -- Decode Ways -- O(n)
+def num_decodings(s):
+    n  = len(s)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 0 if s[0] == '0' else 1
+    for i in range(2, n + 1):
+        one = int(s[i-1:i])
+        two = int(s[i-2:i])
+        if 1 <= one <= 9:   dp[i] += dp[i-1]
+        if 10 <= two <= 26: dp[i] += dp[i-2]
+    return dp[n]
+
+# -- Jump Game II (minimum jumps) -- O(n)
+def jump(nums):
+    jumps = cur_end = cur_far = 0
+    for i in range(len(nums) - 1):
+        cur_far = max(cur_far, i + nums[i])
+        if i == cur_end:
+            jumps += 1; cur_end = cur_far
+    return jumps
+\end{lstlisting}
+
+\section{2-D DP}
+
+\begin{lstlisting}
+# -- 0/1 Knapsack -- O(n * W)
+def knapsack_01(weights, values, W):
+    n  = len(weights)
+    dp = [[0]*(W+1) for _ in range(n+1)]
+    for i in range(1, n+1):
+        for w in range(W+1):
+            dp[i][w] = dp[i-1][w]
+            if weights[i-1] <= w:
+                dp[i][w] = max(dp[i][w], dp[i-1][w-weights[i-1]] + values[i-1])
+    return dp[n][W]
+
+# Space optimised O(W)
+def knapsack_01_opt(weights, values, W):
+    dp = [0] * (W + 1)
+    for w_i, v_i in zip(weights, values):
+        for w in range(W, w_i - 1, -1):    # traverse backward
+            dp[w] = max(dp[w], dp[w - w_i] + v_i)
+    return dp[W]
+
+# -- Unbounded Knapsack -- O(n * W)
+def knapsack_unbounded(weights, values, W):
+    dp = [0] * (W + 1)
+    for w in range(1, W + 1):
+        for w_i, v_i in zip(weights, values):
+            if w_i <= w:
+                dp[w] = max(dp[w], dp[w - w_i] + v_i)
+    return dp[W]
+
+# -- Longest Common Subsequence -- O(m*n)
+def lcs(s, t):
+    m, n = len(s), len(t)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if s[i-1] == t[j-1]: dp[i][j] = dp[i-1][j-1] + 1
+            else:                  dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+
+# LCS reconstruction
+def lcs_string(s, t):
+    m, n = len(s), len(t)
+    dp = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if s[i-1] == t[j-1]: dp[i][j] = dp[i-1][j-1] + 1
+            else:                  dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    result = []
+    i, j = m, n
+    while i > 0 and j > 0:
+        if s[i-1] == t[j-1]: result.append(s[i-1]); i -= 1; j -= 1
+        elif dp[i-1][j] > dp[i][j-1]: i -= 1
+        else: j -= 1
+    return "".join(reversed(result))
+
+# -- Longest Increasing Subsequence -- O(n log n) with patience sort
+import bisect
+def lis(nums):
+    tails = []
+    for x in nums:
+        pos = bisect.bisect_left(tails, x)
+        if pos == len(tails): tails.append(x)
+        else:                  tails[pos] = x
+    return len(tails)
+
+# LIS O(n^2) with reconstruction
+def lis_with_path(nums):
+    n = len(nums)
+    dp     = [1] * n
+    parent = [-1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if nums[j] < nums[i] and dp[j] + 1 > dp[i]:
+                dp[i] = dp[j] + 1; parent[i] = j
+    end = dp.index(max(dp))
+    path = []
+    while end != -1: path.append(nums[end]); end = parent[end]
+    return max(dp), path[::-1]
+
+# -- Edit Distance (Levenshtein) -- O(m*n)
+def edit_distance(s, t):
+    m, n = len(s), len(t)
+    dp = list(range(n + 1))
+    for i in range(1, m+1):
+        prev = dp[:]
+        dp[0] = i
+        for j in range(1, n+1):
+            if s[i-1] == t[j-1]: dp[j] = prev[j-1]
+            else: dp[j] = 1 + min(prev[j], dp[j-1], prev[j-1])
+    return dp[n]
+
+# -- Unique Paths -- O(m*n)
+def unique_paths(m, n):
+    dp = [1] * n
+    for _ in range(1, m):
+        for j in range(1, n): dp[j] += dp[j-1]
+    return dp[n-1]
+
+# -- Minimum Path Sum -- O(m*n)
+def min_path_sum(grid):
+    m, n = len(grid), len(grid[0])
+    dp = grid[0][:]
+    for j in range(1, n): dp[j] += dp[j-1]
+    for i in range(1, m):
+        dp[0] += grid[i][0]
+        for j in range(1, n):
+            dp[j] = grid[i][j] + min(dp[j], dp[j-1])
+    return dp[n-1]
+
+# -- Regular Expression Matching -- O(m*n)
+def is_match(s, p):
+    m, n = len(s), len(p)
+    dp = [[False]*(n+1) for _ in range(m+1)]
+    dp[0][0] = True
+    for j in range(1, n+1):
+        if p[j-1] == '*': dp[0][j] = dp[0][j-2]
+    for i in range(1, m+1):
+        for j in range(1, n+1):
+            if p[j-1] in (s[i-1], '.'):
+                dp[i][j] = dp[i-1][j-1]
+            elif p[j-1] == '*':
+                dp[i][j] = dp[i][j-2]    # zero occurrences
+                if p[j-2] in (s[i-1], '.'):
+                    dp[i][j] = dp[i][j] or dp[i-1][j]
+    return dp[m][n]
+\end{lstlisting}
+
+\section{Interval DP}
+
+\begin{lstlisting}
+# -- Matrix Chain Multiplication -- O(n^3)
+def matrix_chain(dims):
+    n = len(dims) - 1    # number of matrices
+    dp = [[0]*n for _ in range(n)]
+    for length in range(2, n+1):
+        for i in range(n - length + 1):
+            j = i + length - 1
+            dp[i][j] = float('inf')
+            for k in range(i, j):
+                cost = dp[i][k] + dp[k+1][j] + dims[i]*dims[k+1]*dims[j+1]
+                dp[i][j] = min(dp[i][j], cost)
+    return dp[0][n-1]
+
+# -- Burst Balloons -- O(n^3)
+def max_coins(nums):
+    nums = [1] + nums + [1]
+    n = len(nums)
+    dp = [[0]*n for _ in range(n)]
+    for length in range(2, n):
+        for lo in range(n - length):
+            hi = lo + length
+            for k in range(lo+1, hi):
+                dp[lo][hi] = max(dp[lo][hi],
+                    dp[lo][k] + nums[lo]*nums[k]*nums[hi] + dp[k][hi])
+    return dp[0][n-1]
+
+# -- Minimum Cost to Cut a Stick -- O(n^3)
+def min_cost_cut(n, cuts):
+    cuts = [0] + sorted(cuts) + [n]
+    m = len(cuts)
+    dp = [[0]*m for _ in range(m)]
+    for length in range(2, m):
+        for lo in range(m - length):
+            hi = lo + length
+            dp[lo][hi] = min(cuts[hi]-cuts[lo] + dp[lo][k] + dp[k][hi]
+                             for k in range(lo+1, hi))
+    return dp[0][m-1]
+
+# -- Palindrome Partitioning II (min cuts) -- O(n^2)
+def min_cut(s):
+    n = len(s)
+    is_pal = [[False]*n for _ in range(n)]
+    for i in range(n-1, -1, -1):
+        for j in range(i, n):
+            if s[i] == s[j] and (j-i <= 2 or is_pal[i+1][j-1]):
+                is_pal[i][j] = True
+    dp = list(range(-1, n))    # dp[i] = min cuts for s[0..i]
+    for i in range(n):
+        for j in range(i+1):
+            if is_pal[j][i]:
+                dp[i+1] = min(dp[i+1], dp[j] + 1)
+    return dp[n]
+\end{lstlisting}
+
+\section{DP on Trees}
+
+\begin{lstlisting}
+# -- Maximum Independent Set on Tree -- O(n)
+def tree_max_independent_set(adj, n):
+    dp = [[0, 0] for _ in range(n)]    # [excl_root, incl_root]
+
+    def dfs(u, parent):
+        dp[u][1] = 1    # include u
+        for v in adj[u]:
+            if v == parent: continue
+            dfs(v, u)
+            dp[u][0] += max(dp[v][0], dp[v][1])
+            dp[u][1] += dp[v][0]
+
+    dfs(0, -1)
+    return max(dp[0][0], dp[0][1])
+
+# -- Diameter of Tree (longest path) -- O(n)
+def tree_diameter(adj, n):
+    dist = [0] * n
+    def dfs(u, p):
+        max1 = max2 = 0
+        for v in adj[u]:
+            if v == p: continue
+            dfs(v, u)
+            d = dist[v] + 1
+            if d > max1:    max2, max1 = max1, d
+            elif d > max2:  max2 = d
+        dist[u] = max1
+        return max1 + max2    # path through u
+    ans = [0]
+    def dfs2(u, p):
+        r = dfs(u, p)
+        ans[0] = max(ans[0], r)
+    dfs2(0, -1)
+    return ans[0]
+\end{lstlisting}
+
+\section{Digit DP}
+
+\begin{lstlisting}
+# -- Count numbers in [0, n] with digit sum <= S -- O(digits * S)
+def count_digit_sum(n, S):
+    digits = [int(d) for d in str(n)]
+    from functools import cache
+
+    @cache
+    def dp(pos, current_sum, tight, started):
+        if current_sum > S: return 0
+        if pos == len(digits):
+            return 1 if started else 0
+        limit = digits[pos] if tight else 9
+        result = 0
+        for d in range(0, limit + 1):
+            result += dp(pos+1,
+                         current_sum + (d if started or d > 0 else 0),
+                         tight and d == limit,
+                         started or d > 0)
+        return result
+
+    return dp(0, 0, True, False)
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Greedy Algorithms}
+%%%==========================================================
+
+\begin{lstlisting}
+# -- Activity Selection (max non-overlapping intervals) -- O(n log n)
+def activity_selection(intervals):
+    intervals.sort(key=lambda x: x[1])    # sort by end time
+    count = 0; last_end = float('-inf')
+    for start, end in intervals:
+        if start >= last_end:
+            count += 1; last_end = end
+    return count
+
+# -- Minimum Number of Platforms (trains) -- O(n log n)
+def min_platforms(arrivals, departures):
+    arrivals.sort(); departures.sort()
+    platforms = max_platforms = 0
+    i = j = 0
+    while i < len(arrivals):
+        if arrivals[i] <= departures[j]:
+            platforms += 1; i += 1
+            max_platforms = max(max_platforms, platforms)
+        else:
+            platforms -= 1; j += 1
+    return max_platforms
+
+# -- Gas Station (circular tour) -- O(n)
+def can_complete_circuit(gas, cost):
+    total = tank = start = 0
+    for i in range(len(gas)):
+        diff = gas[i] - cost[i]
+        total += diff; tank += diff
+        if tank < 0: start = i + 1; tank = 0
+    return start if total >= 0 else -1
+
+# -- Jump Game (can reach end?) -- O(n)
+def can_jump(nums):
+    max_reach = 0
+    for i, x in enumerate(nums):
+        if i > max_reach: return False
+        max_reach = max(max_reach, i + x)
+    return True
+
+# -- Assign Cookies -- O(n log n)
+def find_content_children(greed, size):
+    greed.sort(); size.sort()
+    child = cookie = 0
+    while child < len(greed) and cookie < len(size):
+        if size[cookie] >= greed[child]: child += 1
+        cookie += 1
+    return child
+
+# -- Fractional Knapsack -- O(n log n)
+def fractional_knapsack(weights, values, W):
+    items = sorted(zip(values, weights), key=lambda x: x[0]/x[1], reverse=True)
+    total = 0.0
+    for v, w in items:
+        if W <= 0: break
+        take   = min(w, W)
+        total += take * (v / w)
+        W     -= take
+    return total
+
+# -- Huffman Encoding -- O(n log n)
+import heapq
+def huffman(freq):
+    heap = [[f, [ch, ""]] for ch, f in freq.items()]
+    heapq.heapify(heap)
+    while len(heap) > 1:
+        lo = heapq.heappop(heap)
+        hi = heapq.heappop(heap)
+        for pair in lo[1:]: pair[1] = '0' + pair[1]
+        for pair in hi[1:]: pair[1] = '1' + pair[1]
+        heapq.heappush(heap, [lo[0]+hi[0]] + lo[1:] + hi[1:])
+    return {pair[0]: pair[1] for pair in heap[0][1:]}
+
+# -- Minimum Spanning Tree cost (Kruskal/Prim) -- see Graph chapter
+
+# -- Largest Number -- O(n log n)
+from functools import cmp_to_key
+def largest_number(nums):
+    nums = list(map(str, nums))
+    nums.sort(key=cmp_to_key(lambda a, b: 1 if a+b > b+a else -1), reverse=True)
+    return "".join(nums).lstrip('0') or "0"
+
+# -- Candy (minimum candies) -- O(n)
+def candy(ratings):
+    n = len(ratings)
+    candies = [1] * n
+    for i in range(1, n):         # left pass
+        if ratings[i] > ratings[i-1]: candies[i] = candies[i-1] + 1
+    for i in range(n-2, -1, -1):  # right pass
+        if ratings[i] > ratings[i+1]: candies[i] = max(candies[i], candies[i+1]+1)
+    return sum(candies)
+
+# -- Meeting Rooms II (minimum conference rooms) -- O(n log n)
+def min_meeting_rooms(intervals):
+    intervals.sort(key=lambda x: x[0])
+    heap = []    # min-heap of end times
+    for start, end in intervals:
+        if heap and heap[0] <= start: heapq.heappop(heap)
+        heapq.heappush(heap, end)
+    return len(heap)
+
+# -- Minimum Cost to Hire K Workers -- O(n log n)
+def mincost_to_hire_workers(quality, wage, k):
+    workers = sorted(zip(wage, quality), key=lambda x: x[0]/x[1])
+    max_heap = []    # max-heap of quality (negated)
+    q_sum = 0; ans = float('inf')
+    for w, q in workers:
+        heapq.heappush(max_heap, -q); q_sum += q
+        if len(max_heap) > k: q_sum += heapq.heappop(max_heap)
+        if len(max_heap) == k: ans = min(ans, w/q * q_sum)
+    return ans
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Divide and Conquer}
+%%%==========================================================
+
+\begin{lstlisting}
+# -- Merge Sort (canonical D&C) -- O(n log n)
+# See Sorting chapter.
+
+# -- Quick Select (kth smallest) -- O(n) avg
+def quick_select(nums, k):
+    # Returns kth smallest (1-indexed)
+    def select(lo, hi, k):
+        if lo == hi: return nums[lo]
+        pivot_idx = _partition(nums, lo, hi)
+        rank = pivot_idx - lo + 1
+        if rank == k:   return nums[pivot_idx]
+        elif rank > k:  return select(lo, pivot_idx-1, k)
+        else:           return select(pivot_idx+1, hi, k-rank)
+    return select(0, len(nums)-1, k)
+
+# -- Maximum Subarray (D&C) -- O(n log n)
+def max_subarray_dc(arr, lo=None, hi=None):
+    if lo is None: lo, hi = 0, len(arr)-1
+    if lo == hi: return arr[lo]
+    mid = (lo + hi) // 2
+    left  = max_subarray_dc(arr, lo, mid)
+    right = max_subarray_dc(arr, mid+1, hi)
+    # Max crossing subarray
+    left_max = curr = 0
+    for i in range(mid, lo-1, -1): curr += arr[i]; left_max = max(left_max, curr)
+    right_max = curr = 0
+    for i in range(mid+1, hi+1):   curr += arr[i]; right_max = max(right_max, curr)
+    return max(left, right, left_max + right_max)
+
+# -- Closest Pair of Points -- O(n log n)
+def closest_pair(points):
+    import math
+    def dist(p, q): return math.hypot(p[0]-q[0], p[1]-q[1])
+
+    def closest_strip(strip, d):
+        strip.sort(key=lambda p: p[1])
+        min_d = d
+        for i in range(len(strip)):
+            j = i + 1
+            while j < len(strip) and strip[j][1] - strip[i][1] < min_d:
+                min_d = min(min_d, dist(strip[i], strip[j])); j += 1
+        return min_d
+
+    def rec(pts):
+        n = len(pts)
+        if n <= 3:
+            min_d = float('inf')
+            for i in range(n):
+                for j in range(i+1, n): min_d = min(min_d, dist(pts[i], pts[j]))
+            return min_d
+        mid  = n // 2
+        mid_x = pts[mid][0]
+        d = min(rec(pts[:mid]), rec(pts[mid:]))
+        strip = [p for p in pts if abs(p[0]-mid_x) < d]
+        return min(d, closest_strip(strip, d))
+
+    points.sort()
+    return rec(points)
+
+# -- Fast Power (Binary Exponentiation) -- O(log n)
+def fast_pow(base, exp, mod=None):
+    result = 1
+    base = base % mod if mod else base
+    while exp > 0:
+        if exp & 1:
+            result = (result * base) % mod if mod else result * base
+        base = (base * base) % mod if mod else base * base
+        exp >>= 1
+    return result
+
+# -- Karatsuba Multiplication -- O(n^1.585)
+def karatsuba(x, y):
+    if x < 10 or y < 10: return x * y
+    n = max(len(str(x)), len(str(y)))
+    m = n // 2
+    high_x, low_x = divmod(x, 10**m)
+    high_y, low_y = divmod(y, 10**m)
+    z0 = karatsuba(low_x, low_y)
+    z2 = karatsuba(high_x, high_y)
+    z1 = karatsuba(low_x + high_x, low_y + high_y) - z0 - z2
+    return z2 * 10**(2*m) + z1 * 10**m + z0
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Backtracking}
+%%%==========================================================
+
+\begin{lstlisting}
+# -- Permutations -- O(n * n!)
+def permutations(nums):
+    result = []
+    def backtrack(path, used):
+        if len(path) == len(nums): result.append(path[:]); return
+        for i, x in enumerate(nums):
+            if used[i]: continue
+            used[i] = True; path.append(x)
+            backtrack(path, used)
+            path.pop(); used[i] = False
+    backtrack([], [False]*len(nums))
+    return result
+
+# Permutations with duplicates
+def permutations_unique(nums):
+    result = []; nums.sort()
+    def backtrack(path, used):
+        if len(path) == len(nums): result.append(path[:]); return
+        for i in range(len(nums)):
+            if used[i]: continue
+            if i > 0 and nums[i] == nums[i-1] and not used[i-1]: continue
+            used[i] = True; path.append(nums[i])
+            backtrack(path, used)
+            path.pop(); used[i] = False
+    backtrack([], [False]*len(nums))
+    return result
+
+# -- Subsets -- O(2^n)
+def subsets(nums):
+    result = []
+    def backtrack(start, path):
+        result.append(path[:])
+        for i in range(start, len(nums)):
+            path.append(nums[i])
+            backtrack(i+1, path)
+            path.pop()
+    backtrack(0, [])
+    return result
+
+# Subsets with duplicates
+def subsets_unique(nums):
+    result = []; nums.sort()
+    def backtrack(start, path):
+        result.append(path[:])
+        for i in range(start, len(nums)):
+            if i > start and nums[i] == nums[i-1]: continue
+            path.append(nums[i]); backtrack(i+1, path); path.pop()
+    backtrack(0, [])
+    return result
+
+# -- Combinations -- O(C(n,k))
+def combinations(n, k):
+    result = []
+    def backtrack(start, path):
+        if len(path) == k: result.append(path[:]); return
+        for i in range(start, n+1):
+            path.append(i); backtrack(i+1, path); path.pop()
+    backtrack(1, [])
+    return result
+
+# Combination Sum (unlimited use, target sum)
+def combination_sum(candidates, target):
+    result = []; candidates.sort()
+    def backtrack(start, path, remaining):
+        if remaining == 0: result.append(path[:]); return
+        for i in range(start, len(candidates)):
+            if candidates[i] > remaining: break
+            path.append(candidates[i])
+            backtrack(i, path, remaining - candidates[i])    # i not i+1 (reuse)
+            path.pop()
+    backtrack(0, [], target)
+    return result
+
+# Combination Sum II (each number used once)
+def combination_sum2(candidates, target):
+    result = []; candidates.sort()
+    def backtrack(start, path, remaining):
+        if remaining == 0: result.append(path[:]); return
+        for i in range(start, len(candidates)):
+            if candidates[i] > remaining: break
+            if i > start and candidates[i] == candidates[i-1]: continue
+            path.append(candidates[i])
+            backtrack(i+1, path, remaining - candidates[i])
+            path.pop()
+    backtrack(0, [], target)
+    return result
+
+# -- N-Queens -- O(n!)
+def solve_n_queens(n):
+    result = []
+    cols = set(); diag1 = set(); diag2 = set()   # diagonals
+
+    def backtrack(row, board):
+        if row == n: result.append(["".join(r) for r in board]); return
+        for col in range(n):
+            if col in cols or (row-col) in diag1 or (row+col) in diag2: continue
+            cols.add(col); diag1.add(row-col); diag2.add(row+col)
+            board[row][col] = 'Q'
+            backtrack(row+1, board)
+            board[row][col] = '.'; cols.discard(col)
+            diag1.discard(row-col); diag2.discard(row+col)
+
+    board = [['.']*n for _ in range(n)]
+    backtrack(0, board)
+    return result
+
+# -- Sudoku Solver -- O(9^(n*n)) but in practice much faster
+def solve_sudoku(board):
+    empty = [(r, c) for r in range(9) for c in range(9) if board[r][c] == '.']
+
+    def is_valid(r, c, ch):
+        if ch in board[r]: return False
+        if ch in [board[i][c] for i in range(9)]: return False
+        br, bc = 3*(r//3), 3*(c//3)
+        for i in range(br, br+3):
+            for j in range(bc, bc+3):
+                if board[i][j] == ch: return False
+        return True
+
+    def backtrack(idx):
+        if idx == len(empty): return True
+        r, c = empty[idx]
+        for ch in '123456789':
+            if is_valid(r, c, ch):
+                board[r][c] = ch
+                if backtrack(idx+1): return True
+                board[r][c] = '.'
+        return False
+
+    backtrack(0)
+
+# -- Word Search in Grid -- O(m*n*4^L)
+def word_search(board, word):
+    m, n = len(board), len(board[0])
+    def dfs(r, c, idx):
+        if idx == len(word): return True
+        if r < 0 or r >= m or c < 0 or c >= n: return False
+        if board[r][c] != word[idx]: return False
+        tmp = board[r][c]; board[r][c] = '#'
+        found = any(dfs(r+dr, c+dc, idx+1) for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)])
+        board[r][c] = tmp
+        return found
+    return any(dfs(r, c, 0) for r in range(m) for c in range(n))
+
+# -- Letter Combinations of Phone Number -- O(4^n)
+def letter_combinations(digits):
+    if not digits: return []
+    mapping = {'2':'abc','3':'def','4':'ghi','5':'jkl',
+               '6':'mno','7':'pqrs','8':'tuv','9':'wxyz'}
+    result = []
+    def backtrack(idx, path):
+        if idx == len(digits): result.append("".join(path)); return
+        for ch in mapping[digits[idx]]:
+            path.append(ch); backtrack(idx+1, path); path.pop()
+    backtrack(0, [])
+    return result
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{String and Mathematical Algorithms}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{String Algorithms}
+%%%==========================================================
+
+\section{KMP Pattern Matching}
+
+\begin{lstlisting}
+# -- KMP (Knuth-Morris-Pratt) -- O(n + m)
+def kmp_search(text, pattern):
+    def build_lps(pattern):
+        m   = len(pattern)
+        lps = [0] * m       # longest proper prefix which is also suffix
+        length = 0; i = 1
+        while i < m:
+            if pattern[i] == pattern[length]:
+                length += 1; lps[i] = length; i += 1
+            else:
+                if length != 0: length = lps[length-1]
+                else:           lps[i] = 0; i += 1
+        return lps
+
+    n, m = len(text), len(pattern)
+    if m == 0: return []
+    lps  = build_lps(pattern)
+    result = []; i = j = 0
+    while i < n:
+        if text[i] == pattern[j]:
+            i += 1; j += 1
+        if j == m:
+            result.append(i - j)
+            j = lps[j-1]
+        elif i < n and text[i] != pattern[j]:
+            if j != 0: j = lps[j-1]
+            else:      i += 1
+    return result    # list of start indices
+
+# -- Z-Function -- O(n)
+def z_function(s):
+    n = len(s)
+    z = [0] * n
+    z[0] = n
+    l = r = 0
+    for i in range(1, n):
+        if i < r: z[i] = min(r-i, z[i-l])
+        while i + z[i] < n and s[z[i]] == s[i + z[i]]:
+            z[i] += 1
+        if i + z[i] > r: l, r = i, i + z[i]
+    return z
+
+def z_search(text, pattern):
+    s = pattern + '#' + text
+    z = z_function(s)
+    m = len(pattern)
+    return [i - m - 1 for i in range(m+1, len(s)) if z[i] == m]
+\end{lstlisting}
+
+\section{Rabin-Karp and Rolling Hash}
+
+\begin{lstlisting}
+# -- Rabin-Karp -- O(n + m) avg, O(nm) worst
+def rabin_karp(text, pattern):
+    n, m = len(text), len(pattern)
+    if m > n: return []
+    MOD  = (1 << 61) - 1    # Mersenne prime
+    BASE = 131
+    pw   = pow(BASE, m, MOD)
+
+    def h(s): return sum(ord(c) * pow(BASE, i, MOD) for i, c in enumerate(s)) % MOD
+
+    p_hash = h(pattern)
+    t_hash = h(text[:m])
+    result = []
+    if t_hash == p_hash and text[:m] == pattern: result.append(0)
+
+    for i in range(1, n - m + 1):
+        t_hash = (t_hash - ord(text[i-1]) + MOD) % MOD
+        t_hash = t_hash * BASE % MOD
+        t_hash = (t_hash + ord(text[i+m-1]) * pow(BASE, m-1, MOD)) % MOD
+        if t_hash == p_hash and text[i:i+m] == pattern:
+            result.append(i)
+    return result
+
+# -- Polynomial Rolling Hash for substring comparison -- O(n) build, O(1) query
+class RollingHash:
+    def __init__(self, s, base=131, mod=(1<<61)-1):
+        n = len(s)
+        self.mod  = mod
+        self.pw   = [1] * (n+1)
+        self.h    = [0] * (n+1)
+        for i in range(n):
+            self.h[i+1]  = (self.h[i] * base + ord(s[i])) % mod
+            self.pw[i+1] = self.pw[i] * base % mod
+
+    def query(self, l, r):    # hash of s[l..r] inclusive, O(1)
+        return (self.h[r+1] - self.h[l] * self.pw[r-l+1]) % self.mod
+\end{lstlisting}
+
+\section{Suffix Array and LCP Array}
+
+\begin{lstlisting}
+# -- Suffix Array (O(n log^2 n) simple version)
+def build_suffix_array(s):
+    s  += '$'    # sentinel (lexicographically smallest)
+    n  = len(s)
+    sa = sorted(range(n), key=lambda i: s[i:])
+    return sa[1:]    # exclude sentinel
+
+# -- LCP Array (Kasai's algorithm) -- O(n)
+def build_lcp(s, sa):
+    n    = len(s)
+    rank = [0] * n
+    for i, suf in enumerate(sa): rank[suf] = i
+    lcp  = [0] * n
+    h    = 0
+    for i in range(n):
+        if rank[i] > 0:
+            j = sa[rank[i]-1]
+            while i+h < n and j+h < n and s[i+h] == s[j+h]: h += 1
+            lcp[rank[i]] = h
+            if h > 0: h -= 1
+    return lcp
+
+# -- Longest Repeated Substring using SA + LCP -- O(n)
+def longest_repeated_substring(s):
+    sa  = build_suffix_array(s)
+    lcp = build_lcp(s, sa)
+    max_lcp = max(lcp)
+    idx = lcp.index(max_lcp)
+    return s[sa[idx]: sa[idx] + max_lcp]
+\end{lstlisting}
+
+\section{Manacher's Algorithm}
+
+\begin{lstlisting}
+# -- Manacher -- longest palindromic substring -- O(n)
+def manacher(s):
+    T   = '#' + '#'.join(s) + '#'
+    n   = len(T)
+    P   = [0] * n
+    C = R = 0
+    for i in range(n):
+        mirror = 2*C - i
+        if i < R: P[i] = min(R-i, P[mirror])
+        while i+P[i]+1 < n and i-P[i]-1 >= 0 and T[i+P[i]+1] == T[i-P[i]-1]:
+            P[i] += 1
+        if i+P[i] > R: C, R = i, i+P[i]
+    max_len = max(P)
+    center  = P.index(max_len)
+    start   = (center - max_len) // 2
+    return s[start: start + max_len]
+
+# Count all palindromic substrings using Manacher
+def count_palindromes(s):
+    T = '#' + '#'.join(s) + '#'
+    n = len(T); P = [0]*n; C = R = 0
+    for i in range(n):
+        mirror = 2*C - i
+        if i < R: P[i] = min(R-i, P[mirror])
+        while i+P[i]+1 < n and i-P[i]-1 >= 0 and T[i+P[i]+1] == T[i-P[i]-1]:
+            P[i] += 1
+        if i+P[i] > R: C, R = i, i+P[i]
+    return sum((p+1)//2 for p in P)
+\end{lstlisting}
+
+\section{Aho-Corasick Multi-Pattern Search}
+
+\begin{lstlisting}
+# -- Aho-Corasick -- O(n + m + z), z = total matches
+from collections import deque, defaultdict
+
+class AhoCorasick:
+    def __init__(self, words):
+        self.goto   = [{}]
+        self.fail   = [0]
+        self.output = [[]]
+        self._build(words)
+
+    def _build(self, words):
+        for word in words:
+            cur = 0
+            for ch in word:
+                if ch not in self.goto[cur]:
+                    self.goto.append({}); self.fail.append(0); self.output.append([])
+                    self.goto[cur][ch] = len(self.goto) - 1
+                cur = self.goto[cur][ch]
+            self.output[cur].append(word)
+        # BFS to set failure links
+        queue = deque()
+        for ch, s in self.goto[0].items():
+            queue.append(s)
+        while queue:
+            r = queue.popleft()
+            for ch, s in self.goto[r].items():
+                queue.append(s)
+                state = self.fail[r]
+                while state and ch not in self.goto[state]: state = self.fail[state]
+                self.fail[s] = self.goto[state].get(ch, 0)
+                if self.fail[s] == s: self.fail[s] = 0
+                self.output[s] += self.output[self.fail[s]]
+
+    def search(self, text):
+        cur = 0; results = []
+        for i, ch in enumerate(text):
+            while cur and ch not in self.goto[cur]: cur = self.fail[cur]
+            cur = self.goto[cur].get(ch, 0)
+            for word in self.output[cur]:
+                results.append((i - len(word) + 1, word))
+        return results
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Mathematical Algorithms}
+%%%==========================================================
+
+\section{Number Theory}
+
+\begin{lstlisting}
+import math
+
+# -- GCD / LCM -- O(log(min(a,b)))
+def gcd(a, b): return math.gcd(a, b)           # or: while b: a,b=b,a%b
+def lcm(a, b): return a * b // math.gcd(a, b)
+
+# -- Extended Euclidean Algorithm -- O(log(min(a,b)))
+def extended_gcd(a, b):
+    # Returns (gcd, x, y) such that a*x + b*y = gcd
+    if a == 0: return b, 0, 1
+    g, x1, y1 = extended_gcd(b % a, a)
+    return g, y1 - (b//a)*x1, x1
+
+# -- Modular Inverse -- O(log m)
+def mod_inverse(a, m):
+    g, x, _ = extended_gcd(a % m, m)
+    if g != 1: raise ValueError("Inverse doesn't exist")
+    return (x % m + m) % m
+
+# Python 3.8+ shorthand:
+# pow(a, -1, m)
+
+# -- Sieve of Eratosthenes -- O(n log log n)
+def sieve(n):
+    is_prime = [True] * (n+1)
+    is_prime[0] = is_prime[1] = False
+    for i in range(2, int(n**0.5)+1):
+        if is_prime[i]:
+            for j in range(i*i, n+1, i): is_prime[j] = False
+    return [i for i in range(2, n+1) if is_prime[i]]
+
+# -- Segmented Sieve -- O(n) for primes up to n
+def segmented_sieve(lo, hi):
+    small_primes = sieve(int(hi**0.5)+1)
+    is_prime = [True] * (hi - lo + 1)
+    if lo == 1: is_prime[0] = False
+    for p in small_primes:
+        start = max(p*p, ((lo + p - 1) // p) * p)
+        for j in range(start, hi+1, p): is_prime[j-lo] = False
+    return [i+lo for i, v in enumerate(is_prime) if v]
+
+# -- Linear Sieve (Euler's sieve) -- O(n) strict
+def linear_sieve(n):
+    primes  = []
+    is_comp = [False] * (n+1)
+    for i in range(2, n+1):
+        if not is_comp[i]: primes.append(i)
+        for p in primes:
+            if i * p > n: break
+            is_comp[i*p] = True
+            if i % p == 0: break
+    return primes
+
+# -- Prime Factorisation -- O(sqrt(n))
+def prime_factors(n):
+    factors = {}
+    d = 2
+    while d * d <= n:
+        while n % d == 0: factors[d] = factors.get(d,0)+1; n //= d
+        d += 1
+    if n > 1: factors[n] = factors.get(n,0)+1
+    return factors
+
+# -- Euler's Totient Function -- O(sqrt(n)) for single n
+def totient(n):
+    result = n
+    p = 2
+    while p*p <= n:
+        if n % p == 0:
+            while n % p == 0: n //= p
+            result -= result // p
+        p += 1
+    if n > 1: result -= result // n
+    return result
+
+# Totient sieve -- O(n log log n) for all values up to n
+def totient_sieve(n):
+    phi = list(range(n+1))
+    for i in range(2, n+1):
+        if phi[i] == i:   # i is prime
+            for j in range(i, n+1, i): phi[j] -= phi[j] // i
+    return phi
+
+# -- Fast Power (Binary Exponentiation) -- O(log n)
+def fast_pow(b, e, mod=None):
+    r = 1
+    b = b % mod if mod else b
+    while e:
+        if e & 1: r = r*b%mod if mod else r*b
+        b = b*b%mod if mod else b*b
+        e >>= 1
+    return r
+
+# -- Matrix Exponentiation -- O(k^3 log n)
+def mat_mul(A, B, mod):
+    k = len(A)
+    C = [[0]*k for _ in range(k)]
+    for i in range(k):
+        for j in range(k):
+            for l in range(k):
+                C[i][j] = (C[i][j] + A[i][l]*B[l][j]) % mod
+    return C
+
+def mat_pow(M, n, mod):
+    k = len(M)
+    R = [[int(i==j) for j in range(k)] for i in range(k)]  # identity
+    while n:
+        if n & 1: R = mat_mul(R, M, mod)
+        M = mat_mul(M, M, mod); n >>= 1
+    return R
+
+# Fibonacci with matrix exponentiation -- O(log n)
+def fib_matrix(n, mod=10**9+7):
+    if n <= 1: return n
+    M = [[1,1],[1,0]]
+    R = mat_pow(M, n-1, mod)
+    return R[0][0]
+
+# -- Chinese Remainder Theorem (CRT) -- O(log(min(m1,m2)))
+def crt(r1, m1, r2, m2):
+    # Find x such that x = r1 (mod m1), x = r2 (mod m2)
+    g, p, q = extended_gcd(m1, m2)
+    if (r2 - r1) % g != 0: return None, None   # no solution
+    lcm_ = m1 * m2 // g
+    x = (r1 + m1 * ((r2-r1)//g * p % (m2//g))) % lcm_
+    return x, lcm_
+
+# -- Lucas's Theorem -- n choose r mod prime p
+def lucas_ncr(n, r, p):
+    if r == 0: return 1
+    ni, ri = n % p, r % p
+    if ri > ni: return 0
+    return ncr(ni, ri, p) * lucas_ncr(n//p, r//p, p) % p
+
+# Precompute factorials for nCr mod p
+def precompute_factorials(n, mod):
+    fact  = [1]*(n+1)
+    inv_f = [1]*(n+1)
+    for i in range(1, n+1): fact[i] = fact[i-1]*i % mod
+    inv_f[n] = pow(fact[n], mod-2, mod)
+    for i in range(n-1, -1, -1): inv_f[i] = inv_f[i+1]*(i+1) % mod
+    def ncr(n, r):
+        if r < 0 or r > n: return 0
+        return fact[n] * inv_f[r] % mod * inv_f[n-r] % mod
+    return ncr
+\end{lstlisting}
+
+\section{Bit Manipulation}
+
+\begin{lstlisting}
+# -- Bit operations in Python ──────────────────────────────────
+x = 42                          # 0b101010
+x & y                           # AND
+x | y                           # OR
+x ^ y                           # XOR
+~x                              # NOT (= -(x+1) in Python!)
+x << k                          # left shift by k
+x >> k                          # right shift by k (arithmetic)
+
+# Python integers are arbitrary precision -- no overflow!
+
+# -- Common tricks ─────────────────────────────────────────────
+x & 1                           # check if odd
+x & (x-1)                      # clear lowest set bit; 0 iff power of 2
+x & (-x)                       # isolate lowest set bit
+x | (x-1)                      # set all bits below lowest set bit
+x.bit_length()                  # number of bits (= floor(log2(x)) + 1)
+bin(x).count('1')               # popcount (number of 1-bits)
+int.bit_count(x)                # Python 3.10+ native popcount
+
+# Check if power of 2
+def is_power_of_two(n): return n > 0 and (n & (n-1)) == 0
+
+# Next power of 2
+def next_pow2(n):
+    p = 1
+    while p < n: p <<= 1
+    return p
+
+# -- XOR tricks ────────────────────────────────────────────────
+# Single number (one element appears odd times)
+def single_number(nums):
+    result = 0
+    for x in nums: result ^= x
+    return result
+
+# Single number II (all others appear 3x) -- O(n)
+def single_number_3x(nums):
+    ones = twos = 0
+    for x in nums:
+        ones = (ones ^ x) & ~twos
+        twos = (twos ^ x) & ~ones
+    return ones
+
+# Two single numbers (two elements appear once)
+def single_number_two(nums):
+    xor = 0
+    for x in nums: xor ^= x
+    diff_bit = xor & (-xor)    # rightmost differing bit
+    a = b = 0
+    for x in nums:
+        if x & diff_bit: a ^= x
+        else:            b ^= x
+    return a, b
+
+# -- Bit DP: bitmask DP -- O(2^n * n)
+# Travelling Salesman (held-karp)
+def tsp(dist, n):
+    INF = float('inf')
+    dp  = [[INF]*(1<<n) for _ in range(n)]
+    dp[0][1] = 0    # start at city 0, visited = {0}
+    for mask in range(1, 1<<n):
+        for u in range(n):
+            if not (mask >> u & 1): continue
+            if dp[u][mask] == INF: continue
+            for v in range(n):
+                if mask >> v & 1: continue
+                new_mask = mask | (1<<v)
+                dp[v][new_mask] = min(dp[v][new_mask], dp[u][mask] + dist[u][v])
+    full = (1<<n) - 1
+    return min(dp[u][full] + dist[u][0] for u in range(1, n))
+
+# Count subsets with given XOR
+def count_subsets_xor(arr, x):
+    from functools import cache
+    n = len(arr)
+    @cache
+    def dp(i, cur_xor):
+        if i == n: return 1 if cur_xor == x else 0
+        return dp(i+1, cur_xor^arr[i]) + dp(i+1, cur_xor)
+    return dp(0, 0)
+
+# -- Subset Enumeration using bitmask -- O(2^n)
+def all_subsets_bitmask(arr):
+    n = len(arr)
+    for mask in range(1 << n):
+        subset = [arr[i] for i in range(n) if mask >> i & 1]
+        print(subset)
+
+# Enumerate all subsets of a given mask (for SOS DP)
+def enumerate_submasks(mask):
+    sub = mask
+    while sub:
+        yield sub
+        sub = (sub-1) & mask
+
+# -- Sum over Subsets (SOS) DP -- O(2^n * n)
+def sos_dp(arr):
+    n = max(arr).bit_length()
+    dp = [0] * (1 << n)
+    for x in arr: dp[x] += 1
+    for i in range(n):
+        for mask in range(1 << n):
+            if mask >> i & 1:
+                dp[mask] += dp[mask ^ (1 << i)]
+    return dp    # dp[mask] = sum of arr[x] for all x subset of mask
+\end{lstlisting}
+
+\section{Geometry}
+
+\begin{lstlisting}
+# -- 2D Point / Vector operations -- O(1)
+def cross(o, a, b):
+    # Cross product of vectors OA and OB
+    # > 0: counterclockwise, < 0: clockwise, = 0: collinear
+    return (a[0]-o[0])*(b[1]-o[1]) - (a[1]-o[1])*(b[0]-o[0])
+
+def dot(a, b):  return a[0]*b[0] + a[1]*b[1]
+def dist2(a, b): return (a[0]-b[0])**2 + (a[1]-b[1])**2
+
+# -- Convex Hull (Graham Scan) -- O(n log n)
+def convex_hull(points):
+    points = sorted(set(points))
+    if len(points) <= 1: return points
+    # Build lower hull
+    lower = []
+    for p in points:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    # Build upper hull
+    upper = []
+    for p in reversed(points):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    return lower[:-1] + upper[:-1]
+
+# -- Point in Polygon (Ray Casting) -- O(n)
+def point_in_polygon(point, polygon):
+    x, y = point; inside = False
+    n = len(polygon); j = n - 1
+    for i in range(n):
+        xi, yi = polygon[i]; xj, yj = polygon[j]
+        if ((yi > y) != (yj > y)) and (x < (xj-xi)*(y-yi)/(yj-yi)+xi):
+            inside = not inside
+        j = i
+    return inside
+
+# -- Line Segment Intersection -- O(1)
+def segments_intersect(p1, p2, p3, p4):
+    d1 = cross(p3, p4, p1); d2 = cross(p3, p4, p2)
+    d3 = cross(p1, p2, p3); d4 = cross(p1, p2, p4)
+    if ((d1 > 0 and d2 < 0) or (d1 < 0 and d2 > 0)) and \
+       ((d3 > 0 and d4 < 0) or (d3 < 0 and d4 > 0)):
+        return True
+    # Check collinear cases (omitted for brevity)
+    return False
+\end{lstlisting}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\part{Advanced Topics and Competitive Programming}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%==========================================================
+\chapter{Competitive Programming Patterns}
+%%%==========================================================
+
+\section{Two Heaps Pattern}
+
+\begin{lstlisting}
+# -- Find Median from Data Stream -- O(log n) per add, O(1) query
+import heapq
+class MedianFinder:
+    def __init__(self):
+        self.lo = []    # max-heap (negated) for lower half
+        self.hi = []    # min-heap for upper half
+
+    def add_num(self, num):
+        heapq.heappush(self.lo, -num)
+        # Ensure lo's max <= hi's min
+        if self.hi and -self.lo[0] > self.hi[0]:
+            heapq.heappush(self.hi, -heapq.heappop(self.lo))
+        # Balance sizes: lo can have at most 1 extra
+        if len(self.lo) > len(self.hi) + 1:
+            heapq.heappush(self.hi, -heapq.heappop(self.lo))
+        elif len(self.hi) > len(self.lo):
+            heapq.heappush(self.lo, -heapq.heappop(self.hi))
+
+    def find_median(self):
+        if len(self.lo) > len(self.hi): return float(-self.lo[0])
+        return (-self.lo[0] + self.hi[0]) / 2.0
+\end{lstlisting}
+
+\section{Intervals}
+
+\begin{lstlisting}
+# -- Merge Overlapping Intervals -- O(n log n)
+def merge_intervals(intervals):
+    intervals.sort(); result = [intervals[0]]
+    for start, end in intervals[1:]:
+        if start <= result[-1][1]: result[-1][1] = max(result[-1][1], end)
+        else:                       result.append([start, end])
+    return result
+
+# -- Insert Interval -- O(n)
+def insert_interval(intervals, new):
+    result = []; i = 0; n = len(intervals)
+    # Add all intervals ending before new starts
+    while i < n and intervals[i][1] < new[0]: result.append(intervals[i]); i += 1
+    # Merge overlapping
+    while i < n and intervals[i][0] <= new[1]:
+        new[0] = min(new[0], intervals[i][0])
+        new[1] = max(new[1], intervals[i][1]); i += 1
+    result.append(new)
+    result.extend(intervals[i:])
+    return result
+
+# -- Non-overlapping Intervals (min removals) -- O(n log n)
+def erase_overlap_intervals(intervals):
+    intervals.sort(key=lambda x: x[1])
+    last_end = float('-inf'); removed = 0
+    for start, end in intervals:
+        if start >= last_end: last_end = end
+        else:                  removed += 1
+    return removed
+\end{lstlisting}
+
+\section{Monotonic Queue / Stack Patterns}
+
+\begin{lstlisting}
+# -- Largest Rectangle in Histogram (revisited) -- O(n)
+def largest_rectangle_histogram(heights):
+    heights = heights + [0]; stack = [-1]; max_area = 0
+    for i, h in enumerate(heights):
+        while stack[-1] != -1 and heights[stack[-1]] >= h:
+            height = heights[stack.pop()]
+            width  = i - stack[-1] - 1
+            max_area = max(max_area, height * width)
+        stack.append(i)
+    return max_area
+
+# -- Jump Game VI (max score with window k) -- O(n log k) with heap
+def max_result(nums, k):
+    from collections import deque
+    n  = len(nums)
+    dq = deque([0])   # indices, decreasing dp value
+    dp = [0] * n; dp[0] = nums[0]
+    for i in range(1, n):
+        while dq and dq[0] < i - k: dq.popleft()
+        dp[i] = dp[dq[0]] + nums[i]
+        while dq and dp[dq[-1]] <= dp[i]: dq.pop()
+        dq.append(i)
+    return dp[n-1]
+\end{lstlisting}
+
+\section{Graph Colouring and Matching}
+
+\begin{lstlisting}
+# -- Hungarian Algorithm (assignment problem) -- O(n^3)
+def hungarian(cost):
+    n = len(cost)
+    u  = [0]*(n+1); v = [0]*(n+1)
+    p  = [0]*(n+1); way = [0]*(n+1)
+    for i in range(1, n+1):
+        p[0] = i; j0 = 0
+        minv = [float('inf')]*(n+1)
+        used = [False]*(n+1)
+        while True:
+            used[j0] = True; i0 = p[j0]; delta = float('inf'); j1 = -1
+            for j in range(1, n+1):
+                if not used[j]:
+                    cur = cost[i0-1][j-1] - u[i0] - v[j]
+                    if cur < minv[j]: minv[j] = cur; way[j] = j0
+                    if minv[j] < delta: delta = minv[j]; j1 = j
+            for j in range(n+1):
+                if used[j]: u[p[j]] += delta; v[j] -= delta
+                else:        minv[j] -= delta
+            j0 = j1
+            if p[j0] == 0: break
+        while j0:
+            p[j0] = p[way[j0]]; j0 = way[j0]
+    ans = [-u[0]]   # total cost
+    assignment = [0]*n
+    for j in range(1, n+1):
+        if p[j]: assignment[p[j]-1] = j-1
+    return -u[0], assignment
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Miscellaneous Algorithms and Tricks}
+%%%==========================================================
+
+\section{Reservoir Sampling}
+
+\begin{lstlisting}
+# -- Reservoir Sampling: pick k items uniformly at random -- O(n)
+import random
+def reservoir_sample(stream, k):
+    reservoir = []
+    for i, item in enumerate(stream):
+        if i < k:
+            reservoir.append(item)
+        else:
+            j = random.randint(0, i)
+            if j < k: reservoir[j] = item
+    return reservoir
+\end{lstlisting}
+
+\section{Fisher-Yates Shuffle}
+
+\begin{lstlisting}
+# -- Fisher-Yates Shuffle -- O(n), uniform distribution
+def shuffle(arr):
+    n = len(arr)
+    for i in range(n-1, 0, -1):
+        j = random.randint(0, i)
+        arr[i], arr[j] = arr[j], arr[i]
+    return arr
+\end{lstlisting}
+
+\section{Meeting in the Middle}
+
+\begin{lstlisting}
+# -- 4-sum count (meet-in-the-middle) -- O(n^2)
+def four_sum_count(A, B, C, D):
+    from collections import Counter
+    ab_sums = Counter(a+b for a in A for b in B)
+    return sum(ab_sums.get(-(c+d), 0) for c in C for d in D)
+\end{lstlisting}
+
+\section{Mo's Algorithm}
+
+\begin{lstlisting}
+# -- Mo's Algorithm: offline range queries -- O((n+q)*sqrt(n))
+import math
+def mo_algorithm(arr, queries):
+    n = len(arr); block = max(1, int(math.sqrt(n)))
+    # Sort queries: (l, r, idx) by block of l, then r
+    queries = sorted(enumerate(queries), key=lambda e: (e[1][0]//block, e[1][1]))
+
+    cur_l = cur_r = 0
+    cur_sum = arr[0]
+    results = [0] * len(queries)
+
+    def add(pos): nonlocal cur_sum; cur_sum += arr[pos]
+    def remove(pos): nonlocal cur_sum; cur_sum -= arr[pos]
+
+    for idx, (l, r) in queries:
+        while cur_r < r: cur_r += 1; add(cur_r)
+        while cur_l > l: cur_l -= 1; add(cur_l)
+        while cur_r > r: remove(cur_r); cur_r -= 1
+        while cur_l < l: remove(cur_l); cur_l += 1
+        results[idx] = cur_sum
+
+    return results
+\end{lstlisting}
+
+\section{Heavy-Light Decomposition (HLD)}
+
+\begin{lstlisting}
+# -- Heavy-Light Decomposition -- O(n) build, O(log^2 n) path query
+class HLD:
+    def __init__(self, adj, values, root=0):
+        n = self.n = len(adj)
+        self.parent = [-1]*n; self.depth = [0]*n
+        self.heavy  = [-1]*n; self.head  = [0]*n
+        self.pos    = [0]*n; self.sz     = [1]*n
+        self._dfs_sz(root, -1, adj)
+        self._dfs_hld(root, root, adj, [0])
+        # Build segment tree on HLD positions
+        arr = [values[i] for i in range(n)]   # reorder by pos
+        self.seg = SegTree(arr)
+
+    def _dfs_sz(self, u, p, adj):
+        self.parent[u] = p; heavy_sz = 0
+        for v in adj[u]:
+            if v == p: continue
+            self.depth[v] = self.depth[u]+1
+            self._dfs_sz(v, u, adj)
+            self.sz[u] += self.sz[v]
+            if self.sz[v] > heavy_sz: heavy_sz = self.sz[v]; self.heavy[u] = v
+
+    def _dfs_hld(self, u, h, adj, cur):
+        self.head[u] = h; self.pos[u] = cur[0]; cur[0] += 1
+        if self.heavy[u] != -1: self._dfs_hld(self.heavy[u], h, adj, cur)
+        for v in adj[u]:
+            if v != self.parent[u] and v != self.heavy[u]:
+                self._dfs_hld(v, v, adj, cur)
+
+    def path_query(self, u, v):
+        result = 0
+        while self.head[u] != self.head[v]:
+            if self.depth[self.head[u]] < self.depth[self.head[v]]: u, v = v, u
+            result += self.seg.query(self.pos[self.head[u]], self.pos[u])
+            u = self.parent[self.head[u]]
+        if self.depth[u] > self.depth[v]: u, v = v, u
+        result += self.seg.query(self.pos[u], self.pos[v])
+        return result
+\end{lstlisting}
+
+\section{Centroid Decomposition}
+
+\begin{lstlisting}
+# -- Centroid Decomposition -- O(n log n) build, O(log n) per query
+class CentroidDecomp:
+    def __init__(self, adj, n):
+        self.adj    = adj; self.n = n
+        self.sz     = [0]*n; self.removed = [False]*n
+        self.parent = [-1]*n
+
+    def _get_sz(self, u, p):
+        self.sz[u] = 1
+        for v in self.adj[u]:
+            if v != p and not self.removed[v]:
+                self._get_sz(v, u); self.sz[u] += self.sz[v]
+
+    def _get_centroid(self, u, p, tree_sz):
+        for v in self.adj[u]:
+            if v != p and not self.removed[v]:
+                if self.sz[v] > tree_sz // 2:
+                    return self._get_centroid(v, u, tree_sz)
+        return u
+
+    def build(self, u=0, p=-1):
+        self._get_sz(u, -1)
+        c = self._get_centroid(u, -1, self.sz[u])
+        self.removed[c] = True
+        self.parent[c]  = p
+        for v in self.adj[c]:
+            if not self.removed[v]: self.build(v, c)
+        self.removed[c] = False
+        return c
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Input / Output Optimisation}
+%%%==========================================================
+
+\begin{lstlisting}
+import sys
+input = sys.stdin.readline    # 3-5x faster than built-in input()
+
+# -- Fast read of integers
+def read_int():     return int(sys.stdin.readline())
+def read_ints():    return list(map(int, sys.stdin.readline().split()))
+def read_matrix(m): return [list(map(int, sys.stdin.readline().split())) for _ in range(m)]
+
+# -- Fast output (buffer before printing)
+out = []
+out.append(str(answer))
+print('\n'.join(out))         # single system call vs n print() calls
+
+# -- Or use sys.stdout.write
+sys.stdout.write('\n'.join(map(str, results)) + '\n')
+
+# -- PyPy tips (if available):
+# 1. Use sys.stdin.read() and split once upfront
+# 2. Avoid excessive function calls
+# 3. Use local variables in tight loops (faster than global)
+
+# -- Complete fast I/O template
+import sys
+from collections import defaultdict, deque
+from heapq import *
+from bisect import *
+from itertools import *
+from functools import cache
+input = sys.stdin.readline
+MOD   = 10**9 + 7
+INF   = float('inf')
+
+def solve():
+    n = int(input())
+    arr = list(map(int, input().split()))
+    # ... solution ...
+
+T = int(input())
+for _ in range(T):
+    solve()
+\end{lstlisting}
+
+%%%==========================================================
+\chapter{Complete Algorithm Reference Table}
+%%%==========================================================
+
+\begin{longtable}{@{}p{4.5cm}p{2.5cm}p{2.5cm}p{3.5cm}@{}}
+\toprule
+\textbf{Algorithm / DS} & \textbf{Time} & \textbf{Space} & \textbf{Notes} \\
+\midrule
+\endhead
+\multicolumn{4}{@{}l@{}}{\textbf{Linear Structures}} \\
+Array access       & $O(1)$        & ---           & Random access \\
+Array search       & $O(n)$        & ---           & Linear scan \\
+Dynamic array push & $O(1)$ amort  & $O(n)$        & Python list \\
+Linked list insert & $O(1)$        & $O(n)$        & With pointer \\
+Stack push/pop     & $O(1)$        & $O(n)$        & \\
+Queue enqueue/deq  & $O(1)$        & $O(n)$        & deque \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Trees}} \\
+BST search/insert  & $O(\log n)$ avg & $O(n)$      & $O(n)$ worst \\
+AVL search/insert  & $O(\log n)$   & $O(n)$        & Guaranteed \\
+Heap push/pop      & $O(\log n)$   & $O(n)$        & \\
+Heap build         & $O(n)$        & $O(n)$        & \\
+Trie insert/search & $O(m)$        & $O(nm)$       & $m$ = key length \\
+Segment tree query & $O(\log n)$   & $O(4n)$       & \\
+BIT update/query   & $O(\log n)$   & $O(n)$        & \\
+Sparse table query & $O(1)$        & $O(n\log n)$  & Static only \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Hashing}} \\
+Dict get/set/del   & $O(1)$ avg    & $O(n)$        & $O(n)$ worst \\
+Set add/in/remove  & $O(1)$ avg    & $O(n)$        & \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Sorting}} \\
+Comparison sort    & $O(n\log n)$  & $O(\log n)$   & Lower bound \\
+Counting sort      & $O(n+k)$      & $O(k)$        & Integer keys \\
+Radix sort         & $O(dn)$       & $O(n+b)$      & $d$ digits, base $b$ \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Graph}} \\
+DFS / BFS          & $O(V+E)$      & $O(V)$        & \\
+Dijkstra           & $O((V+E)\log V)$ & $O(V)$     & Non-neg weights \\
+Bellman-Ford       & $O(VE)$       & $O(V)$        & Neg weights \\
+Floyd-Warshall     & $O(V^3)$      & $O(V^2)$      & All-pairs \\
+Kruskal MST        & $O(E\log E)$  & $O(V)$        & + DSU \\
+Prim MST           & $O((V+E)\log V)$ & $O(V)$     & \\
+Topo Sort          & $O(V+E)$      & $O(V)$        & DAG only \\
+Tarjan SCC         & $O(V+E)$      & $O(V)$        & \\
+Bridges/APs        & $O(V+E)$      & $O(V)$        & \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Strings}} \\
+KMP                & $O(n+m)$      & $O(m)$        & \\
+Z-function         & $O(n)$        & $O(n)$        & \\
+Rabin-Karp         & $O(n+m)$ avg  & $O(1)$        & \\
+Manacher           & $O(n)$        & $O(n)$        & Palindromes \\
+Suffix Array       & $O(n\log^2 n)$& $O(n)$        & \\
+Aho-Corasick       & $O(n+m+z)$    & $O(nm)$       & $z$ = matches \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{DP}} \\
+1D DP              & $O(n)$--$O(n^2)$ & $O(n)$     & \\
+2D DP (LCS, etc.)  & $O(mn)$       & $O(\min(m,n))$ & Optimised \\
+LIS                & $O(n\log n)$  & $O(n)$        & Patience sort \\
+Knapsack 0/1       & $O(nW)$       & $O(W)$        & \\
+Interval DP        & $O(n^3)$      & $O(n^2)$      & \\
+Bitmask DP         & $O(2^n \cdot n)$ & $O(2^n)$   & \\
+Digit DP           & $O(D \cdot S)$ & $O(D \cdot S)$ & $D$ digits \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Number Theory}} \\
+GCD                & $O(\log n)$   & $O(1)$        & \\
+Sieve of Eratosthenes & $O(n\log\log n)$ & $O(n)$ & \\
+Fast power         & $O(\log n)$   & $O(1)$        & \\
+Matrix power       & $O(k^3\log n)$& $O(k^2)$      & $k\times k$ matrix \\
+\midrule
+\multicolumn{4}{@{}l@{}}{\textbf{Special}} \\
+DSU find/union     & $O(\alpha(n))$& $O(n)$        & Nearly $O(1)$ \\
+Mo's Algorithm     & $O((n+q)\sqrt{n})$ & $O(n)$  & Offline queries \\
+\bottomrule
+\end{longtable}
+
+%%%==========================================================
+\chapter{Common Pitfalls: C\texttt{++} to Python}
+%%%==========================================================
+
+\begin{warnbox}[Top 10 Pitfalls when Moving from C\texttt{++} to Python DSA]
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Recursion limit:} Python default is 1000. Add \texttt{sys.setrecursionlimit(300000)} or convert to iterative.
+\item \textbf{Max-heap:} Python only has min-heap. Negate values: \texttt{heapq.heappush(h, -x)}.
+\item \textbf{Integer type:} Python integers never overflow (arbitrary precision). No need for \texttt{long long}.
+\item \textbf{Mutable default args:} \texttt{def f(arr=[]):} shares the list across calls. Use \texttt{def f(arr=None): if arr is None: arr = []}
+\item \textbf{2D list initialisation:} \texttt{[[0]*n]*m} creates \emph{m} references to the same row. Always use \texttt{[[0]*n for \_ in range(m)]}.
+\item \textbf{String concatenation:} \texttt{s += char} in a loop is $O(n^2)$. Use \texttt{"".join(list)}.
+\item \textbf{Slow \texttt{list.pop(0)}:} $O(n)$. Use \texttt{collections.deque} for $O(1)$ front pops.
+\item \textbf{No built-in balanced BST:} Use \texttt{sortedcontainers.SortedList} (pip install) or simulate with binary search on a list.
+\item \textbf{Graph DFS with large input:} Use iterative DFS with explicit stack to avoid recursion limit hits.
+\item \textbf{\texttt{is} vs \texttt{==}:} \texttt{is} checks identity, \texttt{==} checks value. For node comparisons use \texttt{is}; for values use \texttt{==}.
+\end{enumerate}
+\end{warnbox}
+
+\begin{tipbox}[Python Speed-Up Tips for Competitive Programming]
+\begin{enumerate}[leftmargin=*]
+\item Use \texttt{sys.stdin.readline} instead of \texttt{input()} for fast I/O.
+\item Prefer local variables over global in tight loops (Python looks up locals faster).
+\item Use \texttt{@cache} or \texttt{@lru\_cache} for memoisation instead of manual dict.
+\item \texttt{heapq.heapify} is $O(n)$; don't push one-by-one when building from scratch.
+\item \texttt{bisect.bisect\_left/right} for $O(\log n)$ search on sorted lists.
+\item Use \texttt{collections.Counter} for frequency maps --- faster than manual dicts.
+\item Avoid \texttt{list.sort()} on already-nearly-sorted data with large $k$-inversions.
+\item Use \texttt{frozenset} as dict key when you need a set as a hash key.
+\item For set-like ordered operations, use \texttt{sortedcontainers.SortedList}.
+\item Use \texttt{math.comb(n, r)} for exact nCr (no float rounding).
+\end{enumerate}
+\end{tipbox}
+
+\end{document}

@@ -1,0 +1,7 @@
+{
+    "name": "tc01: three files compile and link successful",
+    "sources": ["tc_hello.c", "tc_math.c", "tc_strings.c"],
+    "output": "app",
+    "expected_failed": [],
+    "expected_exit": 0
+}

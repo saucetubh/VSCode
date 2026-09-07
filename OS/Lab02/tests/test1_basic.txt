@@ -1,0 +1,3 @@
+start s1
+start s2
+wait 3

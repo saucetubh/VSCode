@@ -1,0 +1,7 @@
+{
+    "name": "tc02: a single file compile successful",
+    "sources": ["tc_hello.c"],
+    "output": "hello",
+    "expected_failed": [],
+    "expected_exit": 0
+}

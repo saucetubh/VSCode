@@ -1,0 +1,6 @@
+start s2
+wait 1
+pause 1
+wait 2
+resume 1
+wait 1

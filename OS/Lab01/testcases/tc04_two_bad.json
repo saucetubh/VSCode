@@ -1,0 +1,7 @@
+{
+    "name": "tc04: 4 files (2 broken)",
+    "sources": ["tc_bad_undeclared.c", "tc_hello.c", "tc_bad_brace.c", "tc_strings.c"],
+    "output": "app",
+    "expected_failed": ["tc_bad_undeclared.c", "tc_bad_brace.c"],
+    "expected_exit": 1
+}

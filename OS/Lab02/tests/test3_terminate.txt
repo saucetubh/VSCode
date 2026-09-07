@@ -1,0 +1,3 @@
+start s10
+terminate 1
+wait 1
