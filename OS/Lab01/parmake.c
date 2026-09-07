@@ -18,22 +18,17 @@
 #include <stdio.h>  /* printf, fprintf */
 #include <stdlib.h> /* malloc */
 #include <string.h> /* strcmp, strlen, strdup */
+#include <unistd.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
-// TODO: include the headers you need for fork, exec, and wait
-
-/*
- * GIVEN: c_to_o("foo.c") returns a new string "foo.o" allocated on the heap.
- *
- * You will need this for the final step in which you create the executable by linking all the created .o files.
- *
- */
 char *c_to_o(const char *cfile) {
     char *ofile = strdup(cfile);
     ofile[strlen(ofile) - 1] = 'o';
     return ofile;
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) { //char *argv[] means an array of pointers is passed as the argument, each pointer points to a string
     if (argc <= 3 || strcmp(argv[1], "-o") != 0) {
         fprintf(stderr, "usage: %s -o <output_binary> <file1.c> [file2.c ...]\n", argv[0]);
         return 0;
@@ -43,20 +38,58 @@ int main(int argc, char *argv[]) {
     int nfiles = argc - 3;   /* how many source files were given as input */
     char **files = &argv[3]; /* files[0] .. files[nfiles - 1]       */
 
-    // TODO: find a way to store the pid and filename for each child you
-    // fork below, so you can match them back up in the next step.
-    // Hint: arrays work fine here.
+    pid_t pids[nfiles];
+    for(int i=0;i<nfiles;i++) {
+        pid_t pid = fork();
+        if(pid<0) {
+            fprintf(stderr, "FAILED: %s\n",files[i]);
+            pids[i]=-1;
+            continue;
+        }
+        else if(pid) {
+            pids[i]=pid;
+            continue;
+        }
+        char *myarg[4] = {"gcc", "-c", files[i], NULL};
+        execvp(myarg[0], myarg); //execvp takes as argument a single string pointer which is the filename that has to be executed (in this case gcc), and the second argument is the entire array of strings, myarg is char**, it points to the first element
+        exit(1); //only falls to this line if execvp fails, so we exit with 0 to indicate failure
+        //exit() is a graceful shutdown, _Exit() is a force shutdown
+        //_Exit is like pressing the handbrake to stop instantly, can be used here to prevent a bad child from corrupting parent, since _Exit immediately shuts down
+        //exit() does proper clean up and flushes the buffer etc.
+    }
+    
+    int failures=0;
+    for(int i=0;i<nfiles;i++) {
+        int status;
+        pid_t pid = pids[i];
+        if(waitpid(pid, &status, 0)) {//need to pass the address of status so that the wait call can change the value of my status variable, if i pass only the status, the change wait will make is to its own copy of the status
+            if(WIFEXITED(status) && WEXITSTATUS(status) != 0) {
+                printf("FAILED: %s\n",files[i]);
+                failures++;
+                continue;
+            }
+        }
+        else break;
+    }
 
-    // TODO: fork a child process to compile each file, running
-    // `gcc -c <file>`. This has to be parallel; every child should be
-    // running at once, not one at a time.
+    if(failures>0) return 1;
 
-    // TODO: wait for every child you forked and check how it exited.
-    // Print "FAILED: <filename.c>" for any file whose compile failed.
-    // Check the man pages above for how to do this.
-
-    // TODO: if every file compiled successfully, link the .o files into
-    // <output_binary>, and return 0. Otherwise, return 1 without linking.
-
-    return 0;
+    char *finalarg[nfiles+4]; //if N files, we need N+4 arguments (null termination)
+    finalarg[0] = "gcc";
+    for(int i=0;i<nfiles;i++) {
+        finalarg[i+1] = c_to_o(files[i]);
+    }
+    finalarg[nfiles+1] = "-o";
+    finalarg[nfiles+2] = (char *) output_binary;
+    finalarg[nfiles+3] = NULL;
+    
+    pid_t pid = fork();
+    if(pid<0) return 1;
+    else if(pid == 0) {
+        execvp(finalarg[0], finalarg);
+        exit(1); //link failed, child exited with non zero status
+    }
+    wait(NULL); //parents waits
+    return 0; //can add a similar condition as earlier where we save status and use macro to check it and return 0 only if the child did not terminate with an exit status since that would mean execvp failed
+    //but for simplicity we don't
 }
