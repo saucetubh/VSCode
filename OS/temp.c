@@ -144,7 +144,7 @@ int check_status(int id) {
     int status; //can be used if we want to know whether child exited normally, was terminated, or paused, etc.
     
     pid_t child_pid = waitpid(tasks[i].pid, &status, WNOHANG); //returns 0 if child still running, parent can continue what its doing (non blocking), returns pid of the child if reaped, returns -1 if nothing to reap
-    if (child_pid == tasks[i].pid) { //must make sure this condition is ==tasks[i].pid since if child_pid = -1 , i.e nothing to reap, even then this becomes true and is evaluated
+    if (child_pid) {
         tasks[i].end = get_time();
         tasks[i].status = DONE;
         printf("[%.3f] task %d exited\n", get_time(), tasks[i].task_id);
@@ -178,16 +178,12 @@ void cmd_terminate(int id) {
     kill(tasks[i].pid, SIGKILL);
     int status;
     pid_t child_pid = waitpid(tasks[i].pid, &status, 0);
-    if(child_pid==tasks[i].pid) { //must make sure this condition is ==tasks[i].pid since if child_pid = -1 , i.e nothing to reap, even then this becomes true and is evaluated
+    if(child_pid) {
         if(WIFSIGNALED(status)) {
             tasks[i].status = TERMINATED;
             tasks[i].end = get_time();
         }
     }
-    /*
-    for this Lab, simply doing kill followed by waitpid(tasks[i].pid, NULL, 0) works since we know the child was killed (we checked using check_status earlier)
-    hence there is no need to do an exit status check
-    */
 }
 
 /*
