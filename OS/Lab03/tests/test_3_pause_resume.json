@@ -1,0 +1,39 @@
+{
+  "name": "Pause/resume interleave: P7 <-> P8",
+  "checks": [
+    {
+      "type": "exists_once",
+      "events": [
+        "P7:START",
+        "P7:END",
+        "P8:START",
+        "P8:END"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P7:START",
+        "P8:START",
+        "P8:END",
+        "P7:END"
+      ]
+    },
+    {
+      "type": "no_events_between",
+      "between": [
+        "P8:START",
+        "P8:END"
+      ],
+      "forbidden_events": [
+        "P7:TICK",
+        "P7:END"
+      ]
+    },
+    {
+      "type": "count_min",
+      "event": "P7:TICK",
+      "min": 6
+    }
+  ]
+}

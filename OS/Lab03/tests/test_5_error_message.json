@@ -1,0 +1,21 @@
+{
+  "name": "Error handling: P2 fails",
+  "fault": {
+    "proc_id": 2,
+    "faulty_binary": "prog2_fail"
+  },
+  "checks": [
+    {
+      "type": "exists_once",
+      "events": [
+        "P1:START",
+        "P1:END"
+      ]
+    },
+    {
+      "type": "error_message",
+      "proc_id": 2,
+      "exit_code": 7
+    }
+  ]
+}

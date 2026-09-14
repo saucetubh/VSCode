@@ -1,0 +1,54 @@
+{
+  "name": "Parallel execution: P4, P5, P6 after P3",
+  "checks": [
+    {
+      "type": "exists_once",
+      "events": [
+        "P4:START",
+        "P4:END",
+        "P5:START",
+        "P5:END",
+        "P6:START",
+        "P6:END"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P4:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P5:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P6:START"
+      ]
+    },
+    {
+      "type": "overlap_any",
+      "pairs": [
+        [
+          "P4",
+          "P5"
+        ],
+        [
+          "P5",
+          "P6"
+        ],
+        [
+          "P4",
+          "P6"
+        ]
+      ]
+    }
+  ]
+}

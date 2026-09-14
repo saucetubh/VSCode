@@ -1,0 +1,105 @@
+{
+  "name": "Full pipeline, end to end",
+  "checks": [
+    {
+      "type": "exists_once",
+      "events": [
+        "P1:START",
+        "P1:END",
+        "P2:START",
+        "P2:END",
+        "P3:START",
+        "P3:END",
+        "P4:START",
+        "P4:END",
+        "P5:START",
+        "P5:END",
+        "P6:START",
+        "P6:END",
+        "P7:START",
+        "P7:END",
+        "P8:START",
+        "P8:END"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P1:START",
+        "P1:END",
+        "P2:START",
+        "P2:END",
+        "P3:START",
+        "P3:END"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P4:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P5:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P3:END",
+        "P6:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P4:END",
+        "P7:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P5:END",
+        "P7:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P6:END",
+        "P7:START"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P7:START",
+        "P8:START",
+        "P8:END",
+        "P7:END"
+      ]
+    },
+    {
+      "type": "no_events_between",
+      "between": [
+        "P8:START",
+        "P8:END"
+      ],
+      "forbidden_events": [
+        "P7:TICK",
+        "P7:END"
+      ]
+    },
+    {
+      "type": "clean_run"
+    },
+    {
+      "type": "exit_success"
+    }
+  ]
+}

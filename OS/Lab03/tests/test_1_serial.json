@@ -1,0 +1,27 @@
+{
+  "name": "Serial execution: P1 -> P2 -> P3",
+  "checks": [
+    {
+      "type": "exists_once",
+      "events": [
+        "P1:START",
+        "P1:END",
+        "P2:START",
+        "P2:END",
+        "P3:START",
+        "P3:END"
+      ]
+    },
+    {
+      "type": "order",
+      "sequence": [
+        "P1:START",
+        "P1:END",
+        "P2:START",
+        "P2:END",
+        "P3:START",
+        "P3:END"
+      ]
+    }
+  ]
+}
