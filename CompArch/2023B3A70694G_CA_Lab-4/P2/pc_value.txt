@@ -1,0 +1,1 @@
+for both programs, initial pc value is 0x00400000

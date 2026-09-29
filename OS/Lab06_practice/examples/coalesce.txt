@@ -1,0 +1,14 @@
+alloc 100
+alloc 200
+alloc 300
+alloc 400
+free 2
+free 4
+show
+free 3
+show
+free 1
+show
+free 1
+free 9
+show

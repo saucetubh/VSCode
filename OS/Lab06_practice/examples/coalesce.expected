@@ -1,0 +1,26 @@
+alloc 100 -> id 1, chunk 0, payload 100
+alloc 200 -> id 2, chunk 108, payload 200
+alloc 300 -> id 3, chunk 316, payload 300
+alloc 400 -> id 4, chunk 624, payload 400
+free 2 -> OK
+free 4 -> OK
+Offset  Payload  State
+     0      100  USED
+   108      200  FREE
+   316      300  USED
+   624     3464  FREE
+Free list: [108:200] [624:3464]
+free 3 -> OK
+Offset  Payload  State
+     0      100  USED
+   108     3980  FREE
+Free list: [108:3980]
+free 1 -> OK
+Offset  Payload  State
+     0     4088  FREE
+Free list: [0:4088]
+free 1 -> INVALID ID
+free 9 -> INVALID ID
+Offset  Payload  State
+     0     4088  FREE
+Free list: [0:4088]

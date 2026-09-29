@@ -1,0 +1,27 @@
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+alloc
+show
+free 16
+free 16
+free 5
+alloc
+alloc
+show
+free 0
+free 99
+show

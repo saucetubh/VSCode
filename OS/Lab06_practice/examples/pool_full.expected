@@ -1,0 +1,33 @@
+alloc -> id 1, slot 0
+alloc -> id 2, slot 1
+alloc -> id 3, slot 2
+alloc -> id 4, slot 3
+alloc -> id 5, slot 4
+alloc -> id 6, slot 5
+alloc -> id 7, slot 6
+alloc -> id 8, slot 7
+alloc -> id 9, slot 8
+alloc -> id 10, slot 9
+alloc -> id 11, slot 10
+alloc -> id 12, slot 11
+alloc -> id 13, slot 12
+alloc -> id 14, slot 13
+alloc -> id 15, slot 14
+alloc -> id 16, slot 15
+alloc -> FAILED (pool full)
+Slots: UUUUUUUUUUUUUUUU
+Free list: (empty)
+Used: 16  Free: 0
+free 16 -> OK
+free 16 -> INVALID ID
+free 5 -> OK
+alloc -> id 17, slot 4
+alloc -> id 18, slot 15
+Slots: UUUUUUUUUUUUUUUU
+Free list: (empty)
+Used: 16  Free: 0
+free 0 -> INVALID ID
+free 99 -> INVALID ID
+Slots: UUUUUUUUUUUUUUUU
+Free list: (empty)
+Used: 16  Free: 0

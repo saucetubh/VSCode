@@ -1,0 +1,11 @@
+alloc 4072
+show
+free 1
+alloc 4073
+show
+alloc 1
+free 2
+alloc 1
+alloc 3
+alloc 4088
+show

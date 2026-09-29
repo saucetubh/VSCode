@@ -1,0 +1,15 @@
+show
+alloc
+alloc
+alloc
+show
+free 2
+show
+alloc
+show
+free 1
+free 3
+show
+alloc
+alloc
+show

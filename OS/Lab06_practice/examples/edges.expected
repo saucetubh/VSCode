@@ -1,0 +1,20 @@
+alloc 4072 -> id 1, chunk 0, payload 4072
+Offset  Payload  State
+     0     4072  USED
+  4080        8  FREE
+Free list: [4080:8]
+free 1 -> OK
+alloc 4073 -> id 2, chunk 0, payload 4088
+Offset  Payload  State
+     0     4088  USED
+Free list: (empty)
+alloc 1 -> FAILED
+free 2 -> OK
+alloc 1 -> id 3, chunk 0, payload 8
+alloc 3 -> id 4, chunk 16, payload 8
+alloc 4088 -> FAILED
+Offset  Payload  State
+     0        8  USED
+    16        8  USED
+    32     4056  FREE
+Free list: [32:4056]

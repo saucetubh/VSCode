@@ -1,0 +1,16 @@
+alloc 256
+alloc 256
+alloc 256
+alloc 256
+show
+free 2
+free 3
+show
+alloc 512
+free 1
+show
+alloc 512
+show
+free 4
+free 5
+show

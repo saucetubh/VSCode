@@ -1,0 +1,30 @@
+Offset  Payload  State
+     0     4088  FREE
+Free list: [0:4088]
+alloc 100 -> id 1, chunk 0, payload 100
+alloc 100 -> id 2, chunk 108, payload 100
+alloc 100 -> id 3, chunk 216, payload 100
+Offset  Payload  State
+     0      100  USED
+   108      100  USED
+   216      100  USED
+   324     3764  FREE
+Free list: [324:3764]
+free 2 -> OK
+Offset  Payload  State
+     0      100  USED
+   108      100  FREE
+   216      100  USED
+   324     3764  FREE
+Free list: [108:100] [324:3764]
+alloc 3800 -> FAILED
+free 1 -> OK
+Offset  Payload  State
+     0      208  FREE
+   216      100  USED
+   324     3764  FREE
+Free list: [0:208] [324:3764]
+free 3 -> OK
+Offset  Payload  State
+     0     4088  FREE
+Free list: [0:4088]
