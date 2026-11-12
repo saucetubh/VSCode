@@ -1,0 +1,4 @@
+{
+  "name": "LRU selection and deterministic tie-breaking",
+  "expected_output": "  [MEM] ZERO-FILL: Initializing Frame 0\nLOAD page 5 into frame 0\nPAGE 5 type=ANON resident=1 frame=0 dirty=0 swap=-1 file=-1 offset=0 last=0\n  [MEM] ZERO-FILL: Initializing Frame 1\nLOAD page 2 into frame 1\nPAGE 2 type=ANON resident=1 frame=1 dirty=0 swap=-1 file=-1 offset=0 last=0\nSELECT -> page 2\n  [DISK I/O] SWAP OUT: Frame 1 -> Swap Slot 0\nEVICT page 2\nPAGE 2 type=ANON resident=0 frame=-1 dirty=0 swap=0 file=-1 offset=0 last=0\n  [MEM] ZERO-FILL: Initializing Frame 1\nLOAD page 4 into frame 1\nPAGE 4 type=ANON resident=1 frame=1 dirty=0 swap=-1 file=-1 offset=0 last=0\nREAD 4 0 -> 0\nREAD 5 0 -> 0\nSELECT -> page 4\nPAGE 4 type=ANON resident=1 frame=1 dirty=0 swap=-1 file=-1 offset=0 last=1\nPAGE 5 type=ANON resident=1 frame=0 dirty=0 swap=-1 file=-1 offset=0 last=2\n"
+}

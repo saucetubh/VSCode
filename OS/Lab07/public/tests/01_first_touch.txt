@@ -1,0 +1,4 @@
+READ 0 5
+READ 6 5
+INFO 0
+INFO 6

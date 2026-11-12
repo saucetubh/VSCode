@@ -1,0 +1,41 @@
+File Name: 		asm_test2.s
+-----------------TOTAL INSTRUCTIONS----------------------------
+addi $s0, $zero, 4 			    ------ I Type 
+addi $s1, $zero, 10			    ------ I Type 
+addi $s2, $zero, 12			    ------ I Type 
+addi $t0, $zero, 0			    ------ I Type 
+sw $s0, myArray($t1)			    ------ I Type 
+addi $t4, $t0, 4			    ------ I Type 
+sw $s1, myArray($t2)			    ------ I Type 
+addi $t5, $t0, 4			    ------ I Type 
+sw $s2, myArray($t3)			    ------ I Type 
+lw $t6, myArray($zero)			    ------ I Type 
+li $v0, 1			    ------ Others 
+addi $a0, $t6, 0			    ------ I Type 
+li $v1, 10			    ------ Others 
+---------------------------------------------------------------
+Total Lines w/o Comments   =  22
+Total Valid Instructions   =  13
+Backward Loops/JUMP        =  0
+Forward LOOPS/JUMP         =  0
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+BACKWARD LABEL			FORWARD LABEL
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Names of Register used     =  zero v0 v1 a0 t0 t4 t5 t6 s0 s1 s2 
+Total number of registers  =  11
+---------------------------------------------------------------
+
+
+---------------------------------------------------------------
+Total RAW Dependency       =  3
+---------------------------------------------------------------
+
+--------------------DEPENDENT INSTRUCTIONS---------------------
+addi $t0, $zero, 0			---> addi $t4, $t0, 4
+addi $t0, $zero, 0			---> addi $t5, $t0, 4
+lw $t6, myArray($zero)			---> addi $a0, $t6, 0
+---------------------------------------------------------------

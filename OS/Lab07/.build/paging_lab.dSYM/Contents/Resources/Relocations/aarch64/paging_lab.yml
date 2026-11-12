@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/kaustubh/Desktop/VSCODE/OS/Lab07/.build/paging_lab'
+relocations:     []
+...

@@ -1,0 +1,46 @@
+File Name: 		asm_test3.s
+-----------------TOTAL INSTRUCTIONS----------------------------
+addi $t0, $zero, 0 			    ------ I Type 
+jal printNumber1			    ------ J Type 
+addi $t2, $t1, 1 			    ------ I Type 
+jal printNumber2			    ------ J Type 
+addi $t3, $t2, 1 			    ------ I Type 
+j while			    ------ J Type 
+li $v1, 1			    ------ Others 
+add $a1, $t0, $zero			    ------ R Type 
+li $v0, 4			    ------ Others 
+la $a0, space			    ------ Others 
+jr $ra			    ------ R Type 
+li $s0, 1			    ------ Others 
+add $s3, $t0, $zero			    ------ R Type 
+li $s1, 10			    ------ Others 
+la $s2, space			    ------ Others 
+jr $ra			    ------ R Type 
+---------------------------------------------------------------
+Total Lines w/o Comments   =  31
+Total Valid Instructions   =  16
+Backward Loops/JUMP        =  1
+Forward LOOPS/JUMP         =  2
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+BACKWARD LABEL			FORWARD LABEL
+ while			 printNumber1
+-------			 printNumber2
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Names of Register used     =  zero v0 v1 a0 a1 t0 t1 t2 t3 s0 s1 s2 s3 ra 
+Total number of registers  =  14
+---------------------------------------------------------------
+
+
+---------------------------------------------------------------
+Total RAW Dependency       =  3
+---------------------------------------------------------------
+
+--------------------DEPENDENT INSTRUCTIONS---------------------
+addi $t0, $zero, 0 			---> add $a1, $t0, $zero
+addi $t0, $zero, 0 			---> add $s3, $t0, $zero
+addi $t2, $t1, 1 			---> addi $t3, $t2, 1 
+---------------------------------------------------------------

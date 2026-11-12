@@ -1,0 +1,58 @@
+{
+  "expected_output": "[PAGE FAULT] Page 0 (ANON)\nWRITE 0 5 <- 42\n[PAGE FAULT] Page 1 (ANON)\nWRITE 1 0 <- 51\n[PAGE FAULT] Page 2 (ANON)\nWRITE 2 0 <- 52\n[PAGE FAULT] Page 3 (ANON)\nWRITE 3 0 <- 53\n[PAGE FAULT] Page 4 (ANON)\n  [DISK I/O] SWAP OUT: Frame 0 -> Swap Slot 0\nREAD 4 0 -> 0\nPAGE 0 type=ANON resident=0 frame=-1 dirty=0 swap=0 file=-1 offset=0 last=1\n[PAGE FAULT] Page 0 (ANON)\n  [DISK I/O] SWAP OUT: Frame 1 -> Swap Slot 1\n  [DISK I/O] SWAP IN: Slot 0 -> Frame 1\nREAD 0 5 -> 42\nPAGE 0 type=ANON resident=1 frame=1 dirty=0 swap=0 file=-1 offset=0 last=6\n",
+  "name": "Anonymous roundtrip",
+  "semantic": {
+    "frame_owners": [
+      [
+        0,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        0,
+        1,
+        -1,
+        -1
+      ],
+      [
+        0,
+        1,
+        2,
+        -1
+      ],
+      [
+        0,
+        1,
+        2,
+        3
+      ],
+      [
+        4,
+        1,
+        2,
+        3
+      ],
+      [
+        4,
+        1,
+        2,
+        3
+      ],
+      [
+        4,
+        0,
+        2,
+        3
+      ],
+      [
+        4,
+        0,
+        2,
+        3
+      ]
+    ],
+    "input_sha256": "7ad73f0bd3638f304d282ade8362c4ec1c4b9eb464e294de4b43c97d4df7b4a4",
+    "schema_version": 1
+  }
+}

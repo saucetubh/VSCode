@@ -1,0 +1,40 @@
+File Name: 		asm_test4.s
+-----------------TOTAL INSTRUCTIONS----------------------------
+addi $t0, $t0, 0			    ------ I Type 
+beq $t1, 12, exit			    ------ I Type 
+lw $t6, myArray($t2)			    ------ I Type 
+addi $t3, $t0, 4			    ------ I Type 
+li $v0, 1			    ------ Others 
+move $a0, $t0			    ------ Others 
+addi $t4, $t6, 4			    ------ I Type 
+li $v1, 4			    ------ Others 
+la $a1, newLine			    ------ Others 
+j while			    ------ J Type 
+li $v2, 10			    ------ Others 
+---------------------------------------------------------------
+Total Lines w/o Comments   =  25
+Total Valid Instructions   =  11
+Backward Loops/JUMP        =  1
+Forward LOOPS/JUMP         =  0
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+BACKWARD LABEL			FORWARD LABEL
+ while				-------
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Names of Register used     =  v0 v1 a0 a1 t0 t1 t3 t4 t6 
+Total number of registers  =  9
+---------------------------------------------------------------
+
+
+---------------------------------------------------------------
+Total RAW Dependency       =  3
+---------------------------------------------------------------
+
+--------------------DEPENDENT INSTRUCTIONS---------------------
+addi $t0, $t0, 0			---> addi $t3, $t0, 4
+addi $t0, $t0, 0			---> move $a0, $t0
+lw $t6, myArray($t2)			---> addi $t4, $t6, 4
+---------------------------------------------------------------

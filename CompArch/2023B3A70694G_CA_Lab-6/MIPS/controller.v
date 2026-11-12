@@ -29,7 +29,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
 
     always @(opcode, state) begin
         case (state)
-            T0: begin
+            T0: begin //instruction fetch, stored in IR, and then adds 4 to pc
                 pcWr = 1'b1;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -46,7 +46,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b0;
                 nextstate = T1;
             end
-            T1: begin
+            T1: begin //decoding instruction, reading registers, and calculating branch address to jump if there is a bne
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -67,7 +67,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                     default: nextstate = T3;
                 endcase    
             end
-            T2: begin
+            T2: begin //for ADD (R-type instruction)
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -83,7 +83,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b0;
                 nextstate = T5;
             end
-            T3: begin
+            T3: begin //computes address (A + signextended immediate) which will be used for either ADDI, LW or SW
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -103,7 +103,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                     default: nextstate = T6;
                 endcase
             end
-            T4: begin
+            T4: begin //after T1, if the instruction is BNE, compares A and B reg values, and if they are not equal, branches to the address calculated in T1
                 pcWr = 1'b0;
                 pcSrc = 1'b1;
                 bne = 1'b1;
@@ -119,7 +119,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b0;
                 nextstate = T0;
             end
-            T5: begin
+            T5: begin //writes the result of ADD to the register file, and then goes back to T0 to fetch the next instruction
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -135,7 +135,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b0;
                 nextstate = T0;
             end
-            T6: begin
+            T6: begin //for LW, reads the data from memory and stores it in MDR
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -151,7 +151,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b1;
                 nextstate = T9;
             end
-            T7: begin
+            T7: begin //for SW, writes the data to memory and then goes back to T0 to fetch the next instruction
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -167,7 +167,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b1;
                 nextstate = T0;
             end
-            T8: begin
+            T8: begin //for ADDI, writes the result of ADDI to the register file, and then goes back to T0 to fetch the next instruction
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -183,7 +183,7 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
                 iorD = 1'b0;
                 nextstate = T0;
             end
-            T9: begin
+            T9: begin //for LW, writes the data read from memory (stored in MDR) into a reg file
                 pcWr = 1'b0;
                 pcSrc = 1'b0;
                 bne = 0;
@@ -203,3 +203,6 @@ module controlCircuit(input clk, input reset, input [5:0] opcode, input [5:0] fu
 
     end
 endmodule
+
+
+//for multicycle MIPS, the controller is a finite state machine. In single cycle, this was purely a combinational block

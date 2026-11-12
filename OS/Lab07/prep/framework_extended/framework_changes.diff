@@ -1,0 +1,76 @@
+--- paging_sim.h	2026-10-13 08:22:24
++++ paging_sim.h	2026-10-27 09:50:04
+@@ -27,6 +27,9 @@
+     int file_id;
+     size_t file_offset;
+     uint64_t last_access_time;
++    uint64_t load_time;      /* NEW (FIFO): clock when the page was last loaded. */
++    uint64_t access_count;   /* NEW (LFU): accesses since the page was last loaded. */
++    bool referenced;         /* NEW (Clock/NRU): set on every access, cleared by policy. */
+ } PageInfo;
+ 
+ /*
+@@ -50,6 +53,7 @@
+ void sim_mark_page_evicted(int page_id);
+ void sim_set_swap_slot(int page_id, int slot);
+ void sim_mark_page_loaded(int page_id, int frame_id);
++void sim_clear_referenced(int page_id);   /* NEW (Clock/NRU) */
+ 
+ /* Student deliverables. */
+ int select_victim_page(void);
+--- sim_framework.c	2026-10-13 08:22:24
++++ sim_framework.c	2026-10-27 09:50:04
+@@ -19,6 +19,9 @@
+     int file_id;                /* Backing file identifier for file-backed pages. */
+     size_t file_offset;         /* Offset of this page within its backing file. */
+     uint64_t last_access_time;  /* Logical time of the most recent access. */
++    uint64_t load_time;         /* NEW: clock when last loaded (FIFO). */
++    uint64_t access_count;      /* NEW: accesses since last load (LFU). */
++    bool referenced;            /* NEW: reference bit (Clock/NRU). */
+ } InternalPage;
+ 
+ typedef struct {
+@@ -100,7 +103,10 @@
+         .swap_slot = p->swap_slot,
+         .file_id = p->file_id,
+         .file_offset = p->file_offset,
+-        .last_access_time = p->last_access_time
++        .last_access_time = p->last_access_time,
++        .load_time = p->load_time,          /* NEW */
++        .access_count = p->access_count,    /* NEW */
++        .referenced = p->referenced         /* NEW */
+     };
+     return out;
+ }
+@@ -194,6 +200,9 @@
+     p->dirty = false;
+     p->swap_slot = -1;
+     p->last_access_time = sys.global_clock;
++    p->load_time = sys.global_clock;    /* NEW */
++    p->access_count = 0;                /* NEW */
++    p->referenced = true;               /* NEW */
+ 
+     sys.frames[frame_id].occupied = true;
+     sys.frames[frame_id].mapped_page_id = page_id;
+@@ -215,6 +224,8 @@
+     /* Update recency after fault handling as well, then return the selected byte. */
+     InternalPage *p = &sys.pages[page_id];
+     p->last_access_time = sys.global_clock;
++    p->access_count++;                  /* NEW */
++    p->referenced = true;               /* NEW */
+     return sys.frames[p->frame_id].data[offset];
+ }
+ 
+@@ -237,5 +248,12 @@
+     InternalPage *p = &sys.pages[page_id];
+     p->dirty = true;
+     p->last_access_time = sys.global_clock;
++    p->access_count++;                  /* NEW */
++    p->referenced = true;               /* NEW */
+     sys.frames[p->frame_id].data[offset] = value;
+ }
++
++/* NEW: lets Clock/NRU policy code clear a page's reference bit. */
++void sim_clear_referenced(int page_id) {
++    sys.pages[page_id].referenced = false;
++}

@@ -1,0 +1,49 @@
+File Name: 		asm_test1.s
+-----------------TOTAL INSTRUCTIONS----------------------------
+addi $s0, $zero, 4 			    ------ I Type 
+addi $s1, $zero, 10			    ------ I Type 
+addi $s2, $zero, 12			    ------ I Type 
+addi $t1, $zero, 0			    ------ I Type 
+sw $s3, myArray($t3)			    ------ I Type 
+addi $t1, $t1, 4			    ------ I Type 
+sw $s4, myArray($t4)			    ------ I Type 
+addi $t2, $t1, 4			    ------ I Type 
+sw $s5, myArray($t5)			    ------ I Type 
+addi $t0, $zero, 0			    ------ I Type 
+beq $t6, 12, exit			    ------ I Type 
+lw $t7, myArray($a1)			    ------ I Type 
+addi $t0, $t0, 4			    ------ I Type 
+li $v1, 1			    ------ Others 
+move $a0, $t6			    ------ Others 
+li $v0, 4			    ------ Others 
+j while			    ------ J Type 
+li $s7, 10			    ------ Others 
+---------------------------------------------------------------
+Total Lines w/o Comments   =  33
+Total Valid Instructions   =  18
+Backward Loops/JUMP        =  1
+Forward LOOPS/JUMP         =  0
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+BACKWARD LABEL			FORWARD LABEL
+ while				-------
+---------------------------------------------------------------
+
+---------------------------------------------------------------
+Names of Register used     =  zero v0 v1 a0 t0 t1 t2 t6 t7 s0 s1 s2 s3 s4 s5 s7 
+Total number of registers  =  16
+---------------------------------------------------------------
+
+
+---------------------------------------------------------------
+Total RAW Dependency       =  5
+---------------------------------------------------------------
+
+--------------------DEPENDENT INSTRUCTIONS---------------------
+addi $t1, $zero, 0			---> addi $t1, $t1, 4
+addi $t1, $zero, 0			---> addi $t2, $t1, 4
+addi $t1, $t1, 4			---> addi $t2, $t1, 4
+addi $t0, $zero, 0			---> addi $t0, $t0, 4
+beq $t6, 12, exit			---> move $a0, $t6
+---------------------------------------------------------------

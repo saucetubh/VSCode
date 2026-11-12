@@ -1,0 +1,46 @@
+{
+  "expected_output": "[PAGE FAULT] Page 0 (ANON)\nWRITE 0 0 <- 50\n[PAGE FAULT] Page 6 (FILE)\n  [FILE I/O] READ FILE (ID 101, Offset 0) -> Frame 1\nREAD 6 0 -> 171\n[PAGE FAULT] Page 7 (FILE)\n  [FILE I/O] READ FILE (ID 101, Offset 64) -> Frame 2\nREAD 7 0 -> 171\n[PAGE FAULT] Page 8 (FILE)\n  [FILE I/O] READ FILE (ID 101, Offset 128) -> Frame 3\nREAD 8 0 -> 171\n[PAGE FAULT] Page 1 (ANON)\nREAD 1 0 -> 0\nSTATE\nPAGE 0 type=ANON resident=1 frame=0 dirty=1 swap=-1 file=-1 offset=0 last=1\nPAGE 1 type=ANON resident=1 frame=1 dirty=0 swap=-1 file=-1 offset=0 last=5\nPAGE 2 type=ANON resident=0 frame=-1 dirty=0 swap=-1 file=-1 offset=0 last=0\nPAGE 3 type=ANON resident=0 frame=-1 dirty=0 swap=-1 file=-1 offset=0 last=0\nPAGE 4 type=ANON resident=0 frame=-1 dirty=0 swap=-1 file=-1 offset=0 last=0\nPAGE 5 type=ANON resident=0 frame=-1 dirty=0 swap=-1 file=-1 offset=0 last=0\nPAGE 6 type=FILE resident=0 frame=-1 dirty=0 swap=-1 file=101 offset=0 last=2\nPAGE 7 type=FILE resident=1 frame=2 dirty=0 swap=-1 file=101 offset=64 last=3\nPAGE 8 type=FILE resident=1 frame=3 dirty=0 swap=-1 file=101 offset=128 last=4\nPAGE 9 type=FILE resident=0 frame=-1 dirty=0 swap=-1 file=101 offset=192 last=0\nPAGE 10 type=FILE resident=0 frame=-1 dirty=0 swap=-1 file=101 offset=256 last=0\nPAGE 11 type=FILE resident=0 frame=-1 dirty=0 swap=-1 file=101 offset=320 last=0\n",
+  "name": "Clean page preference",
+  "semantic": {
+    "frame_owners": [
+      [
+        0,
+        -1,
+        -1,
+        -1
+      ],
+      [
+        0,
+        6,
+        -1,
+        -1
+      ],
+      [
+        0,
+        6,
+        7,
+        -1
+      ],
+      [
+        0,
+        6,
+        7,
+        8
+      ],
+      [
+        0,
+        1,
+        7,
+        8
+      ],
+      [
+        0,
+        1,
+        7,
+        8
+      ]
+    ],
+    "input_sha256": "a57324815d0c16b41121d3eab24acae3063b009908094b507b6a82817c8a4b3f",
+    "schema_version": 1
+  }
+}

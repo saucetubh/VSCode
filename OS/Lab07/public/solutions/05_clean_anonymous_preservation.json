@@ -1,0 +1,4 @@
+{
+  "name": "preserve nonzero clean anonymous pages",
+  "expected_output": "[PAGE FAULT] Page 0 (ANON)\n  [MEM] ZERO-FILL: Initializing Frame 0\nWRITE 0 9 <- 165\n  [DISK I/O] SWAP OUT: Frame 0 -> Swap Slot 0\nEVICT page 0\nPAGE 0 type=ANON resident=0 frame=-1 dirty=0 swap=0 file=-1 offset=0 last=1\n[PAGE FAULT] Page 0 (ANON)\n  [DISK I/O] SWAP IN: Slot 0 -> Frame 0\nREAD 0 9 -> 165\nPAGE 0 type=ANON resident=1 frame=0 dirty=0 swap=-1 file=-1 offset=0 last=2\n  [DISK I/O] SWAP OUT: Frame 0 -> Swap Slot 0\nEVICT page 0\nPAGE 0 type=ANON resident=0 frame=-1 dirty=0 swap=0 file=-1 offset=0 last=2\n[PAGE FAULT] Page 0 (ANON)\n  [DISK I/O] SWAP IN: Slot 0 -> Frame 0\nREAD 0 9 -> 165\nPAGE 0 type=ANON resident=1 frame=0 dirty=0 swap=-1 file=-1 offset=0 last=3\n"
+}
